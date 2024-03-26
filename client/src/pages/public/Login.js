@@ -1,28 +1,43 @@
 import React, { useState, useCallback } from 'react'
 import { InputField, Button } from '../../components'
+import { apiRegister } from '../../apis/user';
 
 const Login = () => {
     const [isRegister, setIsRegister] = useState(false);
     const [payload, setPayload] = useState({
         email: '',
         password: '',
-        fullname: '',
+        firstname: '',
+        lastname: '',
         phonenumber: ''
     })
 
-    const handleSubmit = useCallback(() => {
-        console.log(payload);
-    }, [payload])
+    const handleSubmit = useCallback(async () => {
+        const { firstname, lastname, phonenumber, ...data } = payload
+        if (isRegister) {
+            const response = await apiRegister(payload)
+            console.log(response);
+        }
+        else
+            console.log(data);
+    }, [payload, isRegister])
     return (
         <div className=' flex justify-center pt-20'>
             < div className='w-1/3  flex flex-col gap-3 items-center justify-center text-primary-1' >
                 <h1 className=' text-center text-[30px] font-semibold pb-5 '>{isRegister ? 'Đăng ký' : 'Đăng nhập'}</h1>
                 {isRegister &&
-                    <InputField
-                        value={payload.fullname}
-                        setValue={setPayload}
-                        nameKey='fullname'
-                    />
+                    <div className=' flex gap-2'>
+                        <InputField
+                            value={payload.firstname}
+                            setValue={setPayload}
+                            nameKey='firstname'
+                        />
+                        <InputField
+                            value={payload.lastname}
+                            setValue={setPayload}
+                            nameKey='lastname'
+                        />
+                    </div>
                 }
                 <InputField
                     value={payload.email}
@@ -64,86 +79,6 @@ const Login = () => {
                     }
                 </div>
 
-                {/* <Form
-                    form={form}
-                    initialValues={{ remember: true }}
-                    onFinish={onFinish}
-                >
-                    {isRegister &&
-                        <Form.Item
-                            name="fullname"
-                            rules={[{ required: true, message: 'Please input your full name!' }]}
-                        >
-                            <Input placeholder="Fullname" />
-                        </Form.Item>
-                    }
-                    <Form.Item
-                        name="username"
-                        rules={[{ required: true, message: 'Please input your username!' }]}
-                    >
-                        <Input placeholder="Username" />
-                    </Form.Item>
-                    <Form.Item
-                        name="password"
-                        rules={[{ required: true, message: 'Please input your password!' }]}
-                    >
-                        <Input
-                            type="password"
-                            placeholder="Password"
-                        />
-                    </Form.Item>
-                    {isRegister &&
-                        <Form.Item
-                            name="comfirmpassword"
-                            rules={[{ required: true, message: 'Please input your comfirm password!' }]}
-                        >
-                            <Input
-                                type="password"
-                                placeholder="Comfirm password"
-                            />
-                        </Form.Item>
-                    }
-                    {isRegister &&
-                        <Form.Item
-                            name="phonenumber"
-                            rules={[{ required: true, message: 'Please input your phone number!' }]}
-                        >
-                            <Input
-                                placeholder="Phone number"
-                            />
-                        </Form.Item>
-                    }
-                    {!isRegister &&
-                        <Form.Item >
-                            <div className=' flex justify-between'>
-                                <Form.Item name="remember" valuePropName="checked" noStyle>
-                                    <Checkbox>Remember me</Checkbox>
-                                </Form.Item>
-
-                                <a href="">
-                                    Forgot password
-                                </a>
-                            </div>
-
-                        </Form.Item>
-                    }
-
-                    <Form.Item>
-                        <div className=' flex flex-col gap-4'>
-                            <Button
-                                className=' bg-primary-1 border-none text-white font-semibold '
-                            >
-                                {isRegister ? 'Đăng ký' : 'Đăng nhập'}
-                            </Button>
-                            <Link
-                                // to={`/${path.SIGNUP}`}
-                                className=' text-center font-semibold'
-                                onClick={() => { isRegister ? setIsRegister(false) : setIsRegister(true) }}
-                            >{isRegister ? 'Đăng nhập' : 'Đăng ký'}</Link>
-                        </div>
-
-                    </Form.Item>
-                </Form> */}
             </div >
 
         </div >
