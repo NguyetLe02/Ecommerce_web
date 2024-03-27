@@ -1,25 +1,59 @@
 import React, { useState, useCallback } from 'react'
 import { InputField, Button } from '../../components'
-import { apiRegister } from '../../apis/user';
+import { apiLogin, apiRegister } from '../../apis/user';
+import Swal from 'sweetalert2'
+import { useNavigate } from 'react-router-dom'
+import path from '../../ultils/path';
+import { register } from '../../store/user/userSlice'
+import { useDispatch } from 'react-redux';
 
 const Login = () => {
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
     const [isRegister, setIsRegister] = useState(false);
     const [payload, setPayload] = useState({
         email: '',
         password: '',
         firstname: '',
         lastname: '',
-        phonenumber: ''
+        mobile: ''
     })
+    const resetPayload = () => {
+        setPayload({
+            email: '',
+            password: '',
+            firstname: '',
+            lastname: '',
+            mobile: ''
+        })
+    }
 
     const handleSubmit = useCallback(async () => {
-        const { firstname, lastname, phonenumber, ...data } = payload
+        const { firstname, lastname, mobile, ...data } = payload
         if (isRegister) {
             const response = await apiRegister(payload)
             console.log(response);
+            if (response.success) {
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "Your account has been registered",
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then(() => {
+                    setIsRegister(false)
+                    resetPayload()
+                });
+            }
         }
-        else
-            console.log(data);
+        else {
+            const response = await apiLogin(data)
+            console.log(response);
+            if (response.success) {
+                dispatch(register({ isLoggedIn: true, token: response.accessToken, currentUser: response.userData }))
+                navigate(`/${path.HOME}`)
+            }
+        }
     }, [payload, isRegister])
     return (
         <div className=' flex justify-center pt-20'>
@@ -52,9 +86,9 @@ const Login = () => {
                 />
                 {isRegister &&
                     <InputField
-                        value={payload.phonenumber}
+                        value={payload.mobile}
                         setValue={setPayload}
-                        nameKey='phonenumber'
+                        nameKey='mobile'
                     />
                 }
                 <Button
