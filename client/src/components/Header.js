@@ -1,12 +1,22 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Navigation, Search, UserPopover } from '../components'
 import logo from '../assets/logo.png'
 import icons from '../ultils/icons'
 import { Link } from 'react-router-dom'
 import path from '../ultils/path'
+import { useDispatch, useSelector } from 'react-redux'
+import { getCurrent } from '../store/user/asyncActions'
 
 const { FaBagShopping } = icons
 const Header = () => {
+    const dispatch = useDispatch()
+    const { isLoggedIn, currentUser } = useSelector(state => state.user)
+    console.log(isLoggedIn, currentUser);
+    useEffect(() => {
+        if (isLoggedIn) {
+            dispatch(getCurrent())
+        }
+    }, [dispatch, isLoggedIn])
     return (
         <div className=' w-screen flex justify-center h-[100px] bg-main text-primary-1 '>
             <div className=' w-main flex px-[30px]'>
@@ -26,7 +36,16 @@ const Header = () => {
                             <FaBagShopping size={24} />
                             <span>0 item</span>
                         </div>
-                        <UserPopover />
+                        <div className='flex justify-center items-center gap-1'>
+                            <UserPopover
+                                size={24}
+                                isLoggedIn={isLoggedIn}
+                            />
+                            {isLoggedIn &&
+                                <span>{currentUser?.lastname}</span>
+                            }
+                        </div>
+
 
                     </div>
                 </div>

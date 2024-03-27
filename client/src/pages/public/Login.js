@@ -4,7 +4,7 @@ import { apiLogin, apiRegister } from '../../apis/user';
 import Swal from 'sweetalert2'
 import { useNavigate } from 'react-router-dom'
 import path from '../../ultils/path';
-import { register } from '../../store/user/userSlice'
+import { login } from '../../store/user/userSlice'
 import { useDispatch } from 'react-redux';
 
 const Login = () => {
@@ -32,7 +32,6 @@ const Login = () => {
         const { firstname, lastname, mobile, ...data } = payload
         if (isRegister) {
             const response = await apiRegister(payload)
-            console.log(response);
             if (response.success) {
                 Swal.fire({
                     position: "top-end",
@@ -48,9 +47,8 @@ const Login = () => {
         }
         else {
             const response = await apiLogin(data)
-            console.log(response);
             if (response.success) {
-                dispatch(register({ isLoggedIn: true, token: response.accessToken, currentUser: response.userData }))
+                dispatch(login({ isLoggedIn: true, token: response.accessToken, currentUser: response.userData }))
                 navigate(`/${path.HOME}`)
             }
         }
