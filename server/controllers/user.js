@@ -6,8 +6,8 @@ const sendMail = require('../ultils/sendMail')
 const crypto = require('crypto')
 
 const register = asyncHandler(async (req, res) => {
-    const { email, password, firstname, lastname } = req.body
-    if (!email || !password || !firstname || !lastname)
+    const { email, password, firstname, lastname, mobile } = req.body
+    if (!email || !password || !firstname || !lastname || !mobile)
         return res.status(400).json({
             success: false,
             message: 'Missing input'
@@ -53,7 +53,7 @@ const getCurrent = asyncHandler(async (req, res) => {
     const { _id } = req.user
     const user = await User.findById(_id).select('-refreshToken -password -role')
     return res.status(200).json({
-        success: false,
+        success: true,
         rs: user ? user : 'User not found'
     })
 })
