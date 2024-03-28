@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { InputField, Button } from '../../components'
 import { apiLogin, apiRegister } from '../../apis/user';
 import Swal from 'sweetalert2'
@@ -6,10 +6,12 @@ import { useNavigate } from 'react-router-dom'
 import path from '../../ultils/path';
 import { login } from '../../store/user/userSlice'
 import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 const Login = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
+    const { isLoggedIn, currentUser } = useSelector(state => state.user)
     const [isRegister, setIsRegister] = useState(false);
     const [payload, setPayload] = useState({
         email: '',
@@ -49,10 +51,19 @@ const Login = () => {
             const response = await apiLogin(data)
             if (response.success) {
                 dispatch(login({ isLoggedIn: true, token: response.accessToken, currentUser: response.userData }))
-                navigate(`/${path.HOME}`)
             }
         }
     }, [payload, isRegister])
+
+    useEffect(() => {
+        if (isLoggedIn && currentUser) {
+            if (currentUser?.role === 'admin') {
+                navigate(`/${path.ADMIN}`);
+            } else {
+                navigate(`/${path.HOME}`);
+            }
+        }
+    }, [isLoggedIn, currentUser]);
     return (
         <div className=' flex justify-center pt-20'>
             < div className='w-1/3  flex flex-col gap-3 items-center justify-center text-primary-1' >

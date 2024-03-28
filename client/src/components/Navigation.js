@@ -1,5 +1,5 @@
 import React from 'react'
-import navigation from '../ultils/contants'
+import { navigation } from '../ultils/contants'
 import { NavLink } from 'react-router-dom'
 
 const Navigation = () => {

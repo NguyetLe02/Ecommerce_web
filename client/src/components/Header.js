@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { memo, useEffect } from 'react'
 import { Navigation, Search, UserPopover } from '../components'
 import logo from '../assets/logo.png'
 import icons from '../ultils/icons'
@@ -11,7 +11,7 @@ const { FaBagShopping } = icons
 const Header = () => {
     const dispatch = useDispatch()
     const { isLoggedIn, currentUser } = useSelector(state => state.user)
-    console.log(isLoggedIn, currentUser);
+    // console.log(isLoggedIn, currentUser);
     useEffect(() => {
         if (isLoggedIn) {
             dispatch(getCurrent())
@@ -41,7 +41,7 @@ const Header = () => {
                                 size={24}
                                 isLoggedIn={isLoggedIn}
                             />
-                            {isLoggedIn &&
+                            {(isLoggedIn && currentUser) &&
                                 <span>{currentUser?.lastname}</span>
                             }
                         </div>
@@ -55,4 +55,4 @@ const Header = () => {
     )
 }
 
-export default Header
+export default memo(Header)

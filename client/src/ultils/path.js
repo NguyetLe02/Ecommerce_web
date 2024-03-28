@@ -9,6 +9,15 @@ const path = {
     BLOGS: 'blogs',
     PROFILE: 'profile',
     ORDERS: 'orders',
+
+    //admin
+    ADMIN: 'admin',
+    DASHBOARD: 'dashboard',
+    MANAGE_USER: 'manage_user',
+
+    //member
+    MEMBER: 'member',
+    PERSONAL: 'personal'
 }
 
 export default path;

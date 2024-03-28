@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Popover } from 'antd';
 import icons from '../ultils/icons';
 import { Link } from 'react-router-dom';
@@ -22,7 +22,7 @@ const Content = (isLoggedIn) => {
                 </div>
                 :
                 <div className='w-[200px] flex flex-col text-base'>
-                    <Link to={`/${path.PROFILE}`}>
+                    <Link to={`/${path.MEMBER}`}>
                         <span>Chỉnh sửa thông tin cá nhân</span>
                     </Link>
                     <Link to={`/${path.ORDERS}`}>
