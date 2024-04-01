@@ -3,17 +3,17 @@ import icons from '../ultils/icons'
 import clsx from 'clsx'
 
 const { FaSearch } = icons
-const Search = ({ value, setValue, type, inValidFields, setInvalidFields, style, fullWidth }) => {
+const Search = ({ value, setValue, type, inValidFields, setInvalidFields, style, fullWidth, isHideLabel, placeholder }) => {
     return (
         <div className={clsx('relative', fullWidth && 'w-full')}>
-            {value.trim() != '' &&
-                <label className=' text-[14px] absolute top-0 left-[8px] bg-white px-2'>Tìm kiếm</label>
+            {value && value.trim() != '' && !isHideLabel &&
+                < label className=' text-[14px] absolute top-0 left-[8px] bg-white px-2'>Tìm kiếm</label>
             }
             <div className=' static flex items-center'>
                 <input
                     type={type || 'text'}
                     className={clsx(' px-6 py-2 rounded-sm border w-full my-2 placeholder:text-sm', style)}
-                    placeholder='Tìm kiếm tại đây'
+                    placeholder={placeholder}
                     value={value}
                     onChange={(e) => setValue(e.target.value)}
                 />
@@ -23,7 +23,7 @@ const Search = ({ value, setValue, type, inValidFields, setInvalidFields, style,
                 />
             </div>
 
-        </div>
+        </div >
     )
 }
 

@@ -128,50 +128,60 @@ const resetPassword = asyncHandler(async (req, res) => {
 })
 
 const getUsers = asyncHandler(async (req, res) => {
-    const response = await User.find()
+    // const response = await User.find()
     // console.log(...req.query);
-    return res.status(200).json({
-        success: response ? true : false,
-        users: response
-    })
+    // return res.status(200).json({
+    //     success: response ? true : false,
+    //     users: response
+    // })
 
     const queries = { ...req.query }
-    // const excludeFields = ['limit', 'sort', 'pages', 'fields']
-    // excludeFields.forEach(el => delete queries[el])
+    const excludeFields = ['limit', 'sort', 'page', 'fields']
+    excludeFields.forEach(el => delete queries[el])
 
     let queryString = JSON.stringify(queries)
     queryString = queryString.replace(/\b(gte\gt\lt\lte)\b/g, mathedEl => `${mathedEl}`)
     const formattedQueries = JSON.parse(queryString)
     // if (queries?.name) formattedQueries.name = { $regex: queries.name, $options: 'i' }
+    if (req.query.q) {
+        delete formattedQueries.q
+        formattedQueries['$or'] = [
+            { firstname: { $regex: req.query.q, $options: 'i' } },
+            { lastname: { $regex: req.query.q, $options: 'i' } },
+            { email: { $regex: req.query.q, $options: 'i' } },
+        ]
+    }
     let queryCommand = User.find(formattedQueries)
 
-    // if (req.query.sort) {
-    //     const sortBy = req.query.sort.split(',').join(' ')
-    //     queryCommand = queryCommand.sort(sortBy)
-    // }
+    if (req.query.sort) {
+        const sortBy = req.query.sort.split(',').join(' ')
+        queryCommand = queryCommand.sort(sortBy)
+    }
 
-    // if (req.query.fields) {
-    //     const fields = req.query.fields.split(',').join(' ')
-    //     queryCommand = queryCommand.select(fields)
-    // }
+    if (req.query.fields) {
+        const fields = req.query.fields.split(',').join(' ')
+        queryCommand = queryCommand.select(fields)
+    }
 
-    // //Phân trang
-    // const page = +req.query.page || 1
-    // const limit = +req.query.limit || 30
-    // const skip = (page - 1) * limit
-    // queryCommand.skip(skip).limit(limit)
+    //Phân trang
+    const page = +req.query.page || 1
+    const limit = +req.query.limit || 30
+    const skip = (page - 1) * limit
+    queryCommand.skip(skip).limit(limit)
 
     //Excute query 
     //Số lượng người thõa mãn điều kiện !== số lượng người trả về 1 lần gọi API
-    queryCommand.exec(async (err, response) => {
-        if (err) throw new Error(err.message)
-        const counts = await User.find(formattedQueries).countDocuments()
+    try {
+        const response = await queryCommand.exec();
+        const counts = await User.find(formattedQueries).countDocuments();
         return res.status(200).json({
-            success: response ? true : false,
+            success: true,
             counts,
-            users: response ? response : 'Cannot get users'
-        })
-    })
+            users: response || 'Cannot get users'
+        });
+    } catch (error) {
+        return res.status(500).json({ success: false, error: error.message });
+    }
 })
 
 const deleteUser = asyncHandler(async (req, res) => {
