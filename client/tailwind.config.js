@@ -49,5 +49,7 @@ module.exports = {
       'slide-top-sm': 'slide-top-sm 0.1s linear both',
     }
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/forms')
+  ],
 }

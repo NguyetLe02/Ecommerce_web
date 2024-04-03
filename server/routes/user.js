@@ -11,7 +11,7 @@ router.get('/forgotpassword', control.forgotPassword)
 router.put('/resetpassword', control.resetPassword)
 router.use(verifyAccessToken)
 router.get('/', isAdmin, control.getUsers)
-router.delete('/', isAdmin, control.deleteUser)
+router.delete('/:uid', isAdmin, control.deleteUser)
 router.put('/:uid', isAdmin, control.updateUserByAdmin)
 router.put('/current', control.updateUser)
 
