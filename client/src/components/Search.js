@@ -9,7 +9,7 @@ const Search = ({ value, setValue, type, inValidFields, setInvalidFields, style,
             {value && value.trim() != '' && !isHideLabel &&
                 < label className=' text-[14px] absolute top-0 left-[8px] bg-white px-2'>Tìm kiếm</label>
             }
-            <div className=' static flex items-center'>
+            <div className=' static flex items-center rounded-md'>
                 <input
                     type={type || 'text'}
                     className={clsx(' px-6 py-2 rounded-sm border w-full my-2 placeholder:text-sm', style)}

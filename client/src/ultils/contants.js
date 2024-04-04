@@ -71,3 +71,25 @@ export const adminSidebar = [
     }
 ]
 
+export const blockStatus = [
+    {
+        code: true,
+        value: 'Blocked'
+    },
+    {
+        code: false,
+        value: 'Active'
+    },
+]
+
+export const roles = [
+    {
+        code: 0,
+        value: 'Admin'
+    },
+    {
+        code: 1,
+        value: 'User'
+    },
+]
+

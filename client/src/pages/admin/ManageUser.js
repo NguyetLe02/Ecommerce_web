@@ -3,6 +3,7 @@ import { apiGetUsers, apiUpdateUser, apiDeleteUser } from '../../apis/user'
 import moment from 'moment'
 import { Button, Search } from '../../components'
 import { useDebounce, Pagination, InputForm, Select } from '../../components'
+import { blockStatus, roles } from '../../ultils/contants'
 import { useSearchParams } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import validateRegex from '../../ultils/validateRegex'
@@ -17,7 +18,7 @@ const ManageUser = () => {
     lastname: '',
     role: '',
     mobile: '',
-    status: '',
+    isBlocked: '',
   })
 
   const [users, setUsers] = useState(null)
@@ -34,6 +35,7 @@ const ManageUser = () => {
 
   const render = useCallback(() => {
     setUpdate(!update)
+    setEditEl(null)
   }, [update])
 
   useEffect(() => {
@@ -43,12 +45,13 @@ const ManageUser = () => {
   }, [queriesDebounce, params, update])
 
   const handleUpdate = async (data) => {
-    const response = await apiUpdateUser(data, editEl?._id)
-    console.log(response)
-    if (response.success) {
-      render()
-      toast.success(response.mes)
-    } else toast.error(response.mes)
+    console.log(data)
+    // const response = await apiUpdateUser(data, editEl?._id)
+    // console.log(response)
+    // if (response.success) {
+    //   render()
+    //   toast.success(response.mes)
+    // } else toast.error(response.mes)
   }
 
   const handleDeleteUser = (uid) => {
@@ -102,8 +105,8 @@ const ManageUser = () => {
                 {users?.users?.map((el, idx) => (
                   <tr key={el._id} className=' border-t border-primary-1'>
                     <td className=' py-2 px-4'>{idx + 1}</td>
-                    <td className=' py-2 px-4'>{
-                      editEl?._id === el?._id
+                    <td className=' py-2 px-4'>
+                      {editEl?._id === el._id
                         ? <InputForm
                           register={register}
                           errors={errors}
@@ -116,38 +119,49 @@ const ManageUser = () => {
                             }
                           }}
                           defaultValue={editEl?.email}
+                          fullWidth
                         />
-                        : <span>{el.email}</span>
-                    }</td>
+                        : <span>{el.email}</span>}
+                    </td>
                     <td className=' py-2 px-4'>{
-                      editEl?._id === el?._id
+                      editEl?._id === el._id
                         ? <InputForm
                           register={register}
                           errors={errors}
                           id={'firstname'}
                           validate={{ required: 'Require fill' }}
                           defaultValue={editEl?.firstname}
+                          fullWidth
                         />
                         : <span>{el.firstname}</span>
                     }</td>
                     <td className=' py-2 px-4'>{
-                      editEl?._id === el?._id
+                      editEl?._id === el._id
                         ? <InputForm
                           register={register}
                           errors={errors}
                           id={'lastname'}
                           validate={{ required: 'Require fill' }}
                           defaultValue={editEl?.lastname}
+                          fullWidth
                         />
                         : <span>{el.lastname}</span>
                     }</td>
                     <td className=' py-2 px-4'>{
-                      editEl?._id === el?._id
-                        ? <Select />
-                        : <span>{el.role}</span>
+                      editEl?._id === el._id
+                        ? <Select
+                          register={register}
+                          errors={errors}
+                          id={'role'}
+                          validate={{ required: 'Require fill' }}
+                          defaultValue={roles.find(role => +role.code === +editEl.role)?.value}
+                          options={roles}
+                          fullWidth
+                        />
+                        : <span>{roles.find(role => +role.code === +el.role)?.value}</span>
                     }</td>
                     <td className=' py-2 px-4'>{
-                      editEl?._id === el?._id
+                      editEl?._id === el._id
                         ? <InputForm
                           register={register}
                           errors={errors}
@@ -160,20 +174,36 @@ const ManageUser = () => {
                             }
                           }}
                           defaultValue={editEl?.mobile}
+                          fullWidth
                         />
                         : <span>{el.mobile}</span>
                     }</td>
                     <td className=' py-2 px-4'>{
-                      editEl?._id === el?._id
-                        ? <Select />
+                      editEl?._id === el._id
+                        ? <Select
+                          register={register}
+                          errors={errors}
+                          id={'isBlocked'}
+                          validate={{ required: 'Require fill' }}
+                          defaultValue={editEl?.isBlocked}
+                          options={blockStatus}
+                          fullWidth
+                        />
                         : <span>{el.isBlocked ? 'Blocked' : 'Active'}</span>
                     }</td>
                     <td className=' py-2 px-4'>{moment(el.createdAt).format('l')}</td>
-                    <td className=' py-2 px-4 flex justify-between'>
-                      {editEl ? <div onClick={() => setEditEl(null)} className=' hover:cursor-pointer text-primary-1 hover:underline'>Back</div>
-                        : <div onClick={() => setEditEl(el)} className=' hover:cursor-pointer text-primary-1 hover:underline'>Edit</div>
-                      }
-                      <div onClick={() => handleDeleteUser(el._id)} className=' hover:cursor-pointer text-red-400 hover:underline'>Delete</div>
+                    <td className=' py-2 px-4'>
+                      <div className=' flex gap-3 justify-center'>
+                        {editEl?._id === el._id ? <div onClick={() => {
+                          setEditEl(null)
+                        }} className=' hover:cursor-pointer text-primary-1 hover:underline'>Back</div>
+                          : <div onClick={() => {
+                            setEditEl(el)
+                          }} className=' hover:cursor-pointer text-primary-1 hover:underline'>Edit</div>
+                        }
+                        <div onClick={() => handleDeleteUser(el._id)} className=' hover:cursor-pointer text-red-400 hover:underline'>Delete</div>
+                      </div>
+
                     </td>
                   </tr>
                 ))}
