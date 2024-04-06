@@ -31,7 +31,7 @@ var productSchema = new mongoose.Schema({
     },
     category: {
         type: mongoose.Types.ObjectId,
-        ref: 'Category'
+        ref: 'ProductCategory',
     },
     sold: {
         type: Number,
