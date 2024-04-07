@@ -14,22 +14,26 @@ module.exports = {
       },
       backgroundColor: {
         main: '#eed6d0',
-        sub: '#fbc4c4',
+        sub: '#006241',
         primary: {
           1: '#603914',
         }
       },
       textColor: {
-        main: '#fbc4c4',
+        main: '#006241',
         primary: {
-          1: '#603914',
+          1: '#000000',
         }
       },
       borderColor: {
         main: '#fbc4c4',
+        sub: '#006241',
         primary: {
           1: '#603914',
         }
+      },
+      minWidth: {
+        main: '1220px',
       }
     },
     keyframes: {
@@ -47,6 +51,12 @@ module.exports = {
     animation: {
       'slide-top': 'slide-top 0.5s cubbic-bezier(0.25,0.46,0.45,0.94) both',
       'slide-top-sm': 'slide-top-sm 0.1s linear both',
+    },
+    screens: {
+      'sm': { 'max': '767px' },
+      'md': { 'min': '768px', 'max': '1220px' },
+      'lg': { 'min': '1220px', 'max': '1800px' },
+
     }
   },
   plugins: [

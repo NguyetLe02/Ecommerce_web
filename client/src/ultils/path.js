@@ -9,6 +9,7 @@ const path = {
     BLOGS: 'blogs',
     PROFILE: 'profile',
     ORDERS: 'orders',
+    DETAIL: 'detailproduct',
 
     //admin
     ADMIN: 'admin',

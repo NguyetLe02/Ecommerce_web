@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom'
-import { Login, Home, Public, Signup } from './pages/public'
+import { Login, Home, Public, Signup, DetailProduct } from './pages/public'
 import { AdmminLayout, Dashboard, ManageUser } from './pages/admin'
 import { MemberLayout, Personal } from './pages/member'
 import path from './ultils/path';
@@ -13,6 +13,7 @@ function App() {
           <Route path={path.HOME} element={<Home />} />
           <Route path={path.LOGIN} element={<Login />} />
           <Route path={path.SIGNUP} element={<Signup />} />
+          <Route path={path.DETAIL} element={<DetailProduct />} />
         </Route>
         <Route path={path.ADMIN} element={<AdmminLayout />}>
           <Route path={path.DASHBOARD} element={<Dashboard />} />

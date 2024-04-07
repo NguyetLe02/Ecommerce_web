@@ -6,7 +6,7 @@ const Button = ({ name, handleOnclick, style, iconsBefore, iconsAfter, type = 'b
         <button
             name={name}
             type={type}
-            className={style ? style : clsx(' px-4 py-2 rounded-md text-white bg-primary-1 font-semibold', fullWidth && ' w-full')}
+            className={style ? style : clsx(' px-4 py-2 rounded-md text-white bg-sub font-semibold', fullWidth && ' w-full')}
             onClick={() => { handleOnclick && handleOnclick() }}
         >
             {iconsBefore}
