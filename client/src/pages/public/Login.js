@@ -66,8 +66,8 @@ const Login = () => {
         }
     }, [isLoggedIn, currentUser]);
     return (
-        <div className=' flex justify-center pt-20'>
-            < div className='w-1/3  flex flex-col gap-3 items-center justify-center text-primary-1' >
+        <div className=' w-full flex justify-center pt-20'>
+            < div className='w-[450px]  flex flex-col gap-3 items-center justify-center text-primary-1 p-10 border rounded-lg hover:shadow-md' >
                 <h1 className=' text-center text-[30px] font-semibold pb-5 '>{isRegister ? 'Đăng ký' : 'Đăng nhập'}</h1>
                 {isRegister &&
                     <div className=' flex gap-2'>

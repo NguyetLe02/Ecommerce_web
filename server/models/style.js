@@ -1,7 +1,7 @@
 const mongoose = require('mongoose'); // Erase if already required
 
 // Declare the Schema of the Mongo model
-var productCategorySchema = new mongoose.Schema({
+var styleSchema = new mongoose.Schema({
     title: {
         type: String,
         required: true,
@@ -16,4 +16,4 @@ var productCategorySchema = new mongoose.Schema({
 });
 
 //Export the model
-module.exports = mongoose.model('ProductCategory', productCategorySchema);
+module.exports = mongoose.model('Style', styleSchema);

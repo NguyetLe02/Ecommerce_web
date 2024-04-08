@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.ant-card .ant-card-body {
+    padding: 0;
+}
+
+.ant-card .ant-card-cover img {
+    border-radius: 8px;
+}
+
+.ant-card .ant-card-meta-title {
+    text-align: center;
+}

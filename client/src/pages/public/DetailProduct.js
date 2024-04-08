@@ -6,7 +6,6 @@ import icons from '../../ultils/icons'
 import moment from 'moment';
 import ProductInformation from '../../components/ProductInformation';
 
-
 const DetailProduct = () => {
     const today = moment()
     const { FaCartPlus } = icons
