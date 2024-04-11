@@ -1,5 +1,5 @@
 import React, { memo, useState } from 'react'
-import { productInforTabs } from '../ultils/contants'
+import { productInforTabs } from '../../ultils/contants'
 
 const ProductInformation = () => {
     const [activeTab, setActiveTab] = useState(1)

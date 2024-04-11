@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { apiGetProduct } from '../../apis'
-import { Button, ZoomImage, RatingStar, ChooseDate, InputQuantity } from '../../components'
+import { Button, ZoomImage, RatingStar, ChooseDate, InputQuantity, ProductInformation } from '../../components'
 import CurrencyFormat from 'react-currency-format';
 import icons from '../../ultils/icons'
 import moment from 'moment';
-import ProductInformation from '../../components/ProductInformation';
 
 const DetailProduct = () => {
-    const today = moment()
     const { FaCartPlus } = icons
     const pid = '661023454ed5d3040c103f5d'
     const category = 'Đồ bộ'
@@ -25,7 +23,7 @@ const DetailProduct = () => {
     }, [pid])
     const title = product?.title
     return (
-        <div className=' w-full'>
+        <div className=' w-full lg:w-main px-[30px]'>
             <div className=' w-full h-full  sm:flex flex-col grid grid-cols-2 gap-3'>
                 <div className='flex gap-3 z-10'>
                     <div className=' flex-none sm:hidden w-[80px] flex flex-col gap-3 overflow-y-auto max-h-[700px]'>
@@ -75,11 +73,11 @@ const DetailProduct = () => {
                     <div className='flex justify-between'>
                         <div className='flex flex-col'>
                             <span>Ngày bắt đầu thuê:</span>
-                            <ChooseDate defaultValue={today} />
+                            <ChooseDate defaultValue={moment()} />
                         </div>
                         <div className='flex flex-col'>
                             <span>Ngày kết thúc thuê:</span>
-                            <ChooseDate defaultValue={today} />
+                            <ChooseDate defaultValue={moment().add(5, 'days')} />
                         </div>
                     </div>
                     <div className=' flex flex-col'>

@@ -46,10 +46,20 @@ module.exports = {
           '-webkit-transform': 'translateY(0px)',
           transform: 'translateY(0px)'
         }
+      },
+      'slide-top': {
+        '0%': {
+          '-webkit-transform': 'translateY(40px)',
+          transform: 'translateY(40px)'
+        },
+        '100%': {
+          '-webkit-transform': 'translateY(10px)',
+          transform: 'translateY(10px)'
+        }
       }
     },
     animation: {
-      'slide-top': 'slide-top 0.5s cubbic-bezier(0.25,0.46,0.45,0.94) both',
+      'slide-top': 'slide-top 0.2s linear both',
       'slide-top-sm': 'slide-top-sm 0.1s linear both',
     },
     screens: {

@@ -1,9 +1,23 @@
-import React from 'react'
-import { Banner, SliderStyle, SliderProductCategory, SliderBrand } from '../../components'
+import React, { useState, useEffect } from 'react'
+import { apiGetProducts } from '../../apis'
+import { Banner, SliderStyle, SliderProductCategory, SliderBrand, SliderHotProducts } from '../../components'
 
 const Home = () => {
+    // const [hotProducts, setHotProducts] = useState(null)
+    // const [newProducts, setNewProducts] = useState(null)
+
+    // const fetchData = async () => {
+    //     const response = await Promise.all([apiGetProducts({ sort: '-sold' }), apiGetProducts({ sort: '-createdAt' })])
+    //     if (response[0]?.success) setHotProducts(response[0]?.products)
+    //     if (response[1]?.success) setNewProducts(response[1]?.products)
+    // }
+
+    // useEffect(() => {
+    //     fetchData()
+    // }, [])
+
     return (
-        <div className=' w-full flex flex-col items-center'>
+        <div className=' w-screen flex flex-col items-center'>
             <Banner />
             <div className='w-full lg:w-main px-[30px] flex flex-col gap-5 '>
                 <div className=' flex flex-col gap-3'>
@@ -32,12 +46,12 @@ const Home = () => {
                     </div>
                 </div>
                 <div className=' flex flex-col'>
-                    <div className='h-full flex justify-center items-center'>
+                    <div className='h-full flex justify-center items-center pb-6'>
                         <div className=' text-2xl font-semibold text-center bg-white absolute p-3'>Các mẫu nổi bật </div>
                         <div className=' w-full border border-black'> </div>
                     </div>
                     <div>
-                        slide
+                        <SliderHotProducts />
                     </div>
                 </div>
                 <div className=' flex flex-col'>

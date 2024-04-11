@@ -13,3 +13,35 @@
 .ant-card .ant-card-meta-title {
     text-align: center;
 }
+
+button.slick-next {
+    right: 20px;
+    z-index: 1;
+}
+
+button.slick-prev {
+    left: 0;
+    z-index: 1;
+}
+
+button.slick-next::before {
+    content: '\2771';
+    background-color: #006241;
+    width: 40px;
+    height: 60px;
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+button.slick-prev::before {
+    content: '\2771';
+    background-color: #006241;
+    width: 40px;
+    height: 60px;
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

@@ -7,7 +7,6 @@ const SliderProductCategory = () => {
     const fetchProductCategories = async () => {
         const response = await apiGetProductCategories()
         if (response.success) setProductCategories(response.productCategories)
-        console.log(response.productCategories[0].icon)
     }
 
     useEffect(() => {
