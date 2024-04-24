@@ -4,6 +4,9 @@ import clsx from 'clsx'
 
 const { FaSearch } = icons
 const Search = ({ value, setValue, type, inValidFields, setInvalidFields, style, fullWidth, isHideLabel, placeholder }) => {
+    const handleSearch = () => {
+        console.log(value)
+    }
     return (
         <div className={clsx('relative', fullWidth && 'w-full')}>
             {value && value.trim() != '' && !isHideLabel &&
@@ -18,6 +21,7 @@ const Search = ({ value, setValue, type, inValidFields, setInvalidFields, style,
                     onChange={(e) => setValue(e.target.value)}
                 />
                 <FaSearch
+                    onClick={handleSearch}
                     className=' absolute right-0 pr-2'
                     size={24}
                 />

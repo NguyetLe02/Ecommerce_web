@@ -33,10 +33,11 @@ button.slick-next::before {
     display: flex;
     justify-content: center;
     align-items: center;
+    border-radius: 4px;
 }
 
 button.slick-prev::before {
-    content: '\2771';
+    content: '\2770';
     background-color: #006241;
     width: 40px;
     height: 60px;
@@ -44,4 +45,5 @@ button.slick-prev::before {
     display: flex;
     justify-content: center;
     align-items: center;
+    border-radius: 4px;
 }

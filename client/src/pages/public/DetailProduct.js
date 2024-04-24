@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { apiGetProduct } from '../../apis'
-import { Button, ZoomImage, RatingStar, ChooseDate, InputQuantity, ProductInformation } from '../../components'
+import { Button, ZoomImage, RatingStar, ChooseDate, InputQuantity, ProductInformation, SliderHotProducts } from '../../components'
 import CurrencyFormat from 'react-currency-format';
 import icons from '../../ultils/icons'
 import moment from 'moment';
+import { useParams } from 'react-router-dom'
 
 const DetailProduct = () => {
     const { FaCartPlus } = icons
-    const pid = '661023454ed5d3040c103f5d'
+    const { pid } = useParams()
     const category = 'Đồ bộ'
     const [product, setProduct] = useState(null)
     const [showImage, setShowImage] = useState(null)
@@ -18,12 +19,12 @@ const DetailProduct = () => {
             setShowImage(response.productData.images[0])
         }
     }
+    const title = product?.title
     useEffect(() => {
         if (pid) fetchProductData()
     }, [pid])
-    const title = product?.title
     return (
-        <div className=' w-full lg:w-main px-[30px]'>
+        <div className=' w-full lg:w-main px-[30px] pt-5'>
             <div className=' w-full h-full  sm:flex flex-col grid grid-cols-2 gap-3'>
                 <div className='flex gap-3 z-10'>
                     <div className=' flex-none sm:hidden w-[80px] flex flex-col gap-3 overflow-y-auto max-h-[700px]'>
@@ -101,6 +102,10 @@ const DetailProduct = () => {
             </div>
             <div className=' py-4'>
                 <ProductInformation />
+            </div>
+            <div className=' w-full m-auto py-6' >
+                <h3 className=' text-xl font-semibold border-b-2 border-sub mb-2'>CÓ THỂ BẠN QUAN TÂM</h3>
+                <SliderHotProducts />
             </div>
         </div >
     )

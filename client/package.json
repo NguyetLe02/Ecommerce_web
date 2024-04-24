@@ -29,6 +29,7 @@
     "slick-carousel": "^1.8.1",
     "sunflower-antd": "^1.0.0-beta.3",
     "sweetalert2": "^11.10.7",
+    "use-react-router-breadcrumbs": "^4.0.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

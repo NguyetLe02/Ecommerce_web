@@ -15,10 +15,8 @@ const settings = {
 const SliderHotProducts = () => {
     const [hotProducts, setHotProducts] = useState([])
     const fetchhotProducts = async () => {
-        const response = await apiGetProducts({ sort: '-sold' })
+        const response = await apiGetProducts({ sort: '-sold', limit: 6 })
         if (response.success) setHotProducts(response.products)
-        // console.log(response.hotProducts[0].icon)
-        // console.log(hotProducts)
     }
 
     useEffect(() => {

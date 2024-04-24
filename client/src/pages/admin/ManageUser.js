@@ -84,11 +84,13 @@ const ManageUser = () => {
           />
         </div>
         <form onSubmit={handleSubmit(handleUpdate)}>
-          {editEl && <Button type='submit' style={'px-4 py-2 rounded-md text-primary-1 bg-main font-semibold'} name={'Update'} fullWidth></Button>}
+          <div className=' py-3'>
+            {editEl && <Button type='submit' style={'px-4 py-2 rounded-md text-primary-1 bg-sub font-semibold text-red-50'} name={'Update'} fullWidth></Button>}
+          </div>
           <ToastContainer />
-          <div className=' rounded-md border border-primary-1'>
+          <div className=' rounded-md border border-sub'>
             <table className=' w-full table-auto text-left pt-2'>
-              <thead className=' font-bold bg-primary-1  text-red-50'>
+              <thead className=' font-bold bg-sub  text-red-50'>
                 <tr>
                   <th className=' py-2 px-4'>#</th>
                   <th className=' py-2 px-4'>Email address</th>

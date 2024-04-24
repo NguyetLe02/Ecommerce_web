@@ -4,12 +4,12 @@ const path = {
     ALL: '*',
     LOGIN: 'login',
     SIGNUP: 'signup',
-    COLLECTIONS: 'collections',
     PRODUCTS: 'products',
+    PRODUCT: 'product',
     BLOGS: 'blogs',
     PROFILE: 'profile',
     ORDERS: 'orders',
-    DETAIL: 'detailproduct',
+    DETAIL_PRODUCT: 'products/:pid/:title',
 
     //admin
     ADMIN: 'admin',

@@ -21,10 +21,6 @@ const ProductInformation = () => {
                     {productInforTabs.find(el => el.id === activeTab).content}
                 </div>
             </div>
-            <div className=' w-full m-auto py-4' >
-                <h3 className=' text-xl font-semibold border-b-2 border-sub'>CÓ THỂ BẠN QUAN TÂM</h3>
-            </div>
-
         </div>
     )
 }

@@ -7,7 +7,7 @@ import SidebarAdmin, { } from '../../components/sidebar/SidebarAdmin'
 const AdmminLayout = () => {
     const { isLoggedIn, currentUser } = useSelector(state => state.user)
     // console.log(isLoggedIn, currentUser);
-    if (!isLoggedIn || !currentUser || currentUser.role !== 'admin') return <Navigate to={`/${path.LOGIN}`} replace={true} />
+    if (!isLoggedIn || !currentUser || currentUser.role !== '0') return <Navigate to={`/${path.LOGIN}`} replace={true} />
     return (
         <div className='flex w-full min-h-screen relative'>
             <div className=' w-[327px] flex-none  bg-main'>

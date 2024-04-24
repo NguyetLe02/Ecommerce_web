@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from 'react'
+import React, { memo, useEffect, useState } from 'react'
 import { Navigation, Search, UserPopover } from '../components'
 import logo from '../assets/logo.png'
 import icons from '../ultils/icons'
@@ -11,7 +11,7 @@ const { FaBagShopping } = icons
 const Header = () => {
     const dispatch = useDispatch()
     const { isLoggedIn, currentUser } = useSelector(state => state.user)
-    // console.log(isLoggedIn, currentUser);
+    const [q, setQ] = useState('')
     useEffect(() => {
         if (isLoggedIn) {
             dispatch(getCurrent())
@@ -31,7 +31,13 @@ const Header = () => {
                 <div className=' w-[80%] flex flex-col flex-auto justify-center relative'>
                     <Navigation />
                     <div className='h-full flex justify-end gap-5 items-center text-base'>
-                        <Search />
+                        <Search
+                            value={q}
+                            setValue={setQ}
+                            style={' w-[500px] '}
+                            isHideLabel
+                            placeholder={'Tìm kiếm '}
+                        />
                         <div className='flex justify-center items-center gap-1'>
                             <FaBagShopping size={24} />
                             <span>0 item</span>
