@@ -19,6 +19,7 @@ const SliderStyle = () => {
                 data={styles}
                 column={6}
                 isTitle={true}
+                type={'style'}
             />
         </div >
     )

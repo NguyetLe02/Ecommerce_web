@@ -38,10 +38,14 @@ const Header = () => {
                             isHideLabel
                             placeholder={'Tìm kiếm '}
                         />
-                        <div className='flex justify-center items-center gap-1'>
-                            <FaBagShopping size={24} />
-                            <span>0 item</span>
-                        </div>
+                        <Link
+                            to={`/${path.CART}`}
+                        >
+                            <div className='flex justify-center items-center gap-1'>
+                                <FaBagShopping size={24} />
+                                <span>0 item</span>
+                            </div>
+                        </Link>
                         <div className='flex justify-center items-center gap-1'>
                             <UserPopover
                                 size={24}

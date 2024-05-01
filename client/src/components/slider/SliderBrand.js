@@ -19,6 +19,7 @@ const SliderBrand = () => {
             <SliderIcon
                 data={Brands}
                 column={5}
+                type={'brand'}
             />
         </div >
     )

@@ -6,7 +6,7 @@ const Public = () => {
     return (
         <div className=' w-full flex flex-col items-center'>
             <Header />
-            <div className='w-full m-auto flex flex-col justify-items-center items-center'>
+            <div className='w-full min-h-screen m-auto flex flex-col justify-items-center items-center'>
                 <Outlet />
             </div>
             <Footer />

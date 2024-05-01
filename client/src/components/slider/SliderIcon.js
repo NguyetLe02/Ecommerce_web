@@ -2,9 +2,10 @@ import React from 'react'
 import { Card, List } from 'antd';
 import { Link } from 'react-router-dom'
 import { createSlug } from '../../ultils/helpers'
+import path from '../../ultils/path';
 const { Meta } = Card;
 
-const SliderIcon = ({ data, column, isTitle }) => {
+const SliderIcon = ({ data, column, isTitle, type }) => {
     return (
         <List
             grid={{
@@ -18,7 +19,7 @@ const SliderIcon = ({ data, column, isTitle }) => {
                         <List.Item>
                             <Link
                                 key={createSlug(item.title)}
-                                to={createSlug(item.title)}
+                                to={`/${path.PRODUCTS}/${type}/${item?._id}`}
                             >
                                 <Card
                                     hoverable

@@ -30,3 +30,5 @@ export { default as Pagination } from './pagination/Pagination'
 
 export { default as ProductInformation } from './product/ProductInformation'
 export { default as ProductCard } from './product/ProductCard'
+export { default as ProductSort } from './product/ProductSort'
+export { default as ProductFilter } from './product/ProductFilter'

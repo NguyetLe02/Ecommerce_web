@@ -1,12 +1,11 @@
-import React, { useCallback } from 'react'
+import React from 'react'
 import icons from '../ultils/icons'
 import clsx from 'clsx'
+import { Link } from 'react-router-dom'
+import path from '../ultils/path'
 
 const { FaSearch } = icons
 const Search = ({ value, setValue, type, inValidFields, setInvalidFields, style, fullWidth, isHideLabel, placeholder }) => {
-    const handleSearch = () => {
-        console.log(value)
-    }
     return (
         <div className={clsx('relative', fullWidth && 'w-full')}>
             {value && value.trim() != '' && !isHideLabel &&
@@ -20,11 +19,14 @@ const Search = ({ value, setValue, type, inValidFields, setInvalidFields, style,
                     value={value}
                     onChange={(e) => setValue(e.target.value)}
                 />
-                <FaSearch
-                    onClick={handleSearch}
-                    className=' absolute right-0 pr-2'
-                    size={24}
-                />
+                <Link
+                    to={`/${path.PRODUCTS}?search=${value}`}
+                    className=' absolute right-0 pr-2 cursor-pointer'
+                >
+                    <FaSearch
+                        size={24}
+                    />
+                </Link>
             </div>
 
         </div >

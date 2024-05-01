@@ -29,6 +29,66 @@ export const navigation = [
     },
 ]
 
+export const productFilter = {
+    price: {
+        '1': 'Tất cả',
+        '2': 'Từ 0đ - 300,000đ',
+        '3': 'Từ 300,000đ - 600,000đ',
+        '4': 'Từ 600,000đ - 1,000,000đ',
+        '5': 'Trên 1,000,000đ',
+    },
+    price: {
+        '1': 'Tất cả',
+        '2': 'Từ 0đ - 300,000đ',
+        '3': 'Từ 300,000đ - 600,000đ',
+        '4': 'Từ 600,000đ - 1,000,000đ',
+        '5': 'Trên 1,000,000đ',
+    },
+    brand: {
+        '1': 'Amber Design',
+        '2': 'Amy Store',
+        '3': 'Angeletta',
+        '4': 'Bandage Dress',
+        '5': 'Beloved',
+        '6': 'Bupbes',
+        '7': 'BYDI',
+        '8': 'CÉNES',
+        '9': ' Còi Luxurious',
+        '10': 'DATT',
+        '11': ' Elpis Clothing',
+    },
+    category: {
+        '1': 'Áo',
+        '2': 'Áo dài',
+        '3': 'Áo vest',
+        '4': 'Đầm',
+        '5': 'Đồ bơi',
+        '6': 'Đồ bộ',
+    },
+    color: {
+        '1': 'Trắng',
+        '2': 'Đen',
+        '3': 'Kem',
+        '4': 'Đỏ',
+        '5': 'Hồng',
+        '6': 'Xanh lá',
+        '7': 'Tím',
+        '8': 'Nâu',
+        '9': 'Xám',
+        '10': 'Cam',
+    },
+    style: {
+        '1': 'Thanh lịch',
+        '2': 'Sang trọng',
+        '3': 'Sexy',
+        '4': 'Cá tính',
+        '5': 'Vintage',
+        '6': 'Trẻ trung',
+    },
+
+
+}
+
 const { MdSpaceDashboard, FaUserAlt, FaBagShopping, GiLargeDress } = icons
 export const adminSidebar = [
     {
@@ -92,6 +152,8 @@ export const roles = [
         value: 'User'
     },
 ]
+
+
 
 
 export const productInforTabs = [

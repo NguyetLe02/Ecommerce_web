@@ -19,6 +19,7 @@ const SliderProductCategory = () => {
                 data={productCategories}
                 column={6}
                 isTitle={true}
+                type={'category'}
             />
         </div >
     )

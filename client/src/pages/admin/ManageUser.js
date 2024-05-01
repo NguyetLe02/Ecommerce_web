@@ -12,7 +12,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Swal from 'sweetalert2'
 
 const ManageUser = () => {
-  const { handleSubmit, register, formState: { errors } } = useForm({
+  const { handleSubmit, register, setValue, formState: { errors } } = useForm({
     email: '',
     firstname: '',
     lastname: '',
@@ -112,6 +112,7 @@ const ManageUser = () => {
                         ? <InputForm
                           register={register}
                           errors={errors}
+                          setValue={setValue}
                           id={'email'}
                           validate={{
                             required: 'Require fill',
@@ -120,7 +121,7 @@ const ManageUser = () => {
                               message: validateRegex.emailValidate.message
                             }
                           }}
-                          defaultValue={editEl?.email}
+                          defaultValue={el.email}
                           fullWidth
                         />
                         : <span>{el.email}</span>}
@@ -129,6 +130,7 @@ const ManageUser = () => {
                       editEl?._id === el._id
                         ? <InputForm
                           register={register}
+                          setValue={setValue}
                           errors={errors}
                           id={'firstname'}
                           validate={{ required: 'Require fill' }}
@@ -141,6 +143,7 @@ const ManageUser = () => {
                       editEl?._id === el._id
                         ? <InputForm
                           register={register}
+                          setValue={setValue}
                           errors={errors}
                           id={'lastname'}
                           validate={{ required: 'Require fill' }}
@@ -166,6 +169,7 @@ const ManageUser = () => {
                       editEl?._id === el._id
                         ? <InputForm
                           register={register}
+                          setValue={setValue}
                           errors={errors}
                           id={'mobile'}
                           validate={{
@@ -175,7 +179,7 @@ const ManageUser = () => {
                               message: validateRegex.phoneValidate.message
                             }
                           }}
-                          defaultValue={editEl?.mobile}
+                          defaultValue={el.mobile}
                           fullWidth
                         />
                         : <span>{el.mobile}</span>
@@ -184,6 +188,7 @@ const ManageUser = () => {
                       editEl?._id === el._id
                         ? <Select
                           register={register}
+                          setValue={setValue}
                           errors={errors}
                           id={'isBlocked'}
                           validate={{ required: 'Require fill' }}
@@ -201,11 +206,11 @@ const ManageUser = () => {
                         }} className=' hover:cursor-pointer text-primary-1 hover:underline'>Back</div>
                           : <div onClick={() => {
                             setEditEl(el)
+
                           }} className=' hover:cursor-pointer text-primary-1 hover:underline'>Edit</div>
                         }
                         <div onClick={() => handleDeleteUser(el._id)} className=' hover:cursor-pointer text-red-400 hover:underline'>Delete</div>
                       </div>
-
                     </td>
                   </tr>
                 ))}

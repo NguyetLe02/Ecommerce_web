@@ -94,7 +94,7 @@ const DetailProduct = () => {
                                 iconsAfter={<FaCartPlus />}
                             />
                             <Button
-                                name={'Mua ngay'}
+                                name={'Thuê ngay'}
                             />
                         </div>
                     </div>

@@ -11,7 +11,7 @@ const ProductCard = ({ productData }) => {
     return (
         <div className=' w-full px-1'>
             <Link
-                to={`/${path.PRODUCTS}/${productData?._id}/${productData?.slug}`}
+                to={`/${path.PRODUCTS}/detail/${productData?._id}/${productData?.slug}`}
                 className=' w-full p-2 hover:border hover:shadow-lg rounded-2xl flex flex-col justify-between'
                 onMouseEnter={e => {
                     e.stopPropagation();

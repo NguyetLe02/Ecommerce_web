@@ -1,7 +1,11 @@
-import React, { memo } from 'react'
+import React from 'react'
 import clsx from 'clsx'
 
-const InputForm = ({ label, disabled, register, errors, id, validate, type = 'text', placeholder, fullWidth, defaultValue }) => {
+const InputForm = ({ setValue, label, disabled, register, errors, id, validate, type = 'text', placeholder, fullWidth, defaultValue }) => {
+    React.useEffect(
+        () => {
+            if (setValue) setValue(id, defaultValue)
+        }, [])
     return (
         <div className=' flex flex-col h-[78px] gap-2'>
             {label && <label htmlFor={id}>{label}</label>}
@@ -11,7 +15,7 @@ const InputForm = ({ label, disabled, register, errors, id, validate, type = 'te
                 {...register(id, validate)}
                 disabled={disabled}
                 placeholder={placeholder}
-                defaultValue={defaultValue}
+                // value={defaultValue}
                 className={clsx(' form-input rounded my-auto', fullWidth && ' w-full')}
             />
             {errors[id] && <small className=' text-xs text-red-500'>{errors[id]?.message}</small>}
@@ -19,4 +23,4 @@ const InputForm = ({ label, disabled, register, errors, id, validate, type = 'te
     )
 }
 
-export default memo(InputForm)
+export default InputForm;
