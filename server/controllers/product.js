@@ -1,5 +1,6 @@
 const Product = require('../models/product');
 const asyncHandler = require('express-async-handler');
+const mongoose = require('mongoose');
 const slugify = require('slugify')
 
 const createProduct = asyncHandler(async (req, res) => {
@@ -14,7 +15,8 @@ const createProduct = asyncHandler(async (req, res) => {
 
 const getProduct = asyncHandler(async (req, res) => {
     const { pid } = req.params
-    const product = await Product.findById(pid)
+    const product = await Product.findById(pid).populate('category brand')
+    // console.log(product.category)
     return res.status(200).json({
         success: product ? true : false,
         productData: product ? product : 'Cannot get product'
@@ -34,6 +36,9 @@ const getProducts = asyncHandler(async (req, res) => {
     const formatedQueries = JSON.parse(queryString)
     //Filtering
     if (queries?.title) formatedQueries.title = { $regex: queries.title, $options: 'i' }
+    console.log(queries?.category)
+    if (queries?.category) formatedQueries.category = mongoose.Types.ObjectId(queries?.category)
+    console.log(formatedQueries)
     let queryCommand = Product.find(formatedQueries)
     //Sorting
     if (req.query.sort) {
@@ -56,7 +61,7 @@ const getProducts = asyncHandler(async (req, res) => {
     try {
         // Thực hiện query và đếm số lượng sản phẩm thỏa mãn điều kiện
         const response = await queryCommand.exec()
-        console.log(response)
+        // console.log(response)
         const counts = await Product.countDocuments(queryCommand.skip(skip).limit(limit))
         res.status(200).json({
             success: response ? true : false,
@@ -93,7 +98,7 @@ const rating = asyncHandler(async (req, res) => {
     if (!star || !pid) throw new Error('Missing inputs')
     const ratingProduct = await Product.findById(pid)
     const alreadyRating = ratingProduct?.ratings?.find(el => el.postedBy.toString() === _id)
-    console.log({ alreadyRating })
+    // console.log({ alreadyRating })
     if (alreadyRating) {
         await Product.updateOne({
             ratings: { $elemMatch: alreadyRating }
@@ -119,11 +124,22 @@ const rating = asyncHandler(async (req, res) => {
     })
 })
 
+const uploadImageProduct = asyncHandler(async (req, res) => {
+    const { pid } = req.params
+    if (!req.files) throw new Error('Missing input image file')
+    const updateProduct = await Product.findByIdAndUpdate(pid, { $push: { images: { $each: req.files.map(el => el.path) } } }, { new: true })
+    return res.status(200).json({
+        success: updateProduct ? true : false,
+        updatedProduct: updateProduct ? updateProduct : 'Cannot update product'
+    })
+})
+
 module.exports = {
     createProduct,
     getProduct,
     getProducts,
     deleteProduct,
     updateProduct,
-    rating
+    rating,
+    uploadImageProduct
 }
