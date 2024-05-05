@@ -9,7 +9,6 @@ import { useParams } from 'react-router-dom'
 const DetailProduct = () => {
     const { FaCartPlus } = icons
     const { pid } = useParams()
-    const category = 'Đồ bộ'
     const [product, setProduct] = useState(null)
     const [showImage, setShowImage] = useState(null)
     const fetchProductData = async () => {
@@ -20,6 +19,8 @@ const DetailProduct = () => {
         }
     }
     const title = product?.title
+    const category = product?.category?.title
+    const brand = product?.brand?.title
     useEffect(() => {
         if (pid) fetchProductData()
     }, [pid])
@@ -43,7 +44,7 @@ const DetailProduct = () => {
                     <div className=' flex flex-col gap-3'>
                         {title && <h3 className=' font-bold text-3xl'>{title}</h3>}
                         <div className=' flex gap-3 text-sm'>
-                            <span className=' border-r border-black pr-2'>Thương hiệu: {product?.brand}</span>
+                            <span className=' border-r border-black pr-2'>Thương hiệu: {brand}</span>
                             <span>Loại: {category}</span>
                         </div>
                         <div className=' flex items-start gap-2'>

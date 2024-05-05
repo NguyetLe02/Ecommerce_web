@@ -128,13 +128,6 @@ const resetPassword = asyncHandler(async (req, res) => {
 })
 
 const getUsers = asyncHandler(async (req, res) => {
-    // const response = await User.find()
-    // console.log(...req.query);
-    // return res.status(200).json({
-    //     success: response ? true : false,
-    //     users: response
-    // })
-
     const queries = { ...req.query }
     const excludeFields = ['limit', 'sort', 'page', 'fields']
     excludeFields.forEach(el => delete queries[el])
@@ -213,6 +206,38 @@ const updateUserByAdmin = asyncHandler(async (req, res) => {
         mes: response ? 'Updated' : 'Some thing went wrong'
     })
 })
+
+const updateUserAddress = asyncHandler(async (req, res) => {
+    const { _id } = req.user
+    if (!req.body.address) throw new Error('Missing input')
+    const response = await User.findByIdAndUpdate(_id, { $push: { address: req.body.address } }, { new: true })
+    return res.status(200).json({
+        success: response ? true : false,
+        updatedUser: response ? response : 'Some thing went wrong'
+    })
+})
+
+const updateCart = asyncHandler(async (req, res) => {
+    const { _id } = req.user
+    const { pid, quantity, size } = req.body
+    if (!pid || !quantity || !size) throw new Error('Missing inputs')
+    const updateUser = await User.findById(_id)
+    const alreadyProduct = updateUser.cart.find(el => el.product.toString() === pid && el.size === size)
+    let response
+    if (alreadyProduct) {
+        response = await User.updateOne(
+            { cart: { $elemMatch: alreadyProduct } },
+            { $set: { 'cart.$.quantity': quantity, 'cart.$.startAt': Date.now(), 'cart.$.endAt': Date.now() + 2 * 24 * 60 * 60 * 1000 } },
+            { new: true }
+        )
+    } else {
+        response = await User.findByIdAndUpdate(_id, { $push: { cart: { product: pid, quantity, size } } }, { new: true })
+    }
+    return res.status(200).json({
+        success: response ? true : false,
+        updatedUser: response ? updateUser : 'Some thing went wrong'
+    })
+})
 module.exports = {
     register,
     login,
@@ -224,5 +249,7 @@ module.exports = {
     getUsers,
     deleteUser,
     updateUser,
-    updateUserByAdmin
+    updateUserByAdmin,
+    updateUserAddress,
+    updateCart
 }

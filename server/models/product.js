@@ -60,10 +60,19 @@ var productSchema = new mongoose.Schema({
         type: [String],
         enum: ['Thanh lịch', 'Sexy', 'Vintage', 'Nàng thơ']
     },
-    wearAt: {
-        type: [String],
-        enum: ['Dự tiệc cưới', 'Du lịch biển', 'Bar/Pub', 'Đồ cưới']
-    }
+    type: [{
+        size: {
+            type: String,
+            enum: ['S', 'M', 'L', 'XL']
+        },
+        quantity: {
+            type: Number,
+            default: 0
+        },
+        remainQuantity: {
+            type: Number,
+        }
+    }]
 }, {
     timestamps: true
 });

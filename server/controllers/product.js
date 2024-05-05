@@ -106,7 +106,7 @@ const rating = asyncHandler(async (req, res) => {
             $set: { "ratings.$.star": star, "ratings.$.comment": comment }
         })
     } else {
-        const response = await Product.findByIdAndUpdate(pid, {
+        await Product.findByIdAndUpdate(pid, {
             $push: { ratings: { star, comment, postedBy: _id } }
         }, { new: true })
     }
@@ -134,6 +134,31 @@ const uploadImageProduct = asyncHandler(async (req, res) => {
     })
 })
 
+//Khi muốn thay đổi số lượng cho 1 size của sản phẩm
+const updateQuantityProduct = asyncHandler(async (req, res) => {
+    const { pid } = req.params
+    const { size, quantity } = req.body
+    if (!size || !quantity) throw new Error('Missing inputs size or quantity')
+    const updatingProduct = await Product.findById(pid)
+    const alreadyExist = updatingProduct?.type?.find(el => el.size === size)
+    if (alreadyExist) {
+        await Product.updateOne({
+            type: { $elemMatch: alreadyExist }
+        }, {
+            $set: { "type.$.size": size, "type.$.quantity": quantity, "type.$.remainQuantity": quantity }
+        })
+    } else {
+        await Product.findByIdAndUpdate(pid, {
+            $push: { type: { size, quantity, remainQuantity: quantity } }
+        }, { new: true })
+    }
+    const updatedProduct = await Product.findById(pid)
+
+    return res.status(200).json({
+        success: true,
+        updatedProduct
+    })
+})
 module.exports = {
     createProduct,
     getProduct,
@@ -141,5 +166,6 @@ module.exports = {
     deleteProduct,
     updateProduct,
     rating,
-    uploadImageProduct
+    uploadImageProduct,
+    updateQuantityProduct
 }
