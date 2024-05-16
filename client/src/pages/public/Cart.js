@@ -1,144 +1,67 @@
-import React, { useState, useEffect } from 'react'
-import { apiGetProducts } from '../../apis/product'
+import React, { useEffect } from 'react'
+import { useSelector } from 'react-redux'
+import CurrencyFormat from 'react-currency-format';
+import { Button, OrderItem } from '../../components';
+import withBaseComponent from '../../hocs/withBaseComponent';
+import { apiUpdateCart } from '../../apis';
+import { toast } from 'react-toastify';
+import path from '../../ultils/path';
 
-const Cart = () => {
-    const [products, setProducts] = useState(null)
-    const fetchProductData = async () => {
-        const response = await apiGetProducts()
-        if (response.success) {
-            setProducts(response?.products)
-        }
+const Cart = ({ navigate }) => {
+    const { currentUser, currentCart } = useSelector(state => state.user)
+    const handleUpdateCart = async () => {
+        // toast.success('Cập nhật giỏ hàng thành công')
+        const promises = currentCart?.map(async (el) => {
+            const response = await apiUpdateCart({ pid: el?.product._id, quantity: el?.quantity, size: el?.size })
+            return response
+        })
+        const response = await Promise.all(promises);
     }
-    useEffect(() => {
-        fetchProductData()
-    }, [])
+
     return (
-        <div className=' w-full lg:w-main px-[30px] pt-5'>
+        <div className=' w-full lg:w-main px-[30px] pt-5 lg:text-xl text-base'>
             <div>
                 <h3 className=' text-2xl font-semibold'>Giỏ hàng</h3>
             </div>
-            <table className=' w-full table-auto text-left pt-2'>
-                <thead className=' m-2'>
-                    <tr>
-                        <th className=' py-2 px-4 w-1/6'> </th>
-                        <th className=' py-2 px-4'>Thông tin chi tiết sản phẩm</th>
-                        <th className=' py-2 px-4 w-1/6'>Đơn giá</th >
-                        <th className=' py-2 px-4 w-1/6'>Số lượng</th >
-                        <th className=' py-2 px-4 w-1/6'>Tổng giá</th >
-                    </tr>
-                </thead>
-                <tbody>
-                    {products?.map((el) => (
-                        <tr key={el._id} className=' border-t border-primary-1'>
-                            <td className=' py-2 px-4'>
-                                <img src={el.images[0]} className='w-full' />
-                            </td>
-                            {/* <td className=' py-2 px-4'>
-                                {editEl?._id === el._id
-                                    ? <InputForm
-                                        register={register}
-                                        errors={errors}
-                                        id={'email'}
-                                        validate={{
-                                            required: 'Require fill',
-                                            pattern: {
-                                                value: validateRegex.emailValidate.value,
-                                                message: validateRegex.emailValidate.message
-                                            }
-                                        }}
-                                        defaultValue={editEl?.email}
-                                        fullWidth
-                                    />
-                                    : <span>{el.email}</span>}
-                            </td>
-                            <td className=' py-2 px-4'>{
-                                editEl?._id === el._id
-                                    ? <InputForm
-                                        register={register}
-                                        errors={errors}
-                                        id={'firstname'}
-                                        validate={{ required: 'Require fill' }}
-                                        defaultValue={editEl?.firstname}
-                                        fullWidth
-                                    />
-                                    : <span>{el.firstname}</span>
-                            }</td>
-                            <td className=' py-2 px-4'>{
-                                editEl?._id === el._id
-                                    ? <InputForm
-                                        register={register}
-                                        errors={errors}
-                                        id={'lastname'}
-                                        validate={{ required: 'Require fill' }}
-                                        defaultValue={editEl?.lastname}
-                                        fullWidth
-                                    />
-                                    : <span>{el.lastname}</span>
-                            }</td>
-                            <td className=' py-2 px-4'>{
-                                editEl?._id === el._id
-                                    ? <Select
-                                        register={register}
-                                        errors={errors}
-                                        id={'role'}
-                                        validate={{ required: 'Require fill' }}
-                                        defaultValue={roles.find(role => +role.code === +editEl.role)?.value}
-                                        options={roles}
-                                        fullWidth
-                                    />
-                                    : <span>{roles.find(role => +role.code === +el.role)?.value}</span>
-                            }</td>
-                            <td className=' py-2 px-4'>{
-                                editEl?._id === el._id
-                                    ? <InputForm
-                                        register={register}
-                                        errors={errors}
-                                        id={'mobile'}
-                                        validate={{
-                                            required: 'Require fill',
-                                            pattern: {
-                                                value: validateRegex.phoneValidate.value,
-                                                message: validateRegex.phoneValidate.message
-                                            }
-                                        }}
-                                        defaultValue={editEl?.mobile}
-                                        fullWidth
-                                    />
-                                    : <span>{el.mobile}</span>
-                            }</td>
-                            <td className=' py-2 px-4'>{
-                                editEl?._id === el._id
-                                    ? <Select
-                                        register={register}
-                                        errors={errors}
-                                        id={'isBlocked'}
-                                        validate={{ required: 'Require fill' }}
-                                        defaultValue={editEl?.isBlocked}
-                                        options={blockStatus}
-                                        fullWidth
-                                    />
-                                    : <span>{el.isBlocked ? 'Blocked' : 'Active'}</span>
-                            }</td>
-                            <td className=' py-2 px-4'>{moment(el.createdAt).format('l')}</td>
-                            <td className=' py-2 px-4'>
-                                <div className=' flex gap-3 justify-center'>
-                                    {editEl?._id === el._id ? <div onClick={() => {
-                                        setEditEl(null)
-                                    }} className=' hover:cursor-pointer text-primary-1 hover:underline'>Back</div>
-                                        : <div onClick={() => {
-                                            setEditEl(el)
-                                        }} className=' hover:cursor-pointer text-primary-1 hover:underline'>Edit</div>
-                                    }
-                                    <div onClick={() => handleDeleteUser(el._id)} className=' hover:cursor-pointer text-red-400 hover:underline'>Delete</div>
-                                </div>
+            <div className=' w-full mx-auto font-bold my-8 border py-3 grid grid-cols-10 bg-main'>
+                <span className='col-span-2 w-full text-center'> </span>
+                <span className='col-span-3 w-full '>Thông tin sản phẩm</span>
+                <span className='col-span-1 w-full text-center'>Số lượng</span>
+                <span className='col-span-2 w-full text-center'>Ngày thuê</span>
+                <span className='col-span-2 w-full text-center'>Tổng </span>
+            </div>
+            {currentCart?.map(el => (
+                <OrderItem
+                    key={el._id}
+                    el={el}
+                    defaultquantity={el.quantity}
+                />
+            ))}
+            <div className='w-full h-full border-t border-gray-600 py-4 flex flex-col items-end gap-4 '>
+                <div className=' w-1/2 flex flex-col gap-2'>
+                    <div className=' flex gap-2 justify-between text-xl'>
+                        <span>Tổng tiền thuê:</span>
+                        <div className=' font-semibold text-main'>
+                            <CurrencyFormat value={currentCart.reduce((sum, el) => sum + el?.product?.rentalPrice * el.quantity, 0)} displayType={'text'} thousandSeparator={true} suffix={' đ'} renderText={value => <div>{value}</div>} />
+                        </div>
+                    </div>
+                    <div className=' flex gap-2 justify-between text-xl'>
+                        <span>Tổng thanh toán :</span>
+                        <div className=' font-semibold text-main '>
+                            <CurrencyFormat value={currentCart.reduce((sum, el) => sum + el?.product?.cost * el.quantity, 0)} displayType={'text'} thousandSeparator={true} suffix={' đ'} renderText={value => <div>{value}</div>} />
+                        </div>
+                    </div>
+                    <div className=' flex md:flex-col sm:flex-col  gap-5 justify-end items-end'>
+                        <Button handleOnclick={handleUpdateCart} style=' w-1/2 bg-main text-xl p-3 rounded-xl font-semibold ' name={'Cập nhật giỏ hàng'} />
+                        <Button handleOnclick={() => {
+                            navigate(`/${path.PAYMENT}`)
+                        }} style='w-1/2 bg-sub text-white text-xl p-3 rounded-xl font-semibold ' name={'Thanh toán'} />
+                    </div>
+                </div>
 
-                            </td> */}
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
+            </div>
         </div>
     )
 }
 
-export default Cart
+export default withBaseComponent(Cart)

@@ -7,7 +7,7 @@ const SliderBrand = () => {
     const fetchBrands = async () => {
         const response = await apiGetBrands()
         if (response.success) setBrands(response.Brands)
-        console.log(response.Brands[0].icon)
+        // console.log(response.Brands[0].icon)
     }
 
     useEffect(() => {

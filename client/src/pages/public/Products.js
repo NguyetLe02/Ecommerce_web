@@ -5,24 +5,23 @@ import { useParams, useSearchParams } from 'react-router-dom'
 
 const Products = () => {
     const [products, setProducts] = useState(null)
-    const [searchParams] = useSearchParams();
-    const search = searchParams.get('search');
-    console.log(search)
+    const [params] = useSearchParams();
     const { type, optionid } = useParams()
-    const fetchProducts = async (type, optionid) => {
-        let response
-        if (search) {
-            response = await apiGetProducts({ title: search })
-        } else {
-            response = await apiGetProducts({ [type]: optionid })
-        }
+    const fetchProducts = async (queries) => {
+        const response = await apiGetProducts(queries)
         if (response.counts !== 0) setProducts(response?.products)
         else setProducts(null)
     }
 
     useEffect(() => {
-        fetchProducts(type, optionid)
-    }, [search])
+        let param = []
+        for (let i of params.entries()) param.push(i)
+        const queries = {}
+        for (let i of params) queries[i[0]] = i[1]
+        console.log(queries)
+        if (type && optionid) queries[type] = optionid
+        fetchProducts(queries)
+    }, [params])
 
     return (
         <div className=' w-full lg:w-main px-[30px]'>
@@ -39,7 +38,9 @@ const Products = () => {
                         </div>
                         <div className=' grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-3'>
                             {products?.map(product => (
-                                <ProductCard productData={product} />
+                                <ProductCard
+                                    key={product._id}
+                                    productData={product} />
                             ))}
                         </div>
                         <div className=' italic '>

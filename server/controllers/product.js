@@ -1,6 +1,5 @@
 const Product = require('../models/product');
 const asyncHandler = require('express-async-handler');
-const mongoose = require('mongoose');
 const slugify = require('slugify')
 
 const createProduct = asyncHandler(async (req, res) => {
@@ -34,12 +33,30 @@ const getProducts = asyncHandler(async (req, res) => {
     let queryString = JSON.stringify(queries)
     queryString = queryString.replace(/\b(gte|gt|lt|lte)\b/g, matchedEl => `$${matchedEl}`)
     const formatedQueries = JSON.parse(queryString)
+    let colorQueryObject
     //Filtering
     if (queries?.title) formatedQueries.title = { $regex: queries.title, $options: 'i' }
-    console.log(queries?.category)
-    if (queries?.category) formatedQueries.category = mongoose.Types.ObjectId(queries?.category)
-    console.log(formatedQueries)
-    let queryCommand = Product.find(formatedQueries)
+    if (queries?.category) formatedQueries.category = queries.category
+    if (queries?.color) {
+        delete formatedQueries.color
+        const colorArr = queries.color?.split(',')
+        const colorQuery = colorArr.map(el => {
+            if (el === 'Trắng') return { color: { $regex: 'white', $options: 'i' } }
+            if (el === 'Đen') return { color: { $regex: 'black', $options: 'i' } }
+            if (el === 'Kem') return { color: { $regex: 'beige', $options: 'i' } }
+            if (el === 'Đỏ') return { color: { $regex: 'red', $options: 'i' } }
+            if (el === 'Hồng') return { color: { $regex: 'pink', $options: 'i' } }
+            if (el === 'Xanh lá') return { color: { $regex: 'green', $options: 'i' } }
+            if (el === 'Tím') return { color: { $regex: 'purple', $options: 'i' } }
+            if (el === 'Nâu') return { color: { $regex: 'brown', $options: 'i' } }
+            if (el === 'Xám') return { color: { $regex: 'gray', $options: 'i' } }
+            if (el === 'Cam') return { color: { $regex: 'orange', $options: 'i' } }
+        })
+        console.log(colorQuery)
+        colorQueryObject = { $or: colorQuery }
+    }
+    const q = { ...colorQueryObject, ...formatedQueries }
+    let queryCommand = Product.find(q)
     //Sorting
     if (req.query.sort) {
         const sortBy = req.query.sort.split(',').join(' ')

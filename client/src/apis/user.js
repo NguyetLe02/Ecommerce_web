@@ -33,3 +33,16 @@ export const apiDeleteUser = (uid) => axios({
     url: '/user/' + uid,
     method: 'delete'
 })
+
+export const apiUpdateCart = (data) => axios({
+    url: '/user/cart',
+    method: 'put',
+    data
+})
+
+export const apiRemoveCart = (data) => axios({
+    url: '/user/removecart',
+    method: 'delete',
+    data
+})
+

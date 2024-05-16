@@ -20,7 +20,7 @@ const Search = ({ value, setValue, type, inValidFields, setInvalidFields, style,
                     onChange={(e) => setValue(e.target.value)}
                 />
                 <Link
-                    to={`/${path.PRODUCTS}?search=${value}`}
+                    to={`/${path.PRODUCTS}?title=${value}`}
                     className=' absolute right-0 pr-2 cursor-pointer'
                 >
                     <FaSearch

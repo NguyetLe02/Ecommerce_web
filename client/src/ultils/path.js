@@ -19,7 +19,8 @@ const path = {
 
     //member
     MEMBER: 'member',
-    PERSONAL: 'personal'
+    PERSONAL: 'personal',
+    PAYMENT: 'payment'
 }
 
 export default path;

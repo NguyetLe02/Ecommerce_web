@@ -6,10 +6,11 @@ import { Link } from 'react-router-dom'
 import path from '../ultils/path'
 import { useDispatch, useSelector } from 'react-redux'
 import { getCurrent } from '../store/user/asyncActions'
+import withBaseComponent from '../hocs/withBaseComponent'
+import { showCart } from '../store/app/appSlice'
 
 const { FaBagShopping } = icons
-const Header = () => {
-    const dispatch = useDispatch()
+const Header = ({ dispatch }) => {
     const { isLoggedIn, currentUser } = useSelector(state => state.user)
     const [q, setQ] = useState('')
     useEffect(() => {
@@ -38,14 +39,10 @@ const Header = () => {
                             isHideLabel
                             placeholder={'Tìm kiếm '}
                         />
-                        <Link
-                            to={`/${path.CART}`}
-                        >
-                            <div className='flex justify-center items-center gap-1'>
-                                <FaBagShopping size={24} />
-                                <span>0 item</span>
-                            </div>
-                        </Link>
+                        <div onClick={() => dispatch(showCart())} className='flex justify-center items-center gap-1'>
+                            <FaBagShopping size={24} />
+                            <span>{`${currentUser?.cart?.length || 0} item`}</span>
+                        </div>
                         <div className='flex justify-center items-center gap-1'>
                             <UserPopover
                                 size={24}
@@ -65,4 +62,4 @@ const Header = () => {
     )
 }
 
-export default memo(Header)
+export default withBaseComponent(memo(Header))

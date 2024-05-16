@@ -21,6 +21,7 @@ module.exports = {
       },
       textColor: {
         main: '#006241',
+        sub: '#eed6d0',
         primary: {
           1: '#000000',
         }

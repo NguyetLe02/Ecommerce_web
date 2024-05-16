@@ -6,9 +6,10 @@ import icons from '../../ultils/icons'
 import moment from 'moment';
 import { useParams } from 'react-router-dom'
 
-const DetailProduct = () => {
+const DetailProduct = ({ data, isQuickView }) => {
     const { FaCartPlus } = icons
     const { pid } = useParams()
+    if (!pid) pid = data
     const [product, setProduct] = useState(null)
     const [showImage, setShowImage] = useState(null)
     const fetchProductData = async () => {
@@ -55,7 +56,7 @@ const DetailProduct = () => {
                         </div>
                     </div>
                     <div className=' py-2 border-black border-y text-3xl font-bold text-main'><CurrencyFormat value={product?.rentalPrice} displayType={'text'} thousandSeparator={true} suffix={' đ'} renderText={value => <div>{value}</div>} /></div>
-                    <div className=' flex gap-3' >Giá hãng:  <div className=' font-semibold text-main'><CurrencyFormat value={product?.cost} displayType={'text'} thousandSeparator={true} suffix={' đ'} renderText={value => <div>{value}</div>} /></div></div>
+                    <div className=' flex gap-3' >Giá hãng:  <div className=' font-semibold text-main'> </div></div>
                     <div className=' flex flex-col gap-3'>
                         <span>Kích thước</span>
                         <div className=' flex'>
@@ -101,13 +102,17 @@ const DetailProduct = () => {
                     </div>
                 </div>
             </div>
-            <div className=' py-4'>
-                <ProductInformation />
-            </div>
-            <div className=' w-full m-auto py-6' >
-                <h3 className=' text-xl font-semibold border-b-2 border-sub mb-2'>CÓ THỂ BẠN QUAN TÂM</h3>
-                <SliderHotProducts />
-            </div>
+            {!isQuickView &&
+                <div>
+                    <div className=' py-4'>
+                        <ProductInformation />
+                    </div>
+                    <div className=' w-full m-auto py-6' >
+                        <h3 className=' text-xl font-semibold border-b-2 border-sub mb-2'>CÓ THỂ BẠN QUAN TÂM</h3>
+                        <SliderHotProducts />
+                    </div>
+                </div>
+            }
         </div >
     )
 }
