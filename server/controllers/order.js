@@ -5,35 +5,37 @@ const asyncHandler = require('express-async-handler')
 
 const createOrder = asyncHandler(async (req, res) => {
     const { _id } = req.user
-    const { couponId } = req.body
+    const { couponId, orderDetails, totalCost, totalRentalPrice, address, status } = req.body
+    console.log(orderDetails)
+    if (address) {
+        await User.findByIdAndUpdate(_id, { address, cart: [] })
+    }
     const coupon = await Coupon.findById(couponId)
-    const userCart = await User.findById(_id).select('cart').populate('cart.product', 'title cost rentalPrice color')
-    const products = userCart?.cart?.map(el => ({
-        product: el.product._id,
-        count: el.quantity,
-        size: el.size,
-        startAt: el.startAt,
-        endAt: el.endAt
-    }))
-    userCart?.cart?.reduce((sum, el) => el.product.cost * el.quantity + sum, 0)
-    //Tổng tiền cọc
-    const totalCost = userCart?.cart?.reduce((sum, el) => el.product.cost * el.quantity + sum, 0)
+    // const userCart = await User.findById(_id).select('cart').populate('cart.product', 'title cost rentalPrice color')
+    // const products = userCart?.cart?.map(el => ({
+    //     product: el.product._id,
+    //     count: el.quantity,
+    //     size: el.size,
+    //     startAt: el.startAt,
+    //     endAt: el.endAt
+    // }))
+    // userCart?.cart?.reduce((sum, el) => el.product.cost * el.quantity + sum, 0)
+    // //Tổng tiền cọc
+    // const totalCost = userCart?.cart?.reduce((sum, el) => el.product.cost * el.quantity + sum, 0)
 
-    //Tổng tiền thuê
-    const totalRentalPrice = userCart?.cart?.reduce((sum, el) => el.product.rentalPrice * el.quantity + sum, 0)
+    // //Tổng tiền thuê
+    // const totalRentalPrice = userCart?.cart?.reduce((sum, el) => el.product.rentalPrice * el.quantity + sum, 0)
 
     //Tổng tiền thuê khi có mã giảm giá
     let totalRentalPriceCoupon
     if (coupon) {
         totalRentalPriceCoupon = Math.round(totalRentalPrice * (1 - coupon.discount / 100) / 1000) * 1000
     }
-    console.log(totalRentalPriceCoupon, coupon)
 
-    const order = await Order.create({ products, totalCost, totalRentalPrice, totalRentalPriceCoupon, orderBy: _id })
+    const order = await Order.create({ orderDetails, totalCost, totalRentalPrice, totalRentalPriceCoupon, orderBy: _id, status })
     return res.status(200).json({
         success: order ? true : false,
         ordered: order ? order : 'Cannot create new Order',
-        userCart: userCart._id
     })
 })
 

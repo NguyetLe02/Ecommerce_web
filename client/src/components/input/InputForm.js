@@ -15,7 +15,6 @@ const InputForm = ({ setValue, label, disabled, register, errors, id, validate, 
                 {...register(id, validate)}
                 disabled={disabled}
                 placeholder={placeholder}
-                // value={defaultValue}
                 className={clsx(' form-input rounded my-auto', fullWidth && ' w-full')}
             />
             {errors[id] && <small className=' text-xs text-red-500'>{errors[id]?.message}</small>}

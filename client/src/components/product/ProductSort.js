@@ -2,29 +2,32 @@ import React, { memo } from 'react'
 import { Dropdown } from 'antd'
 import { DownOutlined } from '@ant-design/icons';
 
-const ProductSort = () => {
+const ProductSort = ({ sortLowToHigh, sortHighToLow }) => {
+    const handleOnClick = (key) => {
+        console.log(key)
+        switch (key) {
+            case '1':
+                sortLowToHigh();
+                break;
+            case '2':
+                sortHighToLow();
+                break;
+            default:
+                break;
+        }
+    };
     const items = [
         {
-            key: '1',
             label: (
-                <span>
+                <span onClick={() => handleOnClick('1')}>
                     Giá từ thấp đến cao
                 </span>
             ),
         },
         {
-            key: '2',
             label: (
-                <span>
+                <span onClick={() => handleOnClick('2')}>
                     Giá từ cao đến thấp
-                </span>
-            ),
-        },
-        {
-            key: '3',
-            label: (
-                <span>
-                    Mới nhất
                 </span>
             ),
         },
@@ -34,7 +37,7 @@ const ProductSort = () => {
             <span>Sắp xếp </span>
             <div className=' w-[150px] flex justify-end items-center border rounded-md p-2'>
                 <Dropdown
-                    menu={{ items, }}
+                    menu={{ items }}
                     placement='bottomRight'
                     trigger='hover'
                 >

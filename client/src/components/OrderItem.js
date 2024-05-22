@@ -15,7 +15,7 @@ const OrderItem = ({ el, dispatch, handleChangeStartDate, handleChangeEndDate, d
         dispatch(updateCart({ pid: el.product?._id, quantity, size: el.size }))
     }, [quantity])
     return (
-        <div key={el._id} className=' w-full mx-auto font-bold my-8 border py-3 grid grid-cols-10'>
+        <div key={el._id} className=' w-full mx-auto font-bold my-8 border-b py-3 grid grid-cols-10'>
             <img alt='Ảnh' src={el?.product.images[0]} className='col-span-2 text-center rounded-lg mx-auto w-2/3 ' />
             <span className='col-span-3 w-full flex flex-col px-2'>
                 <span className=' font-semibold text-main'>{el?.product?.title}</span>

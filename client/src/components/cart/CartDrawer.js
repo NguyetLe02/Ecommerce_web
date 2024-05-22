@@ -49,7 +49,10 @@ const CartDrawer = ({ dispatch, navigate }) => {
                     navigate(`/${path.CART}`)
                     dispatch(showCart())
                 }} style=' w-full bg-sub text-white text-xl py-3 rounded-xl font-semibold ' name={'Chi tiết giỏ hàng'} />
-                <Button style=' w-full bg-sub text-white text-xl py-3 rounded-xl font-semibold ' name={'Thanh toán'} />
+                <Button handleOnclick={() => {
+                    navigate(`/${path.PAYMENT}`)
+                    dispatch(showCart())
+                }} style=' w-full bg-sub text-white text-xl py-3 rounded-xl font-semibold ' name={'Thanh toán'} />
             </div>
         </div>
     )

@@ -23,7 +23,6 @@ export const userSlice = createSlice({
             state.isLoading = false;
         },
         updateCart: (state, action) => {
-            console.log(action)
             const { pid, quantity, size } = action.payload
             const updatingCart = JSON.parse(JSON.stringify(state.currentCart))
             console.log([...updatingCart])

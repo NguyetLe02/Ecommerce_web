@@ -36,3 +36,9 @@ export { default as ProductFilter } from './product/ProductFilter'
 
 export { default as CartDrawer } from './cart/CartDrawer'
 export { default as CartItem } from './cart/CartItem'
+
+export { default as PaymentTable } from './payment/PaymentTable'
+export { default as PaymentAddressTable } from './payment/PaymentAddressTable'
+export { default as Paypal } from './payment/Paypal'
+
+export { default as ButtonAddToCart } from './button/ButtonAddToCart'

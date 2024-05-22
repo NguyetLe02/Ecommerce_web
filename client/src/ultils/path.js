@@ -7,7 +7,6 @@ const path = {
     PRODUCTS_OPTION: 'products/:type/:optionid',
     PRODUCTS: 'products',
     BLOGS: 'blogs',
-    PROFILE: 'profile',
     ORDERS: 'orders',
     DETAIL_PRODUCT: 'products/:detail/:pid/:title',
     CART: 'cart',
@@ -19,8 +18,8 @@ const path = {
 
     //member
     MEMBER: 'member',
-    PERSONAL: 'personal',
-    PAYMENT: 'payment'
+    PAYMENT: 'payment',
+    PROFILE: 'profile',
 }
 
 export default path;

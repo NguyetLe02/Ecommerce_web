@@ -22,7 +22,7 @@ const Content = (isLoggedIn) => {
                 </div>
                 :
                 <div className='w-[200px] flex flex-col text-base'>
-                    <Link to={`/${path.MEMBER}`}>
+                    <Link to={`/${path.MEMBER}/${path.PROFILE}`}>
                         <span>Chỉnh sửa thông tin cá nhân</span>
                     </Link>
                     <Link to={`/${path.ORDERS}`}>

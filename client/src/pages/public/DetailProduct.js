@@ -1,27 +1,69 @@
 import React, { useState, useEffect } from 'react'
 import { apiGetProduct } from '../../apis'
-import { Button, ZoomImage, RatingStar, ChooseDate, InputQuantity, ProductInformation, SliderHotProducts } from '../../components'
+import { Button, ZoomImage, RatingStar, ChooseDate, InputQuantity, ProductInformation, SliderHotProducts, ButtonAddToCart } from '../../components'
 import CurrencyFormat from 'react-currency-format';
 import icons from '../../ultils/icons'
 import moment from 'moment';
 import { useParams } from 'react-router-dom'
 
 const DetailProduct = ({ data, isQuickView }) => {
-    const { FaCartPlus } = icons
+    const { FaCartPlus, FaHeart } = icons
     const { pid } = useParams()
     if (!pid) pid = data
-    const [product, setProduct] = useState(null)
+    const [selectProduct, setSelectProduct] = useState({
+        product: {},
+        size: null,
+        startAt: null,
+        endAt: null,
+        quantity: 0
+    })
     const [showImage, setShowImage] = useState(null)
     const fetchProductData = async () => {
         const response = await apiGetProduct(pid)
         if (response.success) {
-            setProduct(response.productData)
+            const productData = response.productData;
+            setSelectProduct({
+                product: productData,
+                size: productData.type[0].size,
+                startAt: moment(),
+                endAt: moment().add(2, 'days'),
+                quantity: 1
+            });
             setShowImage(response.productData.images[0])
         }
     }
-    const title = product?.title
-    const category = product?.category?.title
-    const brand = product?.brand?.title
+    const handleSelectSize = (size) => {
+        const updatedProduct = {
+            ...selectProduct,
+            size: size
+        };
+        setSelectProduct(updatedProduct);
+    };
+
+    const handleChangeStartDate = (startDate) => {
+        const updatedProduct = {
+            ...selectProduct,
+            startAt: startDate
+        };
+        setSelectProduct(updatedProduct);
+    };
+
+    const handleChangeEndDate = (endDate) => {
+        const updatedProduct = {
+            ...selectProduct,
+            endAt: endDate
+        };
+        setSelectProduct(updatedProduct);
+    };
+
+    const handleChangeQuantity = (quantity) => {
+        const updatedProduct = {
+            ...selectProduct,
+            quantity: quantity
+        };
+        setSelectProduct(updatedProduct);
+    };
+    console.log(selectProduct)
     useEffect(() => {
         if (pid) fetchProductData()
     }, [pid])
@@ -30,7 +72,7 @@ const DetailProduct = ({ data, isQuickView }) => {
             <div className=' w-full h-full  sm:flex flex-col grid grid-cols-2 gap-3'>
                 <div className='flex gap-3 z-10'>
                     <div className=' flex-none sm:hidden w-[80px] flex flex-col gap-3 overflow-y-auto max-h-[700px]'>
-                        {product?.images?.map(el => (
+                        {selectProduct?.product?.images?.map(el => (
                             <img key={el} onClick={() => setShowImage(el)} src={el} alt='sub-image' className='w-full object-cover' />
                         ))}
                     </div>
@@ -43,44 +85,42 @@ const DetailProduct = ({ data, isQuickView }) => {
                 </div>
                 <div className=' flex-1 flex flex-col gap-3 pl-4'>
                     <div className=' flex flex-col gap-3'>
-                        {title && <h3 className=' font-bold text-3xl'>{title}</h3>}
+                        <h3 className=' font-bold text-3xl'>{selectProduct?.product?.title}</h3>
                         <div className=' flex gap-3 text-sm'>
-                            <span className=' border-r border-black pr-2'>Thương hiệu: {brand}</span>
-                            <span>Loại: {category}</span>
+                            <span className=' border-r border-black pr-2'>Thương hiệu: {selectProduct?.product?.brand?.title}</span>
+                            <span>Loại: {selectProduct?.product?.category?.title}</span>
                         </div>
                         <div className=' flex items-start gap-2'>
                             <div>
-                                <RatingStar value={product?.totalRatings} />
+                                <RatingStar value={selectProduct?.product?.totalRatings} />
                             </div>
-                            <div className=' text-sm'>{product?.ratings.length} đánh giá</div>
+                            <div className=' text-sm'>{selectProduct?.product?.ratings?.length} đánh giá</div>
                         </div>
                     </div>
-                    <div className=' py-2 border-black border-y text-3xl font-bold text-main'><CurrencyFormat value={product?.rentalPrice} displayType={'text'} thousandSeparator={true} suffix={' đ'} renderText={value => <div>{value}</div>} /></div>
-                    <div className=' flex gap-3' >Giá hãng:  <div className=' font-semibold text-main'> </div></div>
+                    <div className=' py-2 border-black border-y text-3xl font-bold text-main'><CurrencyFormat value={selectProduct?.product?.rentalPrice} displayType={'text'} thousandSeparator={true} suffix={' đ'} renderText={value => <div>{value}</div>} /></div>
+                    <div className=' flex gap-3' >Giá hãng:  <div className=' font-semibold text-main'><CurrencyFormat value={selectProduct?.product?.cost} displayType={'text'} thousandSeparator={true} suffix={' đ'} renderText={value => <div>{value}</div>} /> </div></div>
                     <div className=' flex flex-col gap-3'>
                         <span>Kích thước</span>
-                        <div className=' flex'>
-                            <div>S</div>
-                            <div>M</div>
-                            <div>L</div>
+                        <div className=' flex gap-2'>
+                            {selectProduct?.product?.type?.map(item =>
+                                <div key={item._id}
+                                    className={` rounded-full p-2 border border-main hover:bg-main flex items-center justify-center w-10 cursor-pointer ${selectProduct?.size === item.size ? 'bg-main' : ''}`}
+                                    onClick={() => handleSelectSize(item.size)}
+                                >
+                                    {item.size}
+                                </div>
+                            )}
                         </div>
                     </div>
-                    {/* <div className=' flex flex-col gap-3'>
-                        <span>Màu sắc</span>
-                        <div className=' flex'>
-                            <div>Trắng</div>
-                            <div>Đen</div>
-                            <div>Đỏ</div>
-                        </div>
-                    </div> */}
+
                     <div className='flex justify-between'>
                         <div className='flex flex-col'>
                             <span>Ngày bắt đầu thuê:</span>
-                            <ChooseDate defaultValue={moment()} />
+                            {selectProduct?.startAt && <ChooseDate defaultValue={selectProduct?.startAt} handleSelectDate={handleChangeStartDate} />}
                         </div>
                         <div className='flex flex-col'>
                             <span>Ngày kết thúc thuê:</span>
-                            <ChooseDate defaultValue={moment().add(5, 'days')} />
+                            {selectProduct?.endAt && <ChooseDate defaultValue={selectProduct?.endAt} handleSelectDate={handleChangeEndDate} />}
                         </div>
                     </div>
                     <div className=' flex flex-col'>
@@ -89,15 +129,13 @@ const DetailProduct = ({ data, isQuickView }) => {
                     <div className=' flex justify-between'>
                         <div className='flex flex-col'>
                             <span>Số lượng</span>
-                            <InputQuantity />
+                            <InputQuantity defaultValue={selectProduct?.quantity} handleChangeQuantity={handleChangeQuantity} />
                         </div>
                         <div className=' flex gap-3'>
                             <Button
-                                iconsAfter={<FaCartPlus />}
+                                iconsAfter={<FaHeart />}
                             />
-                            <Button
-                                name={'Thuê ngay'}
-                            />
+                            <ButtonAddToCart productData={selectProduct} />
                         </div>
                     </div>
                 </div>

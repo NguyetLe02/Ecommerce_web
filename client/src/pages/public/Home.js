@@ -1,20 +1,7 @@
-import React, { useState, useEffect } from 'react'
-import { apiGetProducts } from '../../apis'
+import React from 'react'
 import { Banner, SliderStyle, SliderProductCategory, SliderBrand, SliderHotProducts, SliderNewProducts } from '../../components'
 
 const Home = () => {
-    // const [hotProducts, setHotProducts] = useState(null)
-    // const [newProducts, setNewProducts] = useState(null)
-
-    // const fetchData = async () => {
-    //     const response = await Promise.all([apiGetProducts({ sort: '-sold' }), apiGetProducts({ sort: '-createdAt' })])
-    //     if (response[0]?.success) setHotProducts(response[0]?.products)
-    //     if (response[1]?.success) setNewProducts(response[1]?.products)
-    // }
-
-    // useEffect(() => {
-    //     fetchData()
-    // }, [])
 
     return (
         <div className=' w-screen flex flex-col items-center'>

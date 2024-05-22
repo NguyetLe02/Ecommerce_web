@@ -10,17 +10,17 @@ export const navigation = [
     {
         id: 2,
         value: 'Loại trang phục',
-        path: `/${path.COLLECTIONS}`
+        path: `/${path.PRODUCTS}`
     },
     {
         id: 3,
         value: 'Phong cách',
-        path: `/${path.COLLECTIONS}`
+        path: `/${path.PRODUCTS}`
     },
     {
         id: 4,
         value: 'Thương hiệu',
-        path: `/${path.COLLECTIONS}`
+        path: `/${path.PRODUCTS}`
     },
     {
         id: 5,

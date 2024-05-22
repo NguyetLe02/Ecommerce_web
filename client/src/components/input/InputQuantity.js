@@ -3,9 +3,12 @@ import { InputNumber } from 'antd';
 
 const InputQuantity = ({ defaultValue, handleChangeQuantity }) => {
     if (!defaultValue) defaultValue = 1
+    const onChange = (value) => {
+        handleChangeQuantity(value)
+    }
     return (
         <div>
-            <InputNumber min={1} defaultValue={defaultValue} onChange={handleChangeQuantity} />
+            <InputNumber min={1} defaultValue={defaultValue} onChange={onChange} />
         </div>
     )
 }

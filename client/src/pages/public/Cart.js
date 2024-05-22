@@ -4,13 +4,11 @@ import CurrencyFormat from 'react-currency-format';
 import { Button, OrderItem } from '../../components';
 import withBaseComponent from '../../hocs/withBaseComponent';
 import { apiUpdateCart } from '../../apis';
-import { toast } from 'react-toastify';
 import path from '../../ultils/path';
 
 const Cart = ({ navigate }) => {
     const { currentUser, currentCart } = useSelector(state => state.user)
     const handleUpdateCart = async () => {
-        // toast.success('Cập nhật giỏ hàng thành công')
         const promises = currentCart?.map(async (el) => {
             const response = await apiUpdateCart({ pid: el?.product._id, quantity: el?.quantity, size: el?.size })
             return response
@@ -23,7 +21,7 @@ const Cart = ({ navigate }) => {
             <div>
                 <h3 className=' text-2xl font-semibold'>Giỏ hàng</h3>
             </div>
-            <div className=' w-full mx-auto font-bold my-8 border py-3 grid grid-cols-10 bg-main'>
+            <div className=' w-full mx-auto font-bold my-8 border py-3 grid grid-cols-10 bg-main rounded-t-md'>
                 <span className='col-span-2 w-full text-center'> </span>
                 <span className='col-span-3 w-full '>Thông tin sản phẩm</span>
                 <span className='col-span-1 w-full text-center'>Số lượng</span>
@@ -52,10 +50,10 @@ const Cart = ({ navigate }) => {
                         </div>
                     </div>
                     <div className=' flex md:flex-col sm:flex-col  gap-5 justify-end items-end'>
-                        <Button handleOnclick={handleUpdateCart} style=' w-1/2 bg-main text-xl p-3 rounded-xl font-semibold ' name={'Cập nhật giỏ hàng'} />
+                        <Button handleOnclick={handleUpdateCart} style=' hover:bg-sub hover:text-white w-1/2 bg-main text-xl p-3 rounded-xl font-semibold drop-shadow-xl ' name={'Cập nhật giỏ hàng'} />
                         <Button handleOnclick={() => {
                             navigate(`/${path.PAYMENT}`)
-                        }} style='w-1/2 bg-sub text-white text-xl p-3 rounded-xl font-semibold ' name={'Thanh toán'} />
+                        }} style='hover:bg-sub hover:text-white w-1/2 bg-main text-xl p-3 rounded-xl font-semibold drop-shadow-xl' name={'Thanh toán'} />
                     </div>
                 </div>
 

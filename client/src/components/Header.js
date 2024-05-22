@@ -19,7 +19,7 @@ const Header = ({ dispatch }) => {
         }
     }, [dispatch, isLoggedIn])
     return (
-        <div className=' w-screen flex justify-center h-[100px] bg-main text-primary-1 '>
+        <div className=' w-screen  flex justify-center h-[100px] bg-main text-primary-1 '>
             <div className=' w-main flex px-[30px]'>
                 <div className=' w-[20%] flex-none content-center'>
                     <Link

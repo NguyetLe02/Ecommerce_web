@@ -2,7 +2,7 @@ import Reac, { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom'
 import { Login, Home, Public, DetailProduct, Products, Cart } from './pages/public'
 import { AdmminLayout, Dashboard, ManageUser } from './pages/admin'
-import { MemberLayout, Personal, Payment } from './pages/member'
+import { MemberLayout, Personal, Payment, Profile } from './pages/member'
 import path from './ultils/path';
 import { CartDrawer } from './components';
 import { useSelector } from 'react-redux';
@@ -20,7 +20,7 @@ function App() {
   return (
     <div className=" min-h-screen font-main">
       {isShowCart &&
-        <div onClick={() => dispatch(showCart())} className=' absolute inset-0 bg-black bg-opacity-50 z-50 flex justify-end'>
+        <div onClick={() => dispatch(showCart())} className=' fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-end'>
           <CartDrawer />
         </div>
       }
@@ -39,7 +39,7 @@ function App() {
           <Route path={path.MANAGE_USER} element={<ManageUser />} />
         </Route>
         <Route path={path.MEMBER} element={<MemberLayout />}>
-          <Route path={path.PERSONAL} element={<Personal />} />
+          <Route path={path.PROFILE} element={<Profile />} />
         </Route>
         <Route path={path.ALL} element={<Public />} />
       </Routes>
