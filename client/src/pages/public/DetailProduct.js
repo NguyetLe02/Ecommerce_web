@@ -7,7 +7,7 @@ import moment from 'moment';
 import { useParams } from 'react-router-dom'
 
 const DetailProduct = ({ data, isQuickView }) => {
-    const { FaCartPlus, FaHeart } = icons
+    const { FaHeart } = icons
     const { pid } = useParams()
     if (!pid) pid = data
     const [selectProduct, setSelectProduct] = useState({
@@ -63,7 +63,7 @@ const DetailProduct = ({ data, isQuickView }) => {
         };
         setSelectProduct(updatedProduct);
     };
-    console.log(selectProduct)
+    // console.log(selectProduct.product.ratings.length)
     useEffect(() => {
         if (pid) fetchProductData()
     }, [pid])
@@ -143,7 +143,7 @@ const DetailProduct = ({ data, isQuickView }) => {
             {!isQuickView &&
                 <div>
                     <div className=' py-4'>
-                        <ProductInformation />
+                        <ProductInformation totalRatings={selectProduct.product.totalRatings} totalCount={selectProduct?.product?.ratings?.length} ratings={selectProduct?.product?.ratings} />
                     </div>
                     <div className=' w-full m-auto py-6' >
                         <h3 className=' text-xl font-semibold border-b-2 border-sub mb-2'>CÓ THỂ BẠN QUAN TÂM</h3>

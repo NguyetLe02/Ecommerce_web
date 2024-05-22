@@ -2,7 +2,7 @@ import { FaBagShopping } from "react-icons/fa6";
 import { FaUserAlt, FaSearch, FaCaretDown, FaCartPlus, FaEye, FaHeart } from "react-icons/fa";
 import { MdSpaceDashboard, MdDeleteForever } from "react-icons/md";
 import { GiLargeDress } from "react-icons/gi";
-import { AiFillCloseCircle } from "react-icons/ai";
+import { AiFillCloseCircle, AiFillStar } from "react-icons/ai";
 import { BsThreeDots } from "react-icons/bs";
 import { IoMenu } from "react-icons/io5";
 import { IoIosArrowBack } from "react-icons/io";
@@ -21,6 +21,7 @@ const icons = {
     BsThreeDots,
     IoMenu,
     AiFillCloseCircle,
+    AiFillStar,
     IoIosArrowBack
 }
 

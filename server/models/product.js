@@ -43,13 +43,14 @@ var productSchema = new mongoose.Schema({
     },
     color: {
         type: String,
-        enum: ['Đen', 'Trắng', 'Red', 'Xanh', 'Vàng', 'Cam', 'Hồng']
+        enum: ['black', 'white', 'red', 'green', 'yellow', 'orange', 'pink']
     },
     ratings: [
         {
             star: { type: Number },
             postedBy: { type: mongoose.Types.ObjectId, ref: 'User' },
-            comment: { type: String }
+            comment: { type: String },
+            updatedAt: { type: Date }
         }
     ],
     totalRatings: {

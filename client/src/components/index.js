@@ -33,6 +33,8 @@ export { default as ProductInformation } from './product/ProductInformation'
 export { default as ProductCard } from './product/ProductCard'
 export { default as ProductSort } from './product/ProductSort'
 export { default as ProductFilter } from './product/ProductFilter'
+export { default as Votebar } from './product/Votebar'
+export { default as Comment } from './product/Comment'
 
 export { default as CartDrawer } from './cart/CartDrawer'
 export { default as CartItem } from './cart/CartItem'

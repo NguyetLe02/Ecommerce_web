@@ -47,3 +47,7 @@ button.slick-prev::before {
     align-items: center;
     border-radius: 4px;
 }
+
+.rating-container .ant-rate {
+    font-size: medium;
+}

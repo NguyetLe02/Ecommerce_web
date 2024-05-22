@@ -1,6 +1,7 @@
 const Product = require('../models/product');
 const asyncHandler = require('express-async-handler');
 const slugify = require('slugify')
+const moment = require('moment')
 
 const createProduct = asyncHandler(async (req, res) => {
     if (Object.keys(req.body).length === 0) throw new Error('Missing inputs')
@@ -14,7 +15,14 @@ const createProduct = asyncHandler(async (req, res) => {
 
 const getProduct = asyncHandler(async (req, res) => {
     const { pid } = req.params
-    const product = await Product.findById(pid).populate('category brand')
+    const product = await Product.findById(pid).populate('category brand').populate({
+        path: 'ratings',
+        populate: {
+            path: 'postedBy',
+            model: 'User',
+            select: 'firstname lastname image'
+        }
+    });
     // console.log(product.category)
     return res.status(200).json({
         success: product ? true : false,
@@ -120,11 +128,11 @@ const rating = asyncHandler(async (req, res) => {
         await Product.updateOne({
             ratings: { $elemMatch: alreadyRating }
         }, {
-            $set: { "ratings.$.star": star, "ratings.$.comment": comment }
+            $set: { "ratings.$.star": star, "ratings.$.comment": comment, "ratings.$.updatedAt": moment().format() }
         })
     } else {
         await Product.findByIdAndUpdate(pid, {
-            $push: { ratings: { star, comment, postedBy: _id } }
+            $push: { ratings: { star, comment, postedBy: _id, updatedAt: moment().format() } }
         }, { new: true })
     }
     //Average rating

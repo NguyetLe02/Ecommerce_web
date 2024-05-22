@@ -57,7 +57,10 @@ var userSchema = new mongoose.Schema({
     },
     passwordResetExpires: {
         type: String,
-    }
+    },
+    image: {
+        type: Array,
+    },
 }, {
     timestamps: true,
 })

@@ -3,7 +3,7 @@ import { Rate } from 'antd';
 
 const RatingStar = ({ value }) => {
     return (
-        <div>
+        <div >
             <Rate allowHalf value={value} disabled />
         </div>
     )
