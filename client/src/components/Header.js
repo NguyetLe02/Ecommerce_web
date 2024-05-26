@@ -62,4 +62,4 @@ const Header = ({ dispatch }) => {
     )
 }
 
-export default withBaseComponent(memo(Header))
+export default withBaseComponent(Header)

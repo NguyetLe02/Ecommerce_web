@@ -2,7 +2,7 @@ import Reac, { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom'
 import { Login, Home, Public, DetailProduct, Products, Cart } from './pages/public'
 import { AdmminLayout, Dashboard, ManageUser } from './pages/admin'
-import { MemberLayout, Personal, Payment, Profile } from './pages/member'
+import { MemberLayout, Ordered, Payment, Profile } from './pages/member'
 import path from './ultils/path';
 import { CartDrawer } from './components';
 import { useSelector } from 'react-redux';
@@ -40,6 +40,7 @@ function App() {
         </Route>
         <Route path={path.MEMBER} element={<MemberLayout />}>
           <Route path={path.PROFILE} element={<Profile />} />
+          <Route path={path.ORDERED} element={<Ordered />} />
         </Route>
         <Route path={path.ALL} element={<Public />} />
       </Routes>

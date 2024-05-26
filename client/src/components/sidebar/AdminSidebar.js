@@ -10,7 +10,7 @@ const notactiveStyle = 'flex flex-col justify-center items-centers p-4 gap-2 hov
 
 const { FaCaretDown } = icons
 
-const SidebarAdmin = () => {
+const AdminSidebar = () => {
     return (
         <div className='h-full py-4 text-base '>
             <div className=' flex justify-center items-centers p-4 gap-4'>
@@ -60,4 +60,4 @@ const SidebarAdmin = () => {
     )
 }
 
-export default memo(SidebarAdmin)
+export default memo(AdminSidebar)

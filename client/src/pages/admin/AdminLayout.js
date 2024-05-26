@@ -2,7 +2,7 @@ import React from 'react'
 import { Outlet, Navigate } from 'react-router-dom'
 import path from '../../ultils/path'
 import { useSelector } from 'react-redux'
-import SidebarAdmin, { } from '../../components/sidebar/SidebarAdmin'
+import { AdminSidebar } from '../../components'
 
 const AdmminLayout = () => {
     const { isLoggedIn, currentUser } = useSelector(state => state.user)
@@ -11,7 +11,7 @@ const AdmminLayout = () => {
     return (
         <div className='flex w-full min-h-screen relative'>
             <div className=' w-[327px] flex-none  bg-main'>
-                <SidebarAdmin />
+                <AdminSidebar />
             </div>
             <div className=' flex-auto'>
                 <Outlet />

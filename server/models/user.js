@@ -37,10 +37,10 @@ var userSchema = new mongoose.Schema({
         startAt: Date,
         endAt: Date
     }],
-    address: [{
+    address: {
         type: String,
         default: ''
-    }],
+    },
     favoritelist: [{ type: mongoose.Types.ObjectId, ref: 'Product' }],
     isBlocked: {
         type: Boolean,
@@ -60,6 +60,13 @@ var userSchema = new mongoose.Schema({
     },
     image: {
         type: Array,
+    },
+    dateOfBirth: {
+        type: Date
+    },
+    point: {
+        type: Number,
+        default: 0
     },
 }, {
     timestamps: true,

@@ -4,7 +4,7 @@ import icons from '../ultils/icons';
 import { Link } from 'react-router-dom';
 import path from '../ultils/path';
 import { logout } from '../store/user/userSlice';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 const { FaUserAlt } = icons
 const Content = (isLoggedIn) => {
@@ -42,10 +42,12 @@ const Content = (isLoggedIn) => {
 }
 
 const UserPopover = ({ isLoggedIn }) => {
+    const { currentUser } = useSelector(state => state.user)
     return (
         <div>
             <Popover placement="bottomRight" content={Content(isLoggedIn)} trigger="hover">
-                <FaUserAlt size={24} />
+                {isLoggedIn ? <img src={currentUser?.image} className=' w-[40px] h-[40px] rounded-full border-sub border-2' />
+                    : <FaUserAlt />}
             </Popover>
         </div>
     );

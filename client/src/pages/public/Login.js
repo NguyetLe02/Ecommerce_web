@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import { InputField, Button } from '../../components'
+import { InputField, Button, ChooseDate } from '../../components'
 import { apiLogin, apiRegister } from '../../apis/user';
 import Swal from 'sweetalert2'
 import { useNavigate } from 'react-router-dom'
@@ -7,6 +7,7 @@ import path from '../../ultils/path';
 import { login } from '../../store/user/userSlice'
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
+import { DatePicker } from 'antd';
 
 const Login = () => {
     const navigate = useNavigate()
@@ -19,7 +20,8 @@ const Login = () => {
         password: '',
         firstname: '',
         lastname: '',
-        mobile: ''
+        mobile: '',
+        dateOfBirth: '',
     })
     const resetPayload = () => {
         setPayload({
@@ -27,12 +29,13 @@ const Login = () => {
             password: '',
             firstname: '',
             lastname: '',
-            mobile: ''
+            mobile: '',
+            dateOfBirth: '',
         })
     }
 
     const handleSubmit = useCallback(async () => {
-        const { firstname, lastname, mobile, ...data } = payload
+        const { firstname, lastname, mobile, dateOfBirth, ...data } = payload
         if (isRegister) {
             const response = await apiRegister(payload)
             if (response.success) {
@@ -101,6 +104,13 @@ const Login = () => {
                         setValue={setPayload}
                         nameKey='mobile'
                     />
+                }
+                {isRegister &&
+                    <div className=' w-full flex gap-2 justify-between items-center'>
+                        <div className=' text-sm flex flex-none'>Ngày sinh :</div>
+                        <ChooseDate/>
+                        <DatePicker style={{ width: '100%', padding: '10px' }} />
+                    </div>
                 }
                 <Button
                     name={isRegister ? 'Đăng ký' : 'Đăng nhập'}

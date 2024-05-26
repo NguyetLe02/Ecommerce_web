@@ -1,6 +1,7 @@
 const router = require('express').Router()
 const control = require('../controllers/user')
 const { verifyAccessToken, isAdmin } = require('../middlewares/verifyToken')
+const uploader = require('../config/cloudinary.config')
 
 router.get('/', [verifyAccessToken, isAdmin], control.getUsers)
 router.post('/register', control.register)
@@ -13,9 +14,9 @@ router.put('/resetpassword', control.resetPassword)
 router.put('/cart', [verifyAccessToken], control.updateCart)
 router.delete('/removecart', [verifyAccessToken], control.removeProductInCart)
 router.put('/address', [verifyAccessToken], control.updateUserAddress)
+router.put('/current', verifyAccessToken, uploader.single('image'), control.updateUser)
 router.delete('/:uid', [verifyAccessToken, isAdmin], control.deleteUser)
 router.put('/:uid', [verifyAccessToken, isAdmin], control.updateUserByAdmin)
-router.put('/current', [verifyAccessToken], control.updateUser)
 
 module.exports = router
 

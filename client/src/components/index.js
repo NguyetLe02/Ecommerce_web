@@ -43,4 +43,10 @@ export { default as PaymentTable } from './payment/PaymentTable'
 export { default as PaymentAddressTable } from './payment/PaymentAddressTable'
 export { default as Paypal } from './payment/Paypal'
 
+export { default as AdminSidebar } from './sidebar/AdminSidebar'
+export { default as ProfileSidebar } from './sidebar/ProfileSidebar'
+export { default as HistoryOrderedSidebar } from './sidebar/HistoryOrderedSidebar'
+
+export { default as AvatarUpload } from './uploadImage/AvatarUpload'
+
 export { default as ButtonAddToCart } from './button/ButtonAddToCart'

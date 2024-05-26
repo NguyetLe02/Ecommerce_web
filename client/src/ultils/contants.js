@@ -81,7 +81,7 @@ export const productFilter = {
 
 }
 
-const { MdSpaceDashboard, FaUserAlt, FaBagShopping, GiLargeDress } = icons
+const { MdSpaceDashboard, FaUserAlt, FaBagShopping, GiLargeDress, FaClipboardList } = icons
 export const adminSidebar = [
     {
         id: 1,
@@ -120,6 +120,49 @@ export const adminSidebar = [
         text: 'Quản lý đơn hàng',
         path: `/${path.ADMIN}/${path.DASHBOAR}`,
         icons: <FaBagShopping />
+    }
+]
+
+export const profileSidebar = [
+    {
+        id: 1,
+        type: 'parent',
+        text: 'Tài khoản của tôi',
+        icons: <FaUserAlt />,
+        submenu: [
+            {
+                text: 'Hồ sơ',
+                path: `/${path.MEMBER}/${path.PROFILE}`
+            },
+            {
+                text: 'Ngân hàng',
+                path: `/${path.MEMBER}/${path.PROFILE}?payment`
+            }
+        ]
+    },
+    {
+        id: 2,
+        type: 'single',
+        text: 'Đơn mua',
+        path: `/${path.MEMBER}/${path.ORDERED}`,
+        icons: <FaClipboardList />
+    }
+]
+
+export const profileSidebar1 = [
+    {
+        id: 1,
+        type: 'single',
+        text: 'Hồ sơ của tôi',
+        path: `/${path.MEMBER}/${path.PROFILE}`,
+        icons: <FaUserAlt />,
+    },
+    {
+        id: 2,
+        type: 'single',
+        text: 'Đơn mua',
+        path: `/${path.MEMBER}/${path.ORDERED}`,
+        icons: <FaClipboardList />
     }
 ]
 

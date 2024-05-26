@@ -6,8 +6,8 @@ const sendMail = require('../ultils/sendMail')
 const crypto = require('crypto')
 
 const register = asyncHandler(async (req, res) => {
-    const { email, password, firstname, lastname, mobile } = req.body
-    if (!email || !password || !firstname || !lastname || !mobile)
+    const { email, password, firstname, lastname, mobile, dateOfBirth } = req.body
+    if (!email || !password || !firstname || !lastname || !mobile || !dateOfBirth)
         return res.status(400).json({
             success: false,
             message: 'Missing input'
@@ -195,8 +195,12 @@ const deleteUser = asyncHandler(async (req, res) => {
 
 const updateUser = asyncHandler(async (req, res) => {
     const { _id } = req.user
+    const { firstname, lastname, email, mobile, address } = req.body
+    const data = { firstname, lastname, email, mobile, address }
+    if (req.file) data.image = req.file.path
+    console.log(req.body)
     if (!_id || Object.keys(req.body).length === 0) throw new Error('Missing input')
-    const response = await User.findByIdAndUpdate(_id, req.body, { new: true }).select('-password -role')
+    const response = await User.findByIdAndUpdate(_id, data, { new: true }).select('-password -role')
     return res.status(200).json({
         success: response ? true : false,
         updatedUser: response ? response : 'Some thing went wrong'
@@ -216,7 +220,7 @@ const updateUserByAdmin = asyncHandler(async (req, res) => {
 const updateUserAddress = asyncHandler(async (req, res) => {
     const { _id } = req.user
     if (!req.body.address) throw new Error('Missing input')
-    const response = await User.findByIdAndUpdate(_id, { $push: { address: req.body.address } }, { new: true })
+    const response = await User.findByIdAndUpdate(_id, { address: req.body.address }, { new: true })
     return res.status(200).json({
         success: response ? true : false,
         updatedUser: response ? response : 'Some thing went wrong'
