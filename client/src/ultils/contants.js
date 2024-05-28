@@ -242,3 +242,66 @@ export const productInforTabs = [
     }
 ]
 
+export const orderStatusTabs = [
+    {
+        id: 1,
+        name: 'Tất cả',
+    },
+    {
+        id: 2,
+        name: 'Đang chuẩn bị',
+        status: 'Paid',
+        button1: 'Hủy Đơn Hàng',
+        button2: 'Liên Hệ Người Bán',
+        note: 'Sản phẩm đang được chuẩn bị để giao đến bạn.'
+    },
+    {
+        id: 3,
+        name: 'Chờ giao hàng',
+        status: 'Sent',
+        button1: 'Hàng Có Vấn Đề',
+        button2: 'Đã Nhận Được Hàng',
+        note: 'Vui lòng chỉ nhấn "Đã Nhận Được Hàng" khi đơn hàng đã được giao đến bạn và sản phẩm nhận được không có vấn đề nào.'
+    },
+    {
+        id: 4,
+        name: 'Đơn khiếu nại',
+        status: 'Issue',
+        button1: 'Xem chi tiết',
+        button2: 'Hủy Bỏ Khiếu Nại',
+        note: ''
+    },
+    {
+        id: 5,
+        name: 'Đang thuê',
+        status: 'Received',
+        button1: 'Xảy ra sự cố',
+        button2: 'Gia hạn thuê',
+        note: 'Trong quá trình thuê nếu xảy ra sự cố hãy liên lạc với chúng tôi ngay nhé.'
+    },
+    {
+        id: 6,
+        name: 'Đơn có sự cố',
+        status: 'Problem',
+        button1: 'Xem chi tiết',
+        button2: 'Liên hệ với người bán',
+        note: ''
+    },
+    {
+        id: 7,
+        name: 'Hoàn thành',
+        status: 'Completed',
+        button1: 'Thuê lại',
+        button2: 'Đánh Giá',
+        note: 'Bạn ơi hãy đánh giá sản phẩm nhé.'
+    },
+    {
+        id: 8,
+        name: 'Đã hủy',
+        status: 'Cancelled',
+        button1: 'Xem Chi Tiết Hủy Đơn',
+        button2: 'Mua Lại',
+        note: ''
+    },
+]
+

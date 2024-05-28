@@ -119,7 +119,9 @@ const updateProduct = asyncHandler(async (req, res) => {
 
 const rating = asyncHandler(async (req, res) => {
     const { _id } = req.user
-    const { star, comment, pid } = req.body
+    const { pid } = req.params
+    const { star, comment } = req.body
+    console.log(req.body)
     if (!star || !pid) throw new Error('Missing inputs')
     const ratingProduct = await Product.findById(pid)
     const alreadyRating = ratingProduct?.ratings?.find(el => el.postedBy.toString() === _id)

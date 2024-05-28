@@ -20,3 +20,9 @@ export const apiGetBrands = () => axios({
     url: '/brand',
     method: 'get',
 })
+
+export const apiRating = (data, pid) => axios({
+    url: '/product/ratings/' + pid,
+    method: 'put',
+    data
+})

@@ -2,3 +2,5 @@
 export * from './user'
 export * from './product'
 export * from './productCategory'
+export * from './order'
+export * from './orderDetail'

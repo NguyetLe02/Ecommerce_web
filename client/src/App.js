@@ -4,7 +4,7 @@ import { Login, Home, Public, DetailProduct, Products, Cart } from './pages/publ
 import { AdmminLayout, Dashboard, ManageUser } from './pages/admin'
 import { MemberLayout, Ordered, Payment, Profile } from './pages/member'
 import path from './ultils/path';
-import { CartDrawer } from './components';
+import { CartDrawer, Modal } from './components';
 import { useSelector } from 'react-redux';
 import { getCategories } from './store/app/asyncActions'
 import { showCart } from './store/app/appSlice'
@@ -12,6 +12,7 @@ import { useDispatch } from 'react-redux';
 
 function App() {
   const dispatch = useDispatch()
+  const { isShowModal, modalChildren } = useSelector(state => state.app)
   const { isShowCart } = useSelector(state => state.app)
   useEffect(() => {
     // console.log('getCategories')
@@ -24,6 +25,7 @@ function App() {
           <CartDrawer />
         </div>
       }
+      {isShowModal && <Modal>{modalChildren}</Modal>}
       <Routes>
         <Route path={path.PUBLIC} element={<Public />}>
           <Route path={path.HOME} element={<Home />} />

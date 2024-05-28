@@ -2,11 +2,16 @@ const Order = require('../models/order')
 const User = require('../models/user')
 const Coupon = require('../models/coupon')
 const asyncHandler = require('express-async-handler')
+const OrderDetail = require('../models/orderDetail')
 
 const createOrder = asyncHandler(async (req, res) => {
     const { _id } = req.user
     const { couponId, orderDetails, totalCost, totalRentalPrice, address, status } = req.body
-    console.log(orderDetails)
+    const createdOrderDetails = [];
+    for (const detail of orderDetails) {
+        const createdDetail = await OrderDetail.create(detail);
+        createdOrderDetails.push(createdDetail._id);
+    }
     if (address) {
         await User.findByIdAndUpdate(_id, { address, cart: [] })
     }
@@ -32,19 +37,24 @@ const createOrder = asyncHandler(async (req, res) => {
         totalRentalPriceCoupon = Math.round(totalRentalPrice * (1 - coupon.discount / 100) / 1000) * 1000
     }
 
-    const order = await Order.create({ orderDetails, totalCost, totalRentalPrice, totalRentalPriceCoupon, orderBy: _id, status })
+    const order = await Order.create({ orderDetails: createdOrderDetails, totalCost, totalRentalPrice, totalRentalPriceCoupon, orderBy: _id, status })
     return res.status(200).json({
         success: order ? true : false,
         ordered: order ? order : 'Cannot create new Order',
     })
 })
 
-const getOrders = asyncHandler(async (req, res) => {
+const getOrderItems = asyncHandler(async (req, res) => {
     const { _id } = req.user
-    const response = await Order.find({ orderBy: _id })
+    const orders = await Order.find({ orderBy: _id }).populate('orderDetails');
+    console.log(orders)
+    const orderItems = orders.flatMap(order => order.orderDetails);
+    const count = orderItems.length
+    console.log(count)
     return res.status(200).json({
-        success: response ? true : false,
-        Orders: response ? response : 'Cannot get Order'
+        success: orders ? true : false,
+        OrderItems: orders ? orderItems : 'Cannot get Order',
+        count
     })
 })
 
@@ -77,7 +87,10 @@ const updateStatus = asyncHandler(async (req, res) => {
     const { oid } = req.params
     const { status } = req.body
     if (!status) throw new Error('Missing input status')
-    const response = await Order.findByIdAndUpdate(oid, { status: status }, { new: true })
+
+    const response = await Order.findOne({ 'orderDetails._id': oid })
+    console.log(response)
+    // const response = await Order.findByIdAndUpdate(oid, { status: status }, { new: true })
     return res.status(200).json({
         success: response ? true : false,
         updatedStatus: response ? response : 'Cannot update status'
@@ -86,7 +99,7 @@ const updateStatus = asyncHandler(async (req, res) => {
 
 module.exports = {
     createOrder,
-    getOrders,
+    getOrderItems,
     getOrdersByAdmin,
     // deleteOrder,
     // updateOrder,
