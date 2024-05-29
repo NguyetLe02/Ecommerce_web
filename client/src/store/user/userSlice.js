@@ -23,11 +23,10 @@ export const userSlice = createSlice({
             state.isLoading = false;
         },
         updateCart: (state, action) => {
-            const { pid, quantity, size } = action.payload
+            const { pid, quantity, startAt, endAt, size, totalRentalPrice } = action.payload
             const updatingCart = JSON.parse(JSON.stringify(state.currentCart))
-            console.log([...updatingCart])
             const updateCart = updatingCart.map(el => {
-                if (el.size === size && el.product?._id === pid) return { ...el, quantity }
+                if (el.size === size && el.product?._id === pid) return { ...el, quantity, startAt, endAt, totalRentalPrice }
                 else return el
             })
             state.currentCart = updateCart

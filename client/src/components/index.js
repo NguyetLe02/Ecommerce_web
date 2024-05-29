@@ -44,6 +44,8 @@ export { default as CartItem } from './cart/CartItem'
 export { default as PaymentTable } from './payment/PaymentTable'
 export { default as PaymentAddressTable } from './payment/PaymentAddressTable'
 export { default as Paypal } from './payment/Paypal'
+export { default as PaymentButton } from './payment/PaymentButton'
+export { default as PaymentPolicy } from './payment/PaymentPolicy'
 
 export { default as AdminSidebar } from './sidebar/AdminSidebar'
 export { default as ProfileSidebar } from './sidebar/ProfileSidebar'

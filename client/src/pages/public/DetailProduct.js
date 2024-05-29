@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import { apiGetProduct } from '../../apis'
-import { Button, ZoomImage, RatingStar, ChooseDate, InputQuantity, ProductInformation, SliderHotProducts, ButtonAddToCart } from '../../components'
+import { Button, ZoomImage, RatingStar, ChooseDate, InputQuantity, ProductInformation, SliderHotProducts, ButtonAddToCart, StartDatePicker } from '../../components'
 import CurrencyFormat from 'react-currency-format';
 import icons from '../../ultils/icons'
 import moment from 'moment';
 import { useParams } from 'react-router-dom'
+import dayjs from 'dayjs'
+import { DatePicker } from 'antd';
+import { addDate, getDateFormat } from '../../ultils/helpers';
 
 const DetailProduct = ({ data, isQuickView }) => {
     const { FaHeart } = icons
+    const dateFormat = 'YYYY/MM/DD';
     const { pid } = useParams()
     if (!pid) pid = data
     const [selectProduct, setSelectProduct] = useState({
@@ -25,8 +29,8 @@ const DetailProduct = ({ data, isQuickView }) => {
             setSelectProduct({
                 product: productData,
                 size: productData.type[0].size,
-                startAt: moment(),
-                endAt: moment().add(2, 'days'),
+                startAt: dayjs().add(2, 'days'),
+                endAt: dayjs().add(2, 'days'),
                 quantity: 1
             });
             setShowImage(response.productData.images[0])
@@ -43,11 +47,11 @@ const DetailProduct = ({ data, isQuickView }) => {
     const handleChangeStartDate = (startDate) => {
         const updatedProduct = {
             ...selectProduct,
-            startAt: startDate
+            startAt: startDate,
+            endAt: startDate
         };
         setSelectProduct(updatedProduct);
     };
-
     const handleChangeEndDate = (endDate) => {
         const updatedProduct = {
             ...selectProduct,
@@ -116,11 +120,27 @@ const DetailProduct = ({ data, isQuickView }) => {
                     <div className='flex justify-between'>
                         <div className='flex flex-col'>
                             <span>Ngày bắt đầu thuê:</span>
-                            {selectProduct?.startAt && <ChooseDate defaultValue={selectProduct?.startAt} handleSelectDate={handleChangeStartDate} />}
+                            {selectProduct?.startAt &&
+                                <DatePicker
+                                    format={dateFormat}
+                                    value={dayjs(selectProduct?.startAt, dateFormat)}
+                                    minDate={addDate(new Date(), 2, 'date')}
+                                    onChange={handleChangeStartDate}
+                                />
+
+                            }
                         </div>
                         <div className='flex flex-col'>
                             <span>Ngày kết thúc thuê:</span>
-                            {selectProduct?.endAt && <ChooseDate defaultValue={selectProduct?.endAt} handleSelectDate={handleChangeEndDate} />}
+                            {selectProduct?.endAt &&
+                                <DatePicker
+                                    format={dateFormat}
+                                    value={dayjs(selectProduct?.endAt, dateFormat)}
+                                    minDate={getDateFormat(selectProduct?.startAt)}
+                                    maxDate={addDate(selectProduct?.startAt, 2, 'date')}
+                                    onChange={handleChangeEndDate}
+                                />
+                            }
                         </div>
                     </div>
                     <div className=' flex flex-col'>

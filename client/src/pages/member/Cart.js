@@ -1,16 +1,17 @@
 import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import CurrencyFormat from 'react-currency-format';
-import { Button, OrderItem } from '../../components';
+import { Button, OrderItem, PaymentButton } from '../../components';
 import withBaseComponent from '../../hocs/withBaseComponent';
 import { apiUpdateCart } from '../../apis';
-import path from '../../ultils/path';
 
-const Cart = ({ navigate }) => {
-    const { currentUser, currentCart } = useSelector(state => state.user)
+const Cart = () => {
+    const { currentCart } = useSelector(state => state.user)
+    console.log(currentCart)
     const handleUpdateCart = async () => {
+        console.log(currentCart)
         const promises = currentCart?.map(async (el) => {
-            const response = await apiUpdateCart({ pid: el?.product._id, quantity: el?.quantity, size: el?.size })
+            const response = await apiUpdateCart({ pid: el?.product._id, quantity: el?.quantity, startAt: el?.startAt, endAt: el?.endAt, size: el?.size })
             return response
         })
         const response = await Promise.all(promises);
@@ -40,20 +41,33 @@ const Cart = ({ navigate }) => {
                     <div className=' flex gap-2 justify-between text-xl'>
                         <span>Tổng tiền thuê:</span>
                         <div className=' font-semibold text-main'>
-                            <CurrencyFormat value={currentCart.reduce((sum, el) => sum + el?.product?.rentalPrice * el.quantity, 0)} displayType={'text'} thousandSeparator={true} suffix={' đ'} renderText={value => <div>{value}</div>} />
-                        </div>
+                            <CurrencyFormat
+                                value={currentCart.reduce((sum, el) => sum + el?.totalRentalPrice, 0)}
+                                displayType={'text'}
+                                thousandSeparator={true}
+                                suffix={' đ'}
+                                renderText={value => <div>{value}</div>}
+                            />                        </div>
                     </div>
                     <div className=' flex gap-2 justify-between text-xl'>
                         <span>Tổng thanh toán :</span>
                         <div className=' font-semibold text-main '>
-                            <CurrencyFormat value={currentCart.reduce((sum, el) => sum + el?.product?.cost * el.quantity, 0)} displayType={'text'} thousandSeparator={true} suffix={' đ'} renderText={value => <div>{value}</div>} />
+                            <CurrencyFormat
+                                value={currentCart.reduce((sum, el) => sum + el?.product?.cost * el.quantity, 0)}
+                                displayType={'text'}
+                                thousandSeparator={true}
+                                suffix={' đ'}
+                                renderText={value => <div>{value}</div>}
+                            />
                         </div>
                     </div>
                     <div className=' flex md:flex-col sm:flex-col  gap-5 justify-end items-end'>
-                        <Button handleOnclick={handleUpdateCart} style=' hover:bg-sub hover:text-white w-1/2 bg-main text-xl p-3 rounded-xl font-semibold drop-shadow-xl ' name={'Cập nhật giỏ hàng'} />
-                        <Button handleOnclick={() => {
-                            navigate(`/${path.PAYMENT}`)
-                        }} style='hover:bg-sub hover:text-white w-1/2 bg-main text-xl p-3 rounded-xl font-semibold drop-shadow-xl' name={'Thanh toán'} />
+                        <Button
+                            handleOnclick={handleUpdateCart}
+                            style='  w-full bg-gray-200 text-xl py-3 rounded-xl font-semibold shadow hover:shadow-2xl '
+                            name={'Cập nhật giỏ hàng'}
+                        />
+                        <PaymentButton />
                     </div>
                 </div>
 

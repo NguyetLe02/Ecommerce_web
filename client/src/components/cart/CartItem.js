@@ -40,8 +40,9 @@ const CartItem = ({ productData, orderData, dispatch }) => {
             <div className=' flex flex-col flex-1 justify-between gap-1'>
                 <span className=' font-semibold line-clamp-1'>{productData?.title}</span>
                 <span className=' text-xs'>{`${productData?.color} | ${orderData?.size}`}</span>
+                <div>{`${orderData?.startAt.split('T')[0]} ~ ${orderData?.endAt.split('T')[0]}`}</div>
                 <div className='flex justify-between items-end'>
-                    <InputQuantity defaultValue={orderData.quantity} />
+                    <div>{`x ${orderData?.quantity}`}</div>
                     <span className=' flex'>
                         <div className=' font-semibold text-sub'>
                             <CurrencyFormat value={totalRentalPrice} displayType={'text'} thousandSeparator={true} suffix={' đ'} renderText={value => <div>{value}</div>} />

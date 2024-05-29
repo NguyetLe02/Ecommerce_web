@@ -3,14 +3,13 @@ import icons from '../../ultils/icons'
 import withBaseComponent from '../../hocs/withBaseComponent'
 import { showCart } from '../../store/app/appSlice'
 import { useSelector } from 'react-redux'
-import { Button, CartItem } from '../../components'
+import { Button, CartItem, PaymentButton } from '../../components'
 import CurrencyFormat from 'react-currency-format'
 import path from '../../ultils/path'
 
 const { AiFillCloseCircle } = icons
 const CartDrawer = ({ dispatch, navigate }) => {
-    const { currentUser, currentCart } = useSelector(state => state.user)
-    console.log(currentCart)
+    const { currentCart } = useSelector(state => state.user)
     const totalRentalPrice = currentCart?.reduce((sum, el) => sum + el?.product?.rentalPrice * el.quantity, 0)
     const totalCost = currentCart?.reduce((sum, el) => sum + el?.product?.cost * el.quantity, 0)
 
@@ -35,7 +34,13 @@ const CartDrawer = ({ dispatch, navigate }) => {
                     <div className=' flex gap-2 justify-between text-xl'>
                         <span>Tổng tiền thuê:</span>
                         <div className=' font-semibold text-sub '>
-                            <CurrencyFormat value={totalRentalPrice} displayType={'text'} thousandSeparator={true} suffix={' đ'} renderText={value => <div>{value}</div>} />
+                            <CurrencyFormat
+                                value={currentCart.reduce((sum, el) => sum + el?.totalRentalPrice, 0)}
+                                displayType={'text'}
+                                thousandSeparator={true}
+                                suffix={' đ'}
+                                renderText={value => <div>{value}</div>}
+                            />
                         </div>
                     </div>
                     <div className=' flex gap-2 justify-between text-xl'>
@@ -49,10 +54,7 @@ const CartDrawer = ({ dispatch, navigate }) => {
                     navigate(`/${path.CART}`)
                     dispatch(showCart())
                 }} style=' w-full bg-sub text-white text-xl py-3 rounded-xl font-semibold ' name={'Chi tiết giỏ hàng'} />
-                <Button handleOnclick={() => {
-                    navigate(`/${path.PAYMENT}`)
-                    dispatch(showCart())
-                }} style=' w-full bg-sub text-white text-xl py-3 rounded-xl font-semibold ' name={'Thanh toán'} />
+                <PaymentButton isBlockDrawer={true} />
             </div>
         </div>
     )

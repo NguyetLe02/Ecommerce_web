@@ -4,27 +4,27 @@ import icons from './icons'
 export const navigation = [
     {
         id: 1,
-        value: 'Trang chủ',
+        value: 'Trang Chủ',
         path: `/${path.HOME}`
     },
     {
         id: 2,
-        value: 'Loại trang phục',
+        value: 'Loại Trang Phục',
         path: `/${path.PRODUCTS}`
     },
     {
         id: 3,
-        value: 'Phong cách',
+        value: 'Phong Cách',
         path: `/${path.PRODUCTS}`
     },
     {
         id: 4,
-        value: 'Thương hiệu',
+        value: 'Thương Hiệu',
         path: `/${path.PRODUCTS}`
     },
     {
         id: 5,
-        value: 'Tin tức',
+        value: 'Blog Của Tôi',
         path: `/${path.BLOGS}`
     },
 ]
@@ -215,32 +215,45 @@ export const productInforTabs = [
     },
     {
         id: 2,
-        name: 'Cách thuê đồ',
-        content: `Các bước thuê đồ: 
-        • Bước 1: Các bạn chọn đồ và ngày muốn thuê
-        • Bước 2: Thanh toán tiền cọc bằng tiền giá hãng
-        • Bước 3: Sau khi đồ hoàn trả thành công,  
-        Số tiền nhận lại = tiền cọc - giá thuê
-         
-         Trong trường hợp bạn muốn gia hạn ngày thuê:
-        • Bước 1:Vào đơn hàng chọn gia hạn
-        • Bước 2: Chọn thời gian gia hạn
-         Nếu gia hạn thành công, bạn sẽ có thể tiếp tục thuê đồ,
-         Số tiền nhận lại = tiền cọc - giá thuê (đã gia hạn)
-         Trong trường hợp không thể gai hạn do có lịch thuê khác, khách hàng vui lòng hoàn đồ cho shop theo đúng dự kiến
-         
-         Trường hợp làm hỏng hoặc mất đồ:
-        • Bước 1:Vào đơn hàng chọn 'Sự cố'
-        • Bước 2:Chọn sự cố của bạn
-        Shop sẽ chủ động liên lạc để thỏa thuận về giá trị bồi thường tùy theo sản phẩm, 
-        Số tiền nhận lại (nếu có) = tiền cọc - giá thuê - giá trị bồi thường `
-    },
-    {
-        id: 3,
         name: 'Bình luận',
         content: '0 bình luận'
     }
 ]
+
+
+export const paymentPolicy = [
+    {
+        id: 1,
+        name: 'Các bước thuê đồ',
+        step: [
+            'Chọn đồ và ngày muốn thuê',
+            'Thanh toán tiền cọc bằng tiền giá hãng',
+        ],
+        situation: 'Sau khi đồ hoàn trả thành công',
+        moneyback: 'Số tiền nhận lại = tiền cọc - giá thuê'
+    },
+    {
+        id: 2,
+        name: 'Trong trường hợp bạn muốn gia hạn ngày thuê',
+        step: [
+            'Vào đơn hàng chọn gia hạn',
+            'Chọn thời gian gia hạn',
+        ],
+        situation: 'Nếu gia hạn thành công, bạn sẽ có thể tiếp tục thuê đồ.Trong trường hợp không thể gai hạn do có lịch thuê khác, khách hàng vui lòng hoàn đồ cho shop theo đúng dự kiến',
+        moneyback: 'Số tiền nhận lại = tiền cọc - giá thuê (đã gia hạn)'
+    },
+    {
+        id: 3,
+        name: 'Trường hợp làm hỏng hoặc mất đồ:',
+        step: [
+            'Vào đơn hàng đang thuê chọn `Xảy ra sự cố`',
+            'Chọn và mô tả sự cố của bạn',
+        ],
+        situation: 'Shop sẽ chủ động liên lạc để thỏa thuận về giá trị bồi thường tùy theo sản phẩm.',
+        moneyback: 'Số tiền nhận lại (nếu có) = tiền cọc - giá thuê - giá trị bồi thường '
+    },
+]
+
 
 export const orderStatusTabs = [
     {

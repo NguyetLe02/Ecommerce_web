@@ -18,7 +18,7 @@ const ProductInformation = ({ totalRatings, totalCount, ratings }) => {
                 ))}
             </div>
             <div className={`w-full h-full px-4 pt-4 pb-6 border border-sub rounded-lg ${activeTab === 1 && 'rounded-tl-none'}`}>
-                {activeTab === 3 &&
+                {activeTab === 2 &&
                     <div className=' flex flex-col'>
                         <div className=' flex'>
                             <div className=' w-2/5 border-r-2 border-sub flex flex-col items-center justify-center'>
@@ -47,6 +47,9 @@ const ProductInformation = ({ totalRatings, totalCount, ratings }) => {
                             ))}
                         </div>
                     </div>
+                }
+                {activeTab === 1 &&
+                    <div>{productInforTabs[0].content}</div>
                 }
             </div>
         </div>
