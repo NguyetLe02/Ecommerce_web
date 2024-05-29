@@ -47,11 +47,11 @@ const getOrdersByAdmin = asyncHandler(async (req, res) => {
 //     })
 // })
 
-const updateOrderDetailStatus = asyncHandler(async (req, res) => {
+const updateOrderDetail = asyncHandler(async (req, res) => {
     const { odid } = req.params
-    const { status } = req.body
+    const { status, endAt } = req.body
     if (!status) throw new Error('Missing input status')
-    const response = await OrderDetail.findByIdAndUpdate(odid, { status: status }, { new: true })
+    const response = await OrderDetail.findByIdAndUpdate(odid, { status: status, endAt: endAt }, { new: true })
     return res.status(200).json({
         success: response ? true : false,
         updatedStatus: response ? response : 'Cannot update status slug'
@@ -61,5 +61,5 @@ const updateOrderDetailStatus = asyncHandler(async (req, res) => {
 module.exports = {
     getOrderDetails,
     getOrdersByAdmin,
-    updateOrderDetailStatus
+    updateOrderDetail
 }

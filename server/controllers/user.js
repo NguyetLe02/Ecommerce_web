@@ -1,9 +1,16 @@
 const User = require('../models/user')
+const Product = require('../models/product')
 const asyncHandler = require('express-async-handler')
 const { generateAccessToken, generateRefreshToken } = require('../middlewares/jwt')
 const jwt = require('jsonwebtoken')
 const sendMail = require('../ultils/sendMail')
 const crypto = require('crypto')
+const dayjs = require('dayjs');
+const utc = require('dayjs/plugin/utc');
+const timezone = require('dayjs/plugin/timezone');
+dayjs.extend(utc);
+dayjs.extend(timezone);
+
 
 const register = asyncHandler(async (req, res) => {
     const { email, password, firstname, lastname, mobile, dateOfBirth } = req.body
@@ -230,24 +237,40 @@ const updateUserAddress = asyncHandler(async (req, res) => {
 const updateCart = asyncHandler(async (req, res) => {
     const { _id } = req.user
     let { pid, quantity, startAt, endAt, size } = req.body
-    if (!pid || !quantity || !size) throw new Error('Missing inputs')
+
     if (!startAt) startAt = Date.now()
-    if (!endAt) endAt = Date.now() + 2 * 24 * 60 * 60 * 1000
+    else startAt = new Date(startAt)
+    if (!endAt) endAt = Date.now()
+    else endAt = new Date(endAt)
+
+    const product = await Product.findById(pid)
+    if (!pid || !quantity || !size) throw new Error('Missing inputs')
+
+    //Tính số ngày thuê
+    const millisecondsPerDay = 1000 * 60 * 60 * 24;
+    const startDate = new Date(startAt).getTime();
+    const endDate = new Date(endAt).getTime();
+    const daysDifference = Math.round((endDate - startDate) / millisecondsPerDay) + 1;
+
+    const totalRentalPrice = daysDifference * quantity * product.rentalPrice
+
     const updateUser = await User.findById(_id)
     const alreadyProduct = updateUser.cart.find(el => el.product.toString() === pid && el.size === size)
     let response
     if (alreadyProduct) {
         response = await User.updateOne(
             { cart: { $elemMatch: alreadyProduct } },
-            { $set: { 'cart.$.startAt': startAt, 'cart.$.endAt': endAt, 'cart.$.size': size, 'cart.$.quantity': quantity } },
+            { $set: { 'cart.$.startAt': startAt, 'cart.$.endAt': endAt, 'cart.$.size': size, 'cart.$.quantity': quantity, 'cart.$.totalRentalPrice': totalRentalPrice } },
             { new: true }
         )
     } else {
-        response = await User.findByIdAndUpdate(_id, { $push: { cart: { product: pid, quantity, size, startAt, endAt } } }, { new: true })
+        response = await User.findByIdAndUpdate(_id, { $push: { cart: { product: pid, quantity, size, startAt, endAt, totalRentalPrice } } }, { new: true })
     }
+    const userUpdated = await User.findById(_id)
+    // console.log(userUpdated)
     return res.status(200).json({
         success: response ? true : false,
-        mes: response ? 'Updated cart' : 'Some thing went wrong'
+        mes: response ? response : 'Some thing went wrong'
     })
 })
 

@@ -32,6 +32,7 @@ var userSchema = new mongoose.Schema({
     },
     cart: [{
         product: { type: mongoose.Types.ObjectId, ref: 'Product' },
+        totalRentalPrice: Number,
         quantity: Number,
         size: String,
         startAt: Date,
