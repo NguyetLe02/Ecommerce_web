@@ -3,8 +3,13 @@ import moment from 'moment'
 import CurrencyFormat from 'react-currency-format'
 import { ButtonCancelledOrder, ButtonClaimOrder, ButtonCompletedOrder, ButtonPaidOrder, ButtonReceivedOrder, ButtonSentOrder } from '../../components'
 import ButtonProblemOrder from './ButtonProblemOrder'
+import { dateFormat } from '../../ultils/contants'
+import { differentDate } from '../../ultils/helpers'
+import dayjs from 'dayjs'
 
 const OrderedItem = ({ orderItemData }) => {
+    // console.log(typeof (orderItemData.startAt), orderItemData.endAt)
+    const rentalTime = differentDate(dayjs(orderItemData.startAt).format(dateFormat), dayjs(orderItemData.endAt).format(dateFormat))
     return (
         <div className=' w-full mx-auto font-bold my-8 border-b py-3 flex flex-col gap-3'>
             <div className='grid grid-cols-10'>
@@ -19,7 +24,7 @@ const OrderedItem = ({ orderItemData }) => {
                     <div className=' flex gap-2  '>
                         <span className='font-normal'>Tiền thuê:</span>
                         <div className=' font-semibold flex '>
-                            <CurrencyFormat value={orderItemData.product.rentalPrice * orderItemData.quantity} displayType={'text'} thousandSeparator={true} renderText={value => <div>{value}</div>} />
+                            <CurrencyFormat value={orderItemData.product.rentalPrice * orderItemData.quantity * rentalTime} displayType={'text'} thousandSeparator={true} renderText={value => <div>{value}</div>} />
                         </div>
                     </div>
                     <div className=' flex gap-2'>

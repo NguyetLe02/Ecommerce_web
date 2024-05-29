@@ -5,7 +5,7 @@ export const apiGetOrderItems = () => axios({
     method: 'get'
 })
 
-export const apiUpdateOrderDetailStatus = (data, odid) => axios({
+export const apiUpdateOrderDetail = (data, odid) => axios({
     url: '/orderDetail/' + odid,
     method: 'put',
     data

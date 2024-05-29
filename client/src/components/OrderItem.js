@@ -59,7 +59,7 @@ const OrderItem = ({ el, dispatch, defaultquantity = 1 }) => {
                     format={dateFormat}
                     value={dayjs(endAt, dateFormat)}
                     minDate={getDateFormat(startAt)}
-                    maxDate={addDate(startAt, 2, 'date')}
+                    maxDate={addDate(startAt, 3, 'date')}
                     onChange={handleChangeEndAt}
                 />
             </span>

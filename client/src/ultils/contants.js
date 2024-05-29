@@ -1,6 +1,8 @@
 import path from './path'
 import icons from './icons'
 
+export const dateFormat = 'YYYY-MM-DD'
+
 export const navigation = [
     {
         id: 1,

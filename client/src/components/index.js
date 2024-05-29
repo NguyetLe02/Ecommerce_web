@@ -61,5 +61,6 @@ export { default as ButtonProblemOrder } from './order/ButtonProblemOrder'
 export { default as ButtonReceivedOrder } from './order/ButtonReceivedOrder'
 export { default as ButtonCompletedOrder } from './order/ButtonCompletedOrder'
 export { default as ButtonCancelledOrder } from './order/ButtonCancelledOrder'
+export { default as ExtendDateModal } from './order/ExtendDateModal'
 
 export { default as ButtonAddToCart } from './button/ButtonAddToCart'

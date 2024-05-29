@@ -49,17 +49,32 @@ const getOrdersByAdmin = asyncHandler(async (req, res) => {
 
 const updateOrderDetail = asyncHandler(async (req, res) => {
     const { odid } = req.params
-    const { status, endAt } = req.body
-    if (!status) throw new Error('Missing input status')
-    const response = await OrderDetail.findByIdAndUpdate(odid, { status: status, endAt: endAt }, { new: true })
+    const { status, endAt, totalRentalPrice } = req.body
+    console.log(req.body)
+    // if (endAt) endAt = new Date(endAt)
+    console.log(totalRentalPrice, endAt)
+    // if (!status) throw new Error('Missing input status')
+    const response = await OrderDetail.findByIdAndUpdate(odid, { status: status, endAt: endAt, totalRentalPrice }, { new: true })
     return res.status(200).json({
         success: response ? true : false,
         updatedStatus: response ? response : 'Cannot update status slug'
     })
 })
 
+const updateEndDateOrderDetail = asyncHandler(async (req, res) => {
+    const { odid } = req.params
+    const { endAt } = req.body
+    if (!endAt) throw new Error('Missing input status')
+    const response = await OrderDetail.findByIdAndUpdate(odid, { endAt: endAt }, { new: true })
+    return res.status(200).json({
+        success: response ? true : false,
+        updatedEndDate: response ? response : 'Cannot update and date'
+    })
+})
+
 module.exports = {
     getOrderDetails,
     getOrdersByAdmin,
-    updateOrderDetail
+    updateOrderDetail,
+    updateEndDateOrderDetail
 }

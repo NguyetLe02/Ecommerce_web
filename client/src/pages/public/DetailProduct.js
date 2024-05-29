@@ -133,13 +133,15 @@ const DetailProduct = ({ data, isQuickView }) => {
                         <div className='flex flex-col'>
                             <span>Ngày kết thúc thuê:</span>
                             {selectProduct?.endAt &&
-                                <DatePicker
-                                    format={dateFormat}
-                                    value={dayjs(selectProduct?.endAt, dateFormat)}
-                                    minDate={getDateFormat(selectProduct?.startAt)}
-                                    maxDate={addDate(selectProduct?.startAt, 2, 'date')}
-                                    onChange={handleChangeEndDate}
-                                />
+                                <div title='Thời gian thuê tối đa 4 ngày'>
+                                    <DatePicker
+                                        format={dateFormat}
+                                        value={dayjs(selectProduct?.endAt, dateFormat)}
+                                        minDate={getDateFormat(selectProduct?.startAt)}
+                                        maxDate={addDate(selectProduct?.startAt, 3, 'date')}
+                                        onChange={handleChangeEndDate}
+                                    />
+                                </div>
                             }
                         </div>
                     </div>

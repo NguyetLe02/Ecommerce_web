@@ -1,7 +1,5 @@
 import React, { memo } from 'react'
 import { Button, VoteOption } from '../../components'
-import { apiUpdateOrderDetailStatus } from '../../apis'
-import Swal from 'sweetalert2'
 import withBaseComponent from '../../hocs/withBaseComponent'
 import path from '../../ultils/path'
 import { showModal } from '../../store/app/appSlice'

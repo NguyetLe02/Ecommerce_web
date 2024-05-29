@@ -1,10 +1,11 @@
 import React, { memo } from 'react'
 import Button from '../Button'
-import { apiUpdateOrderDetailStatus } from '../../apis'
 import Swal from 'sweetalert2'
 import withBaseComponent from '../../hocs/withBaseComponent'
+import { showModal } from '../../store/app/appSlice'
+import { ExtendDateModal } from '../../components'
 
-const ButtonReceivedOrder = ({ orderItemData }) => {
+const ButtonReceivedOrder = ({ orderItemData, dispatch }) => {
     const handleCreateProblem = async (data) => {
         // Swal.fire({
         //     title: "Bạn có chắc chắn muốn hủy đơn hàng này không?",
@@ -44,7 +45,7 @@ const ButtonReceivedOrder = ({ orderItemData }) => {
                 <Button
                     name={'Gia Hạn Thuê'}
                     style={'px-4 py-2 rounded-md bg-sub text-white font-semibold shadow hover:shadow-2xl'}
-                    handleOnclick={() => handleExtendOrder(orderItemData)}
+                    handleOnclick={() => dispatch(showModal({ isShowModal: true, modalChildren: <ExtendDateModal data={orderItemData} /> }))}
                 />
             </div>
         </div>

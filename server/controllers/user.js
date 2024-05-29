@@ -238,9 +238,9 @@ const updateCart = asyncHandler(async (req, res) => {
     const { _id } = req.user
     let { pid, quantity, startAt, endAt, size } = req.body
 
-    if (!startAt) startAt = Date.now()
+    if (!startAt) startAt = dayjs().add(2, 'day')
     else startAt = new Date(startAt)
-    if (!endAt) endAt = Date.now()
+    if (!endAt) endAt = dayjs().add(2, 'day')
     else endAt = new Date(endAt)
 
     const product = await Product.findById(pid)

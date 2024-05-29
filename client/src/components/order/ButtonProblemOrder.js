@@ -1,6 +1,5 @@
 import React, { memo } from 'react'
 import Button from '../Button'
-import { apiUpdateOrderDetailStatus } from '../../apis'
 import Swal from 'sweetalert2'
 import withBaseComponent from '../../hocs/withBaseComponent'
 

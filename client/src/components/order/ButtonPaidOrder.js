@@ -1,6 +1,6 @@
 import React, { memo } from 'react'
 import Button from '../Button'
-import { apiUpdateOrderDetailStatus } from '../../apis'
+import { apiUpdateOrderDetail } from '../../apis'
 import Swal from 'sweetalert2'
 import withBaseComponent from '../../hocs/withBaseComponent'
 
@@ -15,7 +15,7 @@ const ButtonPaidOrder = ({ orderItemData }) => {
         }).then(async (result) => {
             if (result.isConfirmed) {
                 try {
-                    const response = await apiUpdateOrderDetailStatus({ status: 'Cancelled' }, data._id);
+                    const response = await apiUpdateOrderDetail({ status: 'Cancelled' }, data._id);
                     if (response.success) {
                         Swal.fire("Hủy đơn hàng thành công", "", "success");
                         window.location.reload()

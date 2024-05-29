@@ -60,7 +60,16 @@ const VoteOption = ({ data, dispatch }) => {
                                     <TextArea rows={4} />
                                 </Form.Item>
                                 <Form.Item>
-                                    <Button type='submit' name={'Đánh giá'} />
+                                    <div className='flex gap-4'>
+                                        <Button
+                                            type='submit'
+                                            name={'Đánh giá'} />
+                                        <Button
+                                            name={'Thoát'}
+                                            style={'px-4 py-2 rounded-md bg-gray-200 font-semibold'}
+                                            handleOnclick={() => dispatch(showModal({ isShowModal: false }))}
+                                        />
+                                    </div>
                                 </Form.Item>
                             </Form>
                         </div>

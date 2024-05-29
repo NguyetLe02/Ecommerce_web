@@ -28,5 +28,10 @@ export const addDate = (date, value, type) => {
     return dayjs(dateString, format)
 }
 
+export const differentDate = (startDate, endDate) => {
+    const daysDifference = dayjs(endDate).diff(dayjs(startDate), 'day') + 1
+    return daysDifference
+}
+
 
 export const createSlug = (string) => string.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").split(" ").join("-")
