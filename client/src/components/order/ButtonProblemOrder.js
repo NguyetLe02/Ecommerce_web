@@ -31,7 +31,6 @@ const ButtonProblemOrder = ({ orderItemData, dispatch }) => {
     }
 
     const handleContactWithShop = (data) => {
-        console.log("Liên lạc với người bán")
     }
     return (
         <div className=' flex justify-end items-end gap-2'>

@@ -32,7 +32,6 @@ const ButtonSentOrder = ({ orderItemData, dispatch }) => {
     }
 
     const handleClaimOrder = (data) => {
-        console.log("Liên lạc với người bán")
     }
     return (
         <div className=' flex justify-between items-end'>

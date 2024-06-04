@@ -8,7 +8,6 @@ const ProductFilterSelection = ({ label, items }) => {
     const [isShow, setIsShow] = useState(true)
     const navigate = useNavigate()
     const [selected, setSelected] = useState({ color: [], price: [] })
-    console.log(selected.length)
     const handleSeleted = (e) => {
         //Check xem el đã được select chưa
         const value = e.target.value;

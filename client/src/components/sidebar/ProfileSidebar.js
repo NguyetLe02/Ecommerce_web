@@ -12,7 +12,6 @@ const { RiMoneyDollarCircleFill } = icons
 const ProfileSidebar = () => {
     const { currentUser } = useSelector(state => state.user)
     const location = useLocation();
-    console.log(location.pathname + location?.search)
 
     return (
         <div className='h-full w-[230px] py-4 text-base bg-gray-50 rounded-2xl shadow-lg'>

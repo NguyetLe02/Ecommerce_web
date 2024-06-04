@@ -4,8 +4,6 @@ import withBaseComponent from '../../hocs/withBaseComponent';
 import { showModal } from '../../store/app/appSlice'
 
 const DetailClaimOrderModal = ({ orderClaimData, orderData, dispatch }) => {
-    console.log(orderClaimData)
-    console.log(orderData)
     const modalRef = useRef()
     useEffect(() => {
         modalRef.current.scrollIntoView({ block: 'center', behavior: 'smooth' })

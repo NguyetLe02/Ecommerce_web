@@ -4,7 +4,6 @@ import { DownOutlined } from '@ant-design/icons';
 
 const ProductSort = ({ sortLowToHigh, sortHighToLow }) => {
     const handleOnClick = (key) => {
-        console.log(key)
         switch (key) {
             case '1':
                 sortLowToHigh();

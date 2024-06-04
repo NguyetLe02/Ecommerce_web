@@ -45,9 +45,7 @@ const ManageUser = () => {
   }, [queriesDebounce, params, update])
 
   const handleUpdate = async (data) => {
-    console.log(data)
     // const response = await apiUpdateUser(data, editEl?._id)
-    // console.log(response)
     // if (response.success) {
     //   render()
     //   toast.success(response.mes)

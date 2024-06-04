@@ -31,7 +31,6 @@ const ButtonReceivedOrder = ({ orderItemData, dispatch }) => {
     }
 
     const handleExtendOrder = (data) => {
-        console.log("Liên lạc với người bán")
     }
     return (
         <div className=' flex justify-between items-end'>
@@ -45,6 +44,7 @@ const ButtonReceivedOrder = ({ orderItemData, dispatch }) => {
                             isShowModal: true,
                             modalChildren: <CreateClaimOrderModal
                                 orderData={orderItemData}
+                                dispatch={dispatch}
                             />
                         }))
                     }

@@ -1,30 +1,39 @@
-import Reac, { useEffect } from 'react';
-import { Route, Routes } from 'react-router-dom'
-import { Login, Home, Public, DetailProduct, Products } from './pages/public'
-import { AdmminLayout, Dashboard, ManageUser, MangeClaimOrder, ManageOrder } from './pages/admin'
-import { MemberLayout, Ordered, Payment, Profile, Cart } from './pages/member'
-import path from './ultils/path';
-import { CartDrawer, Modal } from './components';
-import { useSelector } from 'react-redux';
-import { getCategories } from './store/app/asyncActions'
-import { showCart } from './store/app/appSlice'
-import { useDispatch } from 'react-redux';
+import Reac, { useEffect } from "react";
+import { Route, Routes } from "react-router-dom";
+import { Login, Home, Public, DetailProduct, Products } from "./pages/public";
+import {
+  AdmminLayout,
+  Dashboard,
+  ManageUser,
+  MangeClaimOrder,
+  ManageOrder,
+} from "./pages/admin";
+import { MemberLayout, Ordered, Payment, Profile, Cart } from "./pages/member";
+import path from "./ultils/path";
+import { CartDrawer, Modal } from "./components";
+import { useSelector } from "react-redux";
+import { getCategories } from "./store/app/asyncActions";
+import { showCart } from "./store/app/appSlice";
+import { useDispatch } from "react-redux";
+import ManageProduct from "./pages/admin/ManageProduct";
 
 function App() {
-  const dispatch = useDispatch()
-  const { isShowModal, modalChildren } = useSelector(state => state.app)
-  const { isShowCart } = useSelector(state => state.app)
+  const dispatch = useDispatch();
+  const { isShowModal, modalChildren } = useSelector((state) => state.app);
+  const { isShowCart } = useSelector((state) => state.app);
   useEffect(() => {
-    // console.log('getCategories')
-    dispatch(getCategories())
-  }, [])
+    dispatch(getCategories());
+  }, []);
   return (
     <div className=" min-h-screen font-main">
-      {isShowCart &&
-        <div onClick={() => dispatch(showCart())} className=' fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-end'>
+      {isShowCart && (
+        <div
+          onClick={() => dispatch(showCart())}
+          className=" fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-end"
+        >
           <CartDrawer />
         </div>
-      }
+      )}
       {isShowModal && <Modal>{modalChildren}</Modal>}
       <Routes>
         <Route path={path.PUBLIC} element={<Public />}>
@@ -41,6 +50,7 @@ function App() {
           <Route path={path.MANAGE_USER} element={<ManageUser />} />
           <Route path={path.MANAGE_CLAIM} element={<MangeClaimOrder />} />
           <Route path={path.MANAGE_ORDER} element={<ManageOrder />} />
+          <Route path={path.MANAGE_PRODUCT} element={<ManageProduct />} />
         </Route>
         <Route path={path.MEMBER} element={<MemberLayout />}>
           <Route path={path.PROFILE} element={<Profile />} />
