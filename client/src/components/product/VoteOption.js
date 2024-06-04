@@ -2,8 +2,7 @@ import { Flex, Form, Rate } from 'antd'
 import React, { useEffect, useRef, useState } from 'react'
 import Button from '../Button';
 import TextArea from 'antd/es/input/TextArea';
-import { apiGetProduct, apiRating } from '../../apis';
-import { useSelector } from 'react-redux';
+import { apiRating } from '../../apis';
 import Swal from 'sweetalert2';
 import withBaseComponent from '../../hocs/withBaseComponent';
 import { showModal } from '../../store/app/appSlice'

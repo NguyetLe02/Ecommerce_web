@@ -61,7 +61,6 @@ const ManageUser = () => {
     }).then(async (rs) => {
       if (rs.isConfirmed) {
         const response = await apiDeleteUser(uid)
-        console.log(response)
         if (response.success) {
           toast.success(response.mes)
         } else toast.error(response.mes)

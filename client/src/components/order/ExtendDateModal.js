@@ -14,6 +14,7 @@ const ExtendDateModal = ({ data, dispatch }) => {
     const dateFormat = 'YYYY-MM-DD'
     const [endAt, setEndAt] = useState(() => data.endAt)
     const [totalRentalPriceChage, setTotalRentalPriceChage] = useState(() => data.product.rentalPrice * data.quantity)
+    const rentalTime = differentDate(dayjs(data.startAt).format(dateFormat), dayjs(data.endAt).format(dateFormat))
 
     const handleChangeEndAt = (value) => {
         setEndAt(dayjs(value).format(dateFormat))
@@ -75,7 +76,7 @@ const ExtendDateModal = ({ data, dispatch }) => {
                                 <span>Giá thuê ban đầu:</span>
                                 <div className=' text-xl text-main'>
                                     <CurrencyFormat
-                                        value={data.product.rentalPrice * data.quantity}
+                                        value={data.product.rentalPrice * data.quantity * rentalTime}
                                         displayType={'text'}
                                         suffix={' đ'}
                                         thousandSeparator={true}

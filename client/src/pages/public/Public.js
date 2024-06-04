@@ -1,6 +1,7 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
 import { Footer, Header } from '../../components'
+import { ToastContainer } from 'react-toastify'
 
 const Public = () => {
     return (
@@ -10,6 +11,7 @@ const Public = () => {
                 <Outlet />
             </div>
             <Footer />
+            <ToastContainer />
         </div>
     )
 }

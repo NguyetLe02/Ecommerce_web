@@ -6,7 +6,6 @@ var orderDetailSchema = new mongoose.Schema({
         type: mongoose.Types.ObjectId,
         ref: 'Product'
     },
-    totalRentalPrice: Number,
     quantity: Number,
     size: String,
     startAt: Date,
@@ -16,6 +15,29 @@ var orderDetailSchema = new mongoose.Schema({
         default: 'Paid',
         enum: ['Cancelled', 'Completed', 'Paid', 'Received', 'Sent', 'Issue', 'Problem'],
     },
+    claims: [{
+        type: {
+            type: String,
+            enum: ['ProductIssue', 'Damage']
+        },
+        status: {
+            type: String,
+            default: 'Pending',
+            enum: ['Pending', 'Resolved'],
+        },
+        description: String,
+        images: {
+            type: Array,
+        },
+        response: {
+            decision: {
+                type: String,
+                enum: ['Discount', 'Compensation', 'None']
+            },
+            amount: Number
+        }
+    }]
+
 });
 
 //Export the model

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import CurrencyFormat from 'react-currency-format'
 import { SelectOption } from '../../components'
 import icons from '../../ultils/icons'
@@ -71,7 +71,6 @@ const ProductCard = ({ productData }) => {
                     <div className=' line-clamp-1 font-semibold'> {productData?.title}</div>
                     <div className='  font-bold text-main'><CurrencyFormat value={productData?.rentalPrice} displayType={'text'} thousandSeparator={true} suffix={' đ'} renderText={value => <div>{value}</div>} /></div>
                 </div>
-                <ToastContainer />
             </div>
             {showProductDetail && <DetailProduct data={productData} isQuickView={true} onClose={() => setShowProductDetail(false)} />} {/* Hiển thị ProductDetail component khi state showProductDetail là true */}
         </div>

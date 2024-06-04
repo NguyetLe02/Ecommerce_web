@@ -1,7 +1,7 @@
 import Reac, { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom'
 import { Login, Home, Public, DetailProduct, Products } from './pages/public'
-import { AdmminLayout, Dashboard, ManageUser } from './pages/admin'
+import { AdmminLayout, Dashboard, ManageUser, MangeClaimOrder, ManageOrder } from './pages/admin'
 import { MemberLayout, Ordered, Payment, Profile, Cart } from './pages/member'
 import path from './ultils/path';
 import { CartDrawer, Modal } from './components';
@@ -39,6 +39,8 @@ function App() {
         <Route path={path.ADMIN} element={<AdmminLayout />}>
           <Route path={path.DASHBOARD} element={<Dashboard />} />
           <Route path={path.MANAGE_USER} element={<ManageUser />} />
+          <Route path={path.MANAGE_CLAIM} element={<MangeClaimOrder />} />
+          <Route path={path.MANAGE_ORDER} element={<ManageOrder />} />
         </Route>
         <Route path={path.MEMBER} element={<MemberLayout />}>
           <Route path={path.PROFILE} element={<Profile />} />

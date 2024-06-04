@@ -14,7 +14,7 @@ const Ordered = () => {
         if (response.success) setOrderedItems(response.OrderItems)
     }
 
-    console.log(orderedItems)
+    // console.log(orderedItems)
     useEffect(() => {
         fetchOrderItems()
     }, [currentUser])

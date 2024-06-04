@@ -3,8 +3,10 @@ import Button from '../Button'
 import { apiUpdateOrderDetail } from '../../apis'
 import Swal from 'sweetalert2'
 import withBaseComponent from '../../hocs/withBaseComponent'
+import { showModal } from '../../store/app/appSlice'
+import CreateClaimOrderModal from './CreateClaimOrderModal'
 
-const ButtonSentOrder = ({ orderItemData }) => {
+const ButtonSentOrder = ({ orderItemData, dispatch }) => {
     const handleReceiveOrder = async (data) => {
         Swal.fire({
             title: "Bạn xác nhận là đã nhận được hàng?",
@@ -39,7 +41,14 @@ const ButtonSentOrder = ({ orderItemData }) => {
                 <Button
                     name={'Hàng Có Vấn Đề'}
                     style={'px-4 py-2 rounded-md bg-gray-200 font-semibold shadow hover:shadow-2xl'}
-                    handleOnclick={() => handleClaimOrder(orderItemData)}
+                    handleOnclick={() =>
+                        dispatch(showModal({
+                            isShowModal: true,
+                            modalChildren: <CreateClaimOrderModal
+                                orderData={orderItemData}
+                            />
+                        }))
+                    }
                 />
                 <Button
                     name={'Đã Nhận Được Hàng'}

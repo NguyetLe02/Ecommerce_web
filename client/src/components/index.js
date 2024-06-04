@@ -54,6 +54,7 @@ export { default as HistoryOrderedSidebar } from './sidebar/HistoryOrderedSideba
 export { default as AvatarUpload } from './uploadImage/AvatarUpload'
 
 export { default as OrderedItem } from './order/OrderedItem'
+export { default as AdminOrderedItem } from './order/AdminOrderedItem'
 export { default as ButtonPaidOrder } from './order/ButtonPaidOrder'
 export { default as ButtonSentOrder } from './order/ButtonSentOrder'
 export { default as ButtonClaimOrder } from './order/ButtonClaimOrder'
@@ -62,5 +63,12 @@ export { default as ButtonReceivedOrder } from './order/ButtonReceivedOrder'
 export { default as ButtonCompletedOrder } from './order/ButtonCompletedOrder'
 export { default as ButtonCancelledOrder } from './order/ButtonCancelledOrder'
 export { default as ExtendDateModal } from './order/ExtendDateModal'
+export { default as DetailClaimOrderModal } from './order/DetailClaimOrderModal'
+export { default as CreateClaimOrderModal } from './order/CreateClaimOrderModal'
+export { default as UploadClaimImage } from './order/UploadClaimImage'
+
+export { default as VoucherModal } from './voucher/VoucherModal'
+export { default as VoucherItem } from './voucher/VoucherItem'
+
 
 export { default as ButtonAddToCart } from './button/ButtonAddToCart'

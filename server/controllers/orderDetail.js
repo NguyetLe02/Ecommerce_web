@@ -22,11 +22,16 @@ const getOrderDetails = asyncHandler(async (req, res) => {
     })
 })
 
-const getOrdersByAdmin = asyncHandler(async (req, res) => {
-    const response = await Order.find()
+const getAllOrderDetailsByAdmin = asyncHandler(async (req, res) => {
+    const response = await OrderDetail.find().populate(
+        {
+            path: 'product',
+            select: 'title rentalPrice cost images color slug'
+        }
+    )
     return res.status(200).json({
         success: response ? true : false,
-        Orders: response ? response : 'Cannot get Order'
+        OrderDetails: response ? response : 'Cannot get Order'
     })
 })
 // const deleteOrder = asyncHandler(async (req, res) => {
@@ -49,32 +54,69 @@ const getOrdersByAdmin = asyncHandler(async (req, res) => {
 
 const updateOrderDetail = asyncHandler(async (req, res) => {
     const { odid } = req.params
-    const { status, endAt, totalRentalPrice } = req.body
-    console.log(req.body)
-    // if (endAt) endAt = new Date(endAt)
-    console.log(totalRentalPrice, endAt)
-    // if (!status) throw new Error('Missing input status')
-    const response = await OrderDetail.findByIdAndUpdate(odid, { status: status, endAt: endAt, totalRentalPrice }, { new: true })
+    const { status, endAt } = req.body
+
+    const response = await OrderDetail.findByIdAndUpdate(odid, { status: status, endAt: endAt }, { new: true })
     return res.status(200).json({
         success: response ? true : false,
         updatedStatus: response ? response : 'Cannot update status slug'
     })
 })
 
-const updateEndDateOrderDetail = asyncHandler(async (req, res) => {
+const createClaim = asyncHandler(async (req, res) => {
     const { odid } = req.params
-    const { endAt } = req.body
-    if (!endAt) throw new Error('Missing input status')
-    const response = await OrderDetail.findByIdAndUpdate(odid, { endAt: endAt }, { new: true })
+    const { type, description } = req.body
+    if (!type || !description) throw new Error('Missing input.')
+
+    if (!req.files) throw new Error('Missing input image')
+
+    const orderDetail = await OrderDetail.findById(odid);
+    if (!orderDetail) {
+        return res.status(404).json({
+            success: false,
+            message: 'Không tìm thấy đơn hàng.'
+        });
+    }
+
+    const response = await OrderDetail.findByIdAndUpdate(odid, {
+        status: 'Problem',
+        $push: { claims: { type, description, images: req.files.map(el => el.path) } }
+    }, { new: true })
+
     return res.status(200).json({
         success: response ? true : false,
-        updatedEndDate: response ? response : 'Cannot update and date'
-    })
+        UpdatedOrderDetail: response ? response : 'Không thể tạo claim'
+    });
+})
+
+const updateClaimOrder = asyncHandler(async (req, res) => {
+    const { odid } = req.params
+    const { claimResponse, clid } = req.body
+    if (!claimResponse) throw new Error('Missing input.')
+
+    const orderDetail = await OrderDetail.findById(odid);
+    if (!orderDetail) {
+        return res.status(404).json({
+            success: false,
+            message: 'Không tìm thấy đơn hàng.'
+        });
+    }
+
+    const response = await OrderDetail.findByIdAndUpdate(odid, { status: 'Resolved', response: claimResponse })
+
+
+    console.log(orderDetail)
+
+    return res.status(200).json({
+        success: response ? true : false,
+        UpdatedOrderDetail: response ? response : 'Không thể update claim'
+    });
 })
 
 module.exports = {
     getOrderDetails,
-    getOrdersByAdmin,
+    getAllOrderDetailsByAdmin,
     updateOrderDetail,
-    updateEndDateOrderDetail
+    createClaim,
+    updateClaimOrder
 }

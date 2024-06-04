@@ -13,6 +13,7 @@ const style = { "layout": "vertical" };
 
 // Custom component to wrap the PayPalButtons and show loading spinner
 const ButtonWrapper = ({ currency, showSpinner, amount, payload, setIsSuccess }) => {
+    console.log(payload)
     const [{ isPending, options }, dispatch] = usePayPalScriptReducer();
     useEffect(() => {
         dispatch({
@@ -60,7 +61,6 @@ const ButtonWrapper = ({ currency, showSpinner, amount, payload, setIsSuccess })
 }
 
 export default function Paypal({ amount, payload, setIsSuccess }) {
-    console.log(payload);
     return (
         <div style={{ maxWidth: "750px", minHeight: "200px" }}>
             <PayPalScriptProvider options={{ clientId: "test", components: "buttons", currency: "USD" }}>

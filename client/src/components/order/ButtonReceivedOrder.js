@@ -3,7 +3,7 @@ import Button from '../Button'
 import Swal from 'sweetalert2'
 import withBaseComponent from '../../hocs/withBaseComponent'
 import { showModal } from '../../store/app/appSlice'
-import { ExtendDateModal } from '../../components'
+import { CreateClaimOrderModal, DetailClaimOrderModal, ExtendDateModal } from '../../components'
 
 const ButtonReceivedOrder = ({ orderItemData, dispatch }) => {
     const handleCreateProblem = async (data) => {
@@ -40,7 +40,14 @@ const ButtonReceivedOrder = ({ orderItemData, dispatch }) => {
                 <Button
                     name={'Xảy Ra Sự Cố'}
                     style={'px-4 py-2 rounded-md bg-gray-200 font-semibold shadow hover:shadow-2xl'}
-                    handleOnclick={() => handleCreateProblem(orderItemData)}
+                    handleOnclick={() =>
+                        dispatch(showModal({
+                            isShowModal: true,
+                            modalChildren: <CreateClaimOrderModal
+                                orderData={orderItemData}
+                            />
+                        }))
+                    }
                 />
                 <Button
                     name={'Gia Hạn Thuê'}

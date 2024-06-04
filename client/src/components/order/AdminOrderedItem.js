@@ -1,13 +1,15 @@
 import React from 'react'
 import moment from 'moment'
 import CurrencyFormat from 'react-currency-format'
-import { ButtonCancelledOrder, ButtonClaimOrder, ButtonCompletedOrder, ButtonPaidOrder, ButtonReceivedOrder, ButtonSentOrder } from '../../components'
+import { Button, ButtonCancelledOrder, ButtonClaimOrder, ButtonCompletedOrder, ButtonPaidOrder, ButtonReceivedOrder, ButtonSentOrder, DetailClaimOrderModal } from '../../components'
 import ButtonProblemOrder from './ButtonProblemOrder'
 import { dateFormat } from '../../ultils/contants'
 import { differentDate } from '../../ultils/helpers'
 import dayjs from 'dayjs'
+import withBaseComponent from '../../hocs/withBaseComponent'
+import { showModal } from '../../store/app/appSlice'
 
-const OrderedItem = ({ orderItemData }) => {
+const AdminOrderedItem = ({ orderItemData, dispatch }) => {
     // console.log(typeof (orderItemData.startAt), orderItemData.endAt)
     const rentalTime = differentDate(dayjs(orderItemData.startAt).format(dateFormat), dayjs(orderItemData.endAt).format(dateFormat))
     return (
@@ -54,19 +56,27 @@ const OrderedItem = ({ orderItemData }) => {
                 </div>
             </div>
             <div>
-                {orderItemData.status === "Paid" ?
-                    <ButtonPaidOrder orderItemData={orderItemData} />
-                    : orderItemData.status === 'Sent' ?
-                        <ButtonSentOrder orderItemData={orderItemData} />
-                        : orderItemData.status === 'Issue' ?
-                            <ButtonClaimOrder orderItemData={orderItemData} />
-                            : orderItemData.status === 'Received' ?
-                                <ButtonReceivedOrder orderItemData={orderItemData} />
-                                : orderItemData.status === 'Problem' ?
-                                    <ButtonProblemOrder orderItemData={orderItemData} />
-                                    : orderItemData.status === 'Completed' ?
-                                        <ButtonCompletedOrder orderItemData={orderItemData} />
-                                        : <ButtonCancelledOrder orderItemData={orderItemData} />
+                {(orderItemData.status === "Issue" || orderItemData.status === "Problem") &&
+                    <div className=' flex justify-end items-end gap-2'>
+                        <Button
+                            name={'Xem Chi Tiết'}
+                            style={'px-4 py-2 rounded-md bg-gray-200 font-semibold shadow hover:shadow-2xl'}
+                            handleOnclick={() =>
+                                dispatch(showModal({
+                                    isShowModal: true,
+                                    modalChildren: <DetailClaimOrderModal
+                                        orderClaimData={orderItemData.claims.find(item => item.type === "Damage")}
+                                        orderData={orderItemData}
+                                    />
+                                }))
+                            }
+                        />
+                        <Button
+                            name={'Liên Hệ Khách Hàng'}
+                            style={'px-4 py-2 rounded-md bg-sub text-white font-semibold shadow hover:shadow-2xl'}
+                        // handleOnclick={() => handleContactWithShop(orderItemData.claims.find(item => item.type === "Damage"))}
+                        />
+                    </div>
                 }
             </div>
 
@@ -74,4 +84,4 @@ const OrderedItem = ({ orderItemData }) => {
     )
 }
 
-export default OrderedItem
+export default withBaseComponent(AdminOrderedItem)

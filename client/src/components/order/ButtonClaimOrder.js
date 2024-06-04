@@ -3,8 +3,10 @@ import Button from '../Button'
 import { apiUpdateOrderDetail } from '../../apis'
 import Swal from 'sweetalert2'
 import withBaseComponent from '../../hocs/withBaseComponent'
+import { showModal } from '../../store/app/appSlice'
+import DetailClaimOrderModal from './DetailClaimOrderModal'
 
-const ButtonClaimOrder = ({ orderItemData }) => {
+const ButtonClaimOrder = ({ orderItemData, dispatch }) => {
     const handleDeleteClaim = async (data) => {
         Swal.fire({
             title: "Bạn có chắc chắn muốn hủy khiếu nại đơn hàng này không?",
@@ -39,7 +41,15 @@ const ButtonClaimOrder = ({ orderItemData }) => {
                 <Button
                     name={'Xem Chi Tiết'}
                     style={'px-4 py-2 rounded-md bg-gray-200 font-semibold shadow hover:shadow-2xl'}
-                    handleOnclick={() => handleDetailClaim(orderItemData)}
+                    handleOnclick={() =>
+                        dispatch(showModal({
+                            isShowModal: true,
+                            modalChildren: <DetailClaimOrderModal
+                                orderClaimData={orderItemData.claims.find(item => item.type === "ProductIssue")}
+                                orderData={orderItemData}
+                            />
+                        }))
+                    }
                 />
                 <Button
                     name={'Hủy Bỏ Khiếu Nại'}

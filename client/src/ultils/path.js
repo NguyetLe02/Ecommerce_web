@@ -15,6 +15,8 @@ const path = {
     ADMIN: 'admin',
     DASHBOARD: 'dashboard',
     MANAGE_USER: 'manage_user',
+    MANAGE_CLAIM: 'claim',
+    MANAGE_ORDER: 'manage_order',
     ORDERED: 'ordered',
 
     //member

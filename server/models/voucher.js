@@ -1,7 +1,7 @@
 const mongoose = require('mongoose'); // Erase if already required
 
 // Declare the Schema of the Mongo model
-var CouponSchema = new mongoose.Schema({
+var VoucherSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
@@ -15,10 +15,18 @@ var CouponSchema = new mongoose.Schema({
     expiry: {
         type: Date,
         required: true,
+    },
+    point: {
+        type: Number,
+        default: 50
+    },
+    quantity: {
+        type: Number,
+        default: 30
     }
 }, {
     timestamps: true,
 });
 
 //Export the model
-module.exports = mongoose.model('Coupon', CouponSchema);
+module.exports = mongoose.model('Voucher', VoucherSchema);

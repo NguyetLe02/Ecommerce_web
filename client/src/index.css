@@ -56,3 +56,6 @@ button.slick-prev::before {
     border-radius: 4px;
 }
 
+span.ant-radio+* {
+    width: 100%;
+}

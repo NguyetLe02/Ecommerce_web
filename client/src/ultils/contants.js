@@ -118,10 +118,20 @@ export const adminSidebar = [
     },
     {
         id: 4,
-        type: 'single',
+        type: 'parent',
         text: 'Quản lý đơn hàng',
         path: `/${path.ADMIN}/${path.DASHBOAR}`,
-        icons: <FaBagShopping />
+        icons: <FaBagShopping />,
+        submenu: [
+            {
+                text: 'Tất cả đơn hàng',
+                path: `/${path.ADMIN}/${path.MANAGE_ORDER}`
+            },
+            {
+                text: 'Khiếu nại/Sự cố',
+                path: `/${path.ADMIN}/${path.MANAGE_CLAIM}`
+            }
+        ]
     }
 ]
 

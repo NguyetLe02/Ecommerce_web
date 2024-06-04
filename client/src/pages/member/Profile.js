@@ -45,7 +45,6 @@ const Profile = ({ dispatch }) => {
         if (response) {
             dispatch(getCurrent())
             toast.success('Chỉnh sửa thông tin các nhân thành công')
-            console.log('success')
         } else toast.error('Chỉnh sửa không thành công')
     };
     return (

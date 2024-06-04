@@ -6,6 +6,7 @@ import { AiFillCloseCircle, AiFillStar } from "react-icons/ai";
 import { BsThreeDots } from "react-icons/bs";
 import { IoMenu } from "react-icons/io5";
 import { IoIosArrowBack } from "react-icons/io";
+import { RiMoneyDollarCircleFill } from "react-icons/ri";
 
 const icons = {
     FaBagShopping,
@@ -23,7 +24,8 @@ const icons = {
     IoMenu,
     AiFillCloseCircle,
     AiFillStar,
-    IoIosArrowBack
+    IoIosArrowBack,
+    RiMoneyDollarCircleFill
 }
 
 export default icons

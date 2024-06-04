@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux'
 const activeStyle = 'flex flex-col justify-center items-centers p-4 px-6 gap-2 hover:bg-main bg-main'
 const notactiveStyle = 'flex flex-col justify-center items-centers p-4 px-6 gap-2 hover:bg-main '
 
-
+const { RiMoneyDollarCircleFill } = icons
 const ProfileSidebar = () => {
     const { currentUser } = useSelector(state => state.user)
     const location = useLocation();
@@ -16,8 +16,13 @@ const ProfileSidebar = () => {
 
     return (
         <div className='h-full w-[230px] py-4 text-base bg-gray-50 rounded-2xl shadow-lg'>
-            <div className='flex justify-center items-center p-4 gap-4'>
+            <div className='flex flex-col justify-center items-center p-4 gap-4'>
                 <img src={currentUser?.image} className='w-[150px] h-[150px] rounded-full border-sub border-2' />
+                <div className=' font-semibold text-xl'>{`${currentUser?.firstname} ${currentUser?.lastname}`}</div>
+                <div className=' flex justify-center items-center gap-2 font-semibold text-2xl'>
+                    <RiMoneyDollarCircleFill className=' text-yellow-500' />
+                    <div>{currentUser?.point}</div>
+                </div>
             </div>
             <div>
                 {profileSidebar1.map(el => (
