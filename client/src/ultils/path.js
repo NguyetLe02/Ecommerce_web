@@ -23,6 +23,7 @@ const path = {
     MEMBER: 'member',
     PAYMENT: 'payment',
     PROFILE: 'profile',
+    CHAT: 'chat',
 }
 
 export default path;

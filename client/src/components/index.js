@@ -70,5 +70,9 @@ export { default as UploadClaimImage } from './order/UploadClaimImage'
 export { default as VoucherModal } from './voucher/VoucherModal'
 export { default as VoucherItem } from './voucher/VoucherItem'
 
+export { default as Chat } from './chat/Chat'
+export { default as ChatList } from './chat/ChatList'
+export { default as ChatBox } from './chat/ChatBox'
+export { default as Conversation } from './chat/Conversation'
 
 export { default as ButtonAddToCart } from './button/ButtonAddToCart'

@@ -8,9 +8,10 @@ import { useSelector } from 'react-redux'
 import { getCurrent } from '../store/user/asyncActions'
 import withBaseComponent from '../hocs/withBaseComponent'
 import { showCart } from '../store/app/appSlice'
+import { Badge } from 'antd'
 
-const { FaBagShopping } = icons
-const Header = ({ dispatch }) => {
+const { FaBagShopping, AiFillMessage } = icons
+const Header = ({ dispatch, navigate }) => {
     const { isLoggedIn, currentUser } = useSelector(state => state.user)
     const [q, setQ] = useState('')
     useEffect(() => {
@@ -40,8 +41,17 @@ const Header = ({ dispatch }) => {
                             placeholder={'Tìm kiếm '}
                         />
                         <div onClick={() => dispatch(showCart())} className='flex justify-center items-center gap-1'>
-                            <FaBagShopping size={24} />
-                            <span>{`${currentUser?.cart?.length || 0} item`}</span>
+                            {currentUser?.cart?.length > 0 ?
+                                <Badge count={currentUser?.cart?.length}>
+                                    <FaBagShopping size={24} />
+                                </Badge> :
+                                <FaBagShopping size={24} />
+                            }
+                        </div>
+                        <div onClick={() => navigate(`/${path.MEMBER}/${path.CHAT}`)} className='flex justify-center items-center gap-1'>
+                            <Badge >
+                                <AiFillMessage size={24} />
+                            </Badge>
                         </div>
                         <div className='flex justify-center items-center gap-1'>
                             <UserPopover

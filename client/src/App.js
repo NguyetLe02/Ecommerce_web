@@ -2,7 +2,7 @@ import Reac, { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom'
 import { Login, Home, Public, DetailProduct, Products } from './pages/public'
 import { AdmminLayout, Dashboard, ManageUser, MangeClaimOrder, ManageOrder } from './pages/admin'
-import { MemberLayout, Ordered, Payment, Profile, Cart } from './pages/member'
+import { MemberLayout, Ordered, Payment, Profile, Cart, Message } from './pages/member'
 import path from './ultils/path';
 import { CartDrawer, Modal } from './components';
 import { useSelector } from 'react-redux';
@@ -15,7 +15,6 @@ function App() {
   const { isShowModal, modalChildren } = useSelector(state => state.app)
   const { isShowCart } = useSelector(state => state.app)
   useEffect(() => {
-    // console.log('getCategories')
     dispatch(getCategories())
   }, [])
   return (
@@ -45,6 +44,7 @@ function App() {
         <Route path={path.MEMBER} element={<MemberLayout />}>
           <Route path={path.PROFILE} element={<Profile />} />
           <Route path={path.ORDERED} element={<Ordered />} />
+          <Route path={path.CHAT} element={<Message />} />
         </Route>
         <Route path={path.ALL} element={<Public />} />
       </Routes>
