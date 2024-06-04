@@ -30,7 +30,6 @@ const ButtonPaidOrder = ({ orderItemData }) => {
     }
 
     const handleContactWithShop = (data) => {
-        console.log("Liên lạc với người bán")
     }
     return (
         <div className=' flex justify-between items-end'>

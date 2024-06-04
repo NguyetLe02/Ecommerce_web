@@ -8,7 +8,7 @@ const getBase64 = (file) =>
         reader.onload = () => resolve(reader.result);
         reader.onerror = (error) => reject(error);
     });
-const UploadClaimImage = ({ onImageUpload }) => {
+const UploadClaimImage = ({ onImageUpload, maxCount, images }) => {
     const [previewOpen, setPreviewOpen] = useState(false);
     const [previewImage, setPreviewImage] = useState('');
     const [fileList, setFileList] = useState([]);
@@ -53,6 +53,7 @@ const UploadClaimImage = ({ onImageUpload }) => {
                 onPreview={handlePreview}
                 onChange={handleChange}
                 beforeUpload={beforeUpload}
+                maxCount={maxCount || 5}
             >
                 {fileList.length >= 5 ? null : uploadButton}
             </Upload>

@@ -8,7 +8,6 @@ import { apiCreateOrderClaim } from '../../apis';
 import Swal from 'sweetalert2';
 
 const CreateClaimOrderModal = ({ orderData, dispatch }) => {
-    // console.log(orderData)
     const modalRef = useRef()
     const [form] = Form.useForm()
     const [uploadedImages, setUploadedImages] = useState([]);

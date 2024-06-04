@@ -9,7 +9,6 @@ export const getCurrent = createAsyncThunk('user/current', async (data, { reject
 
 export const updateCart = createAsyncThunk('user/updateCart', async (data, { rejectWithValue }) => {
     const response = await apis.apiUpdateCart()
-    console.log(response)
     if (!response.success) return rejectWithValue(response)
     return response.rs
 })

@@ -29,7 +29,6 @@ const Products = () => {
 
     const sortProductsLowToHigh = () => {
         const sorted = [...products].sort((a, b) => a.rentalPrice - b.rentalPrice);
-        console.log(sorted)
         setSortedProducts(sorted);
     };
 

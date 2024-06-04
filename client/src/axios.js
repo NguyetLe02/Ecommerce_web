@@ -13,7 +13,6 @@ instance.interceptors.request.use(function (config) {
         config.headers = { authorization: `Bearer ${accessToken}` }
         return config
     }
-    // console.log(localStorageData);
     return config;
 }, function (error) {
     // Do something with request error

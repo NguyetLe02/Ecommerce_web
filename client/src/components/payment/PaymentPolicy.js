@@ -13,7 +13,6 @@ const PaymentPolicy = ({ dispatch, navigate }) => {
         modalRef.current.scrollIntoView({ block: 'center', behavior: 'smooth' })
     }, [])
     useEffect(() => {
-        console.log(isAgree)
     }, [isAgree])
 
     return (

@@ -10,10 +10,8 @@ export const generateRange = (start, end) => {
 }
 
 export const getDateFormat = (date) => {
-    // console.log(date)
     const format = 'YYYY-MM-DD';
     const dateConvert = dayjs(date).format();
-    // console.log(dateConvert)
     return dayjs(dateConvert, format)
 }
 
