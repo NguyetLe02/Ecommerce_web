@@ -10,11 +10,9 @@ const Ordered = () => {
     const [orderedItems, setOrderedItems] = useState([])
     const fetchOrderItems = async () => {
         const response = await apiGetOrderItems()
-        console.log(response)
         if (response.success) setOrderedItems(response.OrderItems)
     }
 
-    // console.log(orderedItems)
     useEffect(() => {
         fetchOrderItems()
     }, [currentUser])

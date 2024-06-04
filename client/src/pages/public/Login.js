@@ -13,7 +13,6 @@ const Login = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const { isLoggedIn, currentUser } = useSelector(state => state.user)
-    console.log(isLoggedIn, currentUser)
     const [isRegister, setIsRegister] = useState(false);
     const [payload, setPayload] = useState({
         email: '',
@@ -61,7 +60,6 @@ const Login = () => {
 
     useEffect(() => {
         if (isLoggedIn && currentUser) {
-            // console.log(currentUser.role)
             if (currentUser?.role === '0') {
                 navigate(`/${path.ADMIN}`);
             } else {

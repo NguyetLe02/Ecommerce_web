@@ -83,7 +83,7 @@ export const productFilter = {
 
 }
 
-const { MdSpaceDashboard, FaUserAlt, FaBagShopping, GiLargeDress, FaClipboardList } = icons
+const { MdSpaceDashboard, FaUserAlt, FaBagShopping, GiLargeDress, FaClipboardList, FaPowerOff } = icons
 export const adminSidebar = [
     {
         id: 1,
@@ -132,6 +132,13 @@ export const adminSidebar = [
                 path: `/${path.ADMIN}/${path.MANAGE_CLAIM}`
             }
         ]
+    },
+    {
+        id: 5,
+        type: 'single',
+        text: 'Đăng xuất',
+        path: `/login`,
+        icons: <FaPowerOff />,
     }
 ]
 
@@ -329,4 +336,3 @@ export const orderStatusTabs = [
         note: ''
     },
 ]
-

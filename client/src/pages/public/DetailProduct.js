@@ -67,7 +67,6 @@ const DetailProduct = ({ data, isQuickView }) => {
         };
         setSelectProduct(updatedProduct);
     };
-    // console.log(selectProduct.product.ratings.length)
     useEffect(() => {
         if (pid) fetchProductData()
     }, [pid])

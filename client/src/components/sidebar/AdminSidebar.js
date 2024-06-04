@@ -17,7 +17,7 @@ const AdminSidebar = () => {
                 <img src={logo} alt='logo' className='w-[150px] object-contain' />
             </div>
             <div >
-                {adminSidebar.map(el => (
+                {adminSidebar?.map(el => (
                     <Fragment key={el.id}>
                         {el.type === 'single' &&
                             <NavLink

@@ -6,7 +6,6 @@ import { showModal } from '../../store/app/appSlice'
 
 const ButtonCompletedOrder = ({ orderItemData, navigate, dispatch }) => {
     const handleRerental = async (data) => {
-        console.log(data)
         navigate(`/${path.PRODUCTS}/detail/${data?.product?._id}/${data?.product?.slug}`)
     }
 

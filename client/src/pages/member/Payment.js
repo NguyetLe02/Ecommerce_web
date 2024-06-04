@@ -50,7 +50,6 @@ const Payment = ({ dispatch, navigate }) => {
         setVoucher(selectedVoucher);
     }
 
-    console.log(voucher)
     useEffect(() => {
         if (isSuccess) {
             dispatch(getCurrent())

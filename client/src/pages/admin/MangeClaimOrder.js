@@ -12,14 +12,11 @@ const ManageClaimOrder = ({ dispatch }) => {
     const [orderedItems, setOrderedItems] = useState([])
     const fetchOrderItems = async () => {
         const response = await apiGetAllOrderItems()
-        console.log(response)
         if (response.success) setOrderedItems(response?.OrderDetails)
     }
 
-    // console.log(orderedItems)
     useEffect(() => {
         fetchOrderItems()
-        console.log(orderedItems)
     }, [])
     return (
         <div className='  w-full lg:w-main px-8 flex gap-5 flex-col '>

@@ -7,7 +7,6 @@ const SliderNewProducts = () => {
     const fetchNewProducts = async () => {
         const response = await apiGetProducts({ sort: '-createdAt', limit: 8 })
 
-        // console.log(response)
         if (response.success) setNewProducts(response.products)
     }
 

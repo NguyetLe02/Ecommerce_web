@@ -9,11 +9,9 @@ const ManageOrder = () => {
     const [orderedItems, setOrderedItems] = useState([])
     const fetchOrderItems = async () => {
         const response = await apiGetAllOrderItems()
-        console.log(response)
         if (response.success) setOrderedItems(response?.OrderDetails)
     }
 
-    // console.log(orderedItems)
     useEffect(() => {
         fetchOrderItems()
     }, [])

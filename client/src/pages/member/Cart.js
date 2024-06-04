@@ -7,9 +7,7 @@ import { apiUpdateCart } from '../../apis';
 
 const Cart = ({ navigate }) => {
     const { currentCart } = useSelector(state => state.user)
-    console.log(currentCart.length)
     const handleUpdateCart = async () => {
-        console.log(currentCart)
         const promises = currentCart?.map(async (el) => {
             const response = await apiUpdateCart({ pid: el?.product._id, quantity: el?.quantity, startAt: el?.startAt, endAt: el?.endAt, size: el?.size })
             return response
