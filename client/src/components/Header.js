@@ -7,12 +7,13 @@ import path from '../ultils/path'
 import { useSelector } from 'react-redux'
 import { getCurrent } from '../store/user/asyncActions'
 import withBaseComponent from '../hocs/withBaseComponent'
-import { showCart } from '../store/app/appSlice'
+import { setHasMessage, showCart } from '../store/app/appSlice'
 import { Badge } from 'antd'
 
 const { FaBagShopping, AiFillMessage } = icons
 const Header = ({ dispatch, navigate }) => {
     const { isLoggedIn, currentUser } = useSelector(state => state.user)
+    const { hasMessage } = useSelector(state => state.app)
     const [q, setQ] = useState('')
     useEffect(() => {
         if (isLoggedIn) {
@@ -48,10 +49,19 @@ const Header = ({ dispatch, navigate }) => {
                                 <FaBagShopping size={24} />
                             }
                         </div>
-                        <div onClick={() => navigate(`/${path.MEMBER}/${path.CHAT}`)} className='flex justify-center items-center gap-1'>
-                            <Badge >
-                                <AiFillMessage size={24} />
-                            </Badge>
+                        <div onClick={() => {
+                            dispatch(setHasMessage(false));
+                            navigate(`/${path.MEMBER}/${path.CHAT}`)
+                        }} className='flex justify-center items-center gap-1'>
+                            {
+                                hasMessage ?
+                                    <Badge count={1}>
+                                        <AiFillMessage size={24} />
+                                    </Badge> :
+                                    <Badge>
+                                        <AiFillMessage size={24} />
+                                    </Badge>
+                            }
                         </div>
                         <div className='flex justify-center items-center gap-1'>
                             <UserPopover

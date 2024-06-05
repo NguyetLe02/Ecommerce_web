@@ -7,8 +7,9 @@ import {
   ManageUser,
   MangeClaimOrder,
   ManageOrder,
+  AdminMessage,
 } from "./pages/admin";
-import { MemberLayout, Ordered, Payment, Profile, Cart } from "./pages/member";
+import { MemberLayout, Ordered, Payment, Profile, Cart, Message } from "./pages/member";
 import path from "./ultils/path";
 import { CartDrawer, Modal } from "./components";
 import { useSelector } from "react-redux";
@@ -16,6 +17,10 @@ import { getCategories } from "./store/app/asyncActions";
 import { showCart } from "./store/app/appSlice";
 import { useDispatch } from "react-redux";
 import ManageProduct from "./pages/admin/ManageProduct";
+
+import io from 'socket.io-client';
+
+const socket = io('http://localhost:5000');
 
 function App() {
   const dispatch = useDispatch();
@@ -51,6 +56,7 @@ function App() {
           <Route path={path.MANAGE_CLAIM} element={<MangeClaimOrder />} />
           <Route path={path.MANAGE_ORDER} element={<ManageOrder />} />
           <Route path={path.MANAGE_PRODUCT} element={<ManageProduct />} />
+          <Route path={path.CHAT} element={<AdminMessage />} />
         </Route>
         <Route path={path.MEMBER} element={<MemberLayout />}>
           <Route path={path.PROFILE} element={<Profile />} />

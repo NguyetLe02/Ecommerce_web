@@ -1,24 +1,29 @@
-import React from 'react'
-import ChatListItem from './ChatListItem'
-import { useSelector } from 'react-redux'
+import React, { useState } from 'react';
+import ChatListItem from './ChatListItem';
+import { useSelector } from 'react-redux';
 
 const ChatList = ({ conversationList, setSelectedConversation }) => {
-    const { currentUser } = useSelector(state => state.user)
-    const handleSelectConversation = (value) => {
-        setSelectedConversation(value)
-    }
-    return (
-        <div className=' w-full gap-2'>
-            {conversationList?.map(conversation =>
-                <div onClick={() => handleSelectConversation(conversation)}>
-                    <ChatListItem
-                        conversation={conversation}
-                        currentUser={currentUser?._id}
-                    />
-                </div>
-            )}
-        </div>
-    )
-}
+    const { currentUser } = useSelector(state => state.user);
+    const [selectedConversationId, setSelectedConversationId] = useState(null);
 
-export default ChatList
+    const handleConversationClick = (conversation) => {
+        setSelectedConversation(conversation);
+        setSelectedConversationId(conversation._id);
+    };
+
+    return (
+        <div className='flex flex-col w-2/5 gap-2'>
+            {conversationList?.map(conversation => (
+                <ChatListItem
+                    key={conversation._id}
+                    conversation={conversation}
+                    currentUser={currentUser?._id}
+                    isSelected={conversation._id === selectedConversationId}
+                    setSelectedConversation={() => handleConversationClick(conversation)}
+                />
+            ))}
+        </div>
+    );
+};
+
+export default ChatList;

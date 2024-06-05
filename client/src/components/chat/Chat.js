@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux'
 import { apiGetConversations } from '../../apis'
 
 const Chat = () => {
-    const [conversation, setConversations] = useState([])
+    const [conversations, setConversations] = useState([])
     const [selectedConversation, setSelectedConversation] = useState()
     const { currentUser } = useSelector(state => state.user)
 
@@ -23,9 +23,12 @@ const Chat = () => {
 
     console.log(selectedConversation)
     return (
-        <div className=' w-full flex '>
-            <ChatList className='w-[100px]' conversationList={conversation} setSelectedConversation={selectedConversation} />
-            <ChatBox />
+        <div className=' w-full flex h-full '>
+            <ChatList
+                conversationList={conversations}
+                setSelectedConversation={setSelectedConversation}
+            />
+            <ChatBox selectedConversation={selectedConversation} />
         </div>
     )
 }

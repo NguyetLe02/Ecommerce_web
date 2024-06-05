@@ -8,6 +8,7 @@ import { IoMenu } from "react-icons/io5";
 import { IoIosArrowBack } from "react-icons/io";
 import { RiMoneyDollarCircleFill } from "react-icons/ri";
 import { FaPowerOff, FaEdit } from "react-icons/fa";
+import { TbSend } from "react-icons/tb";
 
 const icons = {
     FaBagShopping,
@@ -29,7 +30,8 @@ const icons = {
     IoIosArrowBack,
     RiMoneyDollarCircleFill,
     FaPowerOff,
-    FaEdit
+    FaEdit,
+    TbSend
 }
 
 export default icons
