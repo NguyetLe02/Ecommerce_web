@@ -36,7 +36,11 @@ var orderDetailSchema = new mongoose.Schema({
             },
             amount: Number
         }
-    }]
+    }],
+    orderBy: {
+        type: mongoose.Types.ObjectId,
+        ref: 'User'
+    }
 
 });
 

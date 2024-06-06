@@ -1,17 +1,10 @@
 import {
-  Avatar,
-  Form,
-  Input,
-  DatePicker,
-  Tag,
-  Space,
   Table,
-  Select,
 } from "antd";
 import { FaEdit, FaEye, FaTrashAlt } from "react-icons/fa";
 import { Button } from "../../components";
 import { useEffect, useState } from "react";
-import { apiGetProducts, apiGetProduct } from "../../apis/product";
+import { apiGetProducts, apiGetProduct, apiRemoveProduct } from "../../apis/product";
 import { showModal } from "../../store/app/appSlice";
 import CreateProductModal from "../../components/modal/CreateProductModal";
 import { useDispatch } from "react-redux";
@@ -45,11 +38,11 @@ const ManageProduct = () => {
       cancelButtonText: `Hủy`,
     }).then(async (result) => {
       if (result.isConfirmed) {
-        // const response = await apiRemoveProduct(id);
-        // if (response.success) {
-        //   Swal.fire("Xóa thành công", "", "success");
-        //   window.location.reload();
-        // }
+        const response = await apiRemoveProduct(id);
+        if (response.success) {
+          Swal.fire("Xóa thành công", "", "success");
+          window.location.reload();
+        }
       }
     });
   };
@@ -99,9 +92,9 @@ const ManageProduct = () => {
       width: "15%",
       render: (record) => (
         <div style={{ padding: "0.5rem 0" }} className="flex gap-2">
-          <FaEdit style={{cursor: "pointer"}} color="yellow" onClick={() => handleClickEdit(record)} />
-          <FaEye style={{cursor: "pointer"}} color="#00b1ff" onClick={() => handleWatchDetail(record)} />
-          <FaTrashAlt style={{cursor: "pointer"}} color="red" onClick={() => handleClickRemove(record)} />
+          <FaEdit style={{ cursor: "pointer" }} color="yellow" onClick={() => handleClickEdit(record)} />
+          <FaEye style={{ cursor: "pointer" }} color="#00b1ff" onClick={() => handleWatchDetail(record)} />
+          <FaTrashAlt style={{ cursor: "pointer" }} color="red" onClick={() => handleClickRemove(record)} />
         </div>
       ),
     },
@@ -120,9 +113,10 @@ const ManageProduct = () => {
   }, []);
   return (
     <div id="ManageProduct">
-      <div
-        style={{ marginTop: "3rem", paddingLeft: "2rem", paddingRight: "2rem" }}
-      >
+      <div className='h-screen w-full px-8'>
+        <h1 className=' h-[75px] flex justify-between items-center text-3xl font-bold border-b text-primary-1'>
+          <span>Quản lý sản phẩm</span>
+        </h1>
         <Button
           name={"Thêm sản phẩm"}
           handleOnclick={() =>

@@ -75,4 +75,6 @@ export { default as ChatList } from './chat/ChatList'
 export { default as ChatBox } from './chat/ChatBox'
 export { default as Conversation } from './chat/Conversation'
 
+export { default as CreateVoucherModal } from './modal/CreateVoucherModal'
+
 export { default as ButtonAddToCart } from './button/ButtonAddToCart'

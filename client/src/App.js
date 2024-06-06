@@ -5,9 +5,20 @@ import {
   AdmminLayout,
   Dashboard,
   ManageUser,
-  MangeClaimOrder,
   ManageOrder,
   AdminMessage,
+  ManageProblemOrder,
+  ManageClaimOrder,
+  ManageBrand,
+  ManageSentOrder,
+  ManageRentingOrder,
+  ManageCompletedOrder,
+  ManageRevenue,
+  ManageVoucher,
+  ManageBlog,
+  ManageProductCategory,
+  ManageCancelledOrder,
+  ManageProduct,
 } from "./pages/admin";
 import { MemberLayout, Ordered, Payment, Profile, Cart, Message } from "./pages/member";
 import path from "./ultils/path";
@@ -16,9 +27,9 @@ import { useSelector } from "react-redux";
 import { getCategories } from "./store/app/asyncActions";
 import { showCart } from "./store/app/appSlice";
 import { useDispatch } from "react-redux";
-import ManageProduct from "./pages/admin/ManageProduct";
 
 import io from 'socket.io-client';
+import { ToastContainer } from "react-toastify";
 
 const socket = io('http://localhost:5000');
 
@@ -31,6 +42,7 @@ function App() {
   }, []);
   return (
     <div className=" min-h-screen font-main">
+      <ToastContainer />
       {isShowCart && (
         <div
           onClick={() => dispatch(showCart())}
@@ -53,10 +65,20 @@ function App() {
         <Route path={path.ADMIN} element={<AdmminLayout />}>
           <Route path={path.DASHBOARD} element={<Dashboard />} />
           <Route path={path.MANAGE_USER} element={<ManageUser />} />
-          <Route path={path.MANAGE_CLAIM} element={<MangeClaimOrder />} />
-          <Route path={path.MANAGE_ORDER} element={<ManageOrder />} />
+          <Route path={path.PROBLEM_ORDER} element={<ManageProblemOrder />} />
+          <Route path={path.CLAIM_ORDER} element={<ManageClaimOrder />} />
+          <Route path={path.ORDER} element={<ManageOrder />} />
           <Route path={path.MANAGE_PRODUCT} element={<ManageProduct />} />
           <Route path={path.CHAT} element={<AdminMessage />} />
+          <Route path={path.PRODUCT_CATEGORY} element={<ManageProductCategory />} />
+          <Route path={path.BRAND} element={<ManageBrand />} />
+          <Route path={path.SENT_ORDER} element={<ManageSentOrder />} />
+          <Route path={path.RENTING_ORDER} element={<ManageRentingOrder />} />
+          <Route path={path.COMPLETED_ORDER} element={<ManageCompletedOrder />} />
+          <Route path={path.CANCELLED_ORDER} element={<ManageCancelledOrder />} />
+          <Route path={path.REVENUE} element={<ManageRevenue />} />
+          <Route path={path.VOUCHER} element={<ManageVoucher />} />
+          <Route path={path.BLOG} element={<ManageBlog />} />
         </Route>
         <Route path={path.MEMBER} element={<MemberLayout />}>
           <Route path={path.PROFILE} element={<Profile />} />

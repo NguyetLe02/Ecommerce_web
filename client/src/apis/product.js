@@ -5,6 +5,11 @@ export const apiGetProduct = (pid) => axios({
     method: 'get',
 })
 
+export const apiRemoveProduct = (pid) => axios({
+    url: '/product/' + pid,
+    method: 'delete',
+})
+
 export const apiGetProducts = (params) => axios({
     url: '/product/',
     method: 'get',
@@ -16,10 +21,6 @@ export const apiGetStyle = () => axios({
     method: 'get',
 })
 
-export const apiGetBrands = () => axios({
-    url: '/brand',
-    method: 'get',
-})
 
 export const apiRating = (data, pid) => axios({
     url: '/product/ratings/' + pid,

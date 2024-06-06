@@ -3,6 +3,7 @@ const asyncHandler = require('express-async-handler')
 const dayjs = require('dayjs')
 
 const createVoucher = asyncHandler(async (req, res) => {
+    console.log(req.body)
     const { name, discount, expiry } = req.body
     if (!name || !discount || !expiry) throw new Error('Missing inputs')
     const response = await Voucher.create({

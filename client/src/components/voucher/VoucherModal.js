@@ -39,7 +39,7 @@ const VoucherModal = ({ data, dispatch, onVoucherSelect }) => {
     }
 
     return (
-        <div ref={modalRef} onClick={(e) => e.stopPropagation()} className='w-[600px] h-fit bg-white rounded-lg'>
+        <div ref={modalRef} onClick={(e) => e.stopPropagation()} className='w-[600px] h-[700px] bg-white rounded-lg'>
             <div className='px-6 py-4'>
                 <div className=' flex justify-between'>
                     <div className=' w-2/3 text-2xl font-semibold border-b p-4 pl-0'>Chọn Voucher</div>
@@ -51,8 +51,8 @@ const VoucherModal = ({ data, dispatch, onVoucherSelect }) => {
                         </div>
                     </div>
                 </div>
-                <div className='flex flex-col py-4 gap-4'>
-                    <Radio.Group onChange={handleSelectVoucher} value={selectedVoucher?._id} className='w-full'>
+                <div className='flex flex-col py-4 gap-4 overflow-auto'>
+                    <Radio.Group onChange={handleSelectVoucher} value={selectedVoucher?._id} className='w-full h-[500px] overflow-y-auto'>
                         {vouchers?.map(voucher =>
                             <VoucherItem key={voucher._id} data={voucher} />
                         )}

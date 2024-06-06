@@ -8,7 +8,7 @@ const PaymentAddressTable = ({ setAddress }) => {
     const { currentUser } = useSelector(state => state.user)
     const address = watch('address')
     useEffect(() => {
-        setValue('address', currentUser?.address[0])
+        setValue('address', currentUser?.address)
     }, [currentUser])
     setAddress(address)
     return (

@@ -73,7 +73,10 @@ var productSchema = new mongoose.Schema({
         remainQuantity: {
             type: Number,
         }
-    }]
+    }],
+    totalQuantity: {
+        type: Number,
+    }
 }, {
     timestamps: true
 });

@@ -5,10 +5,17 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { apiGetAllOrderItems, apiUpdateOrderDetail } from "../../apis";
 import moment from "moment";
-import { Button } from "../../components";
+import { Button, DetailClaimOrderModal } from "../../components";
 import Swal from "sweetalert2";
+import icons from '../../ultils/icons'
+import { withConfirm } from "antd/es/modal/confirm";
+import withBaseComponent from "../../hocs/withBaseComponent";
+import { showModal } from "../../store/app/appSlice";
+import path from "../../ultils/path";
 
-const ManageOrder = () => {
+const { FaEye, AiFillMessage } = icons
+const ManageProblemOrder = ({ dispatch, navigate }) => {
+    const [orderDetails, setOrderDetails] = useState([])
     const columns = [
         {
             title: "Người đặt",
@@ -66,43 +73,41 @@ const ManageOrder = () => {
             dataIndex: "_id",
             width: "15%",
             render: (record) => (
-                <Button
-                    name={'Đã chuyển hàng'}
-                    handleOnclick={() => handleChangeStatus(record)}
-                />
+                <div style={{ padding: "0.5rem 0" }} className="flex gap-2">
+                    <FaEye
+                        title="Xem chi tiết"
+                        size={20}
+                        className=' text-main cursor-pointer'
+                        onClick={() =>
+                            dispatch(showModal({
+                                isShowModal: true,
+                                modalChildren: <DetailClaimOrderModal
+                                    isAdmin={true}
+                                    orderClaimData={orderDetails.find(item => item._id === record).claims.find(item => item.type === "Damage")}
+                                    orderData={orderDetails.find(item => item._id === record)}
+                                />
+                            }))
+                        }
+                    />
+                    <AiFillMessage
+                        title="Liên hệ với khách"
+                        size={20}
+                        className=' text-brown cursor-pointer'
+                        onClick={() => navigate(`/${path.ADMIN}/${path.CHAT}`)}
+                    />
+                </div>
             ),
         },
 
 
     ];
 
-    const handleChangeStatus = async (orderDetailId) => {
-        Swal.fire({
-            title: "Bạn đã giao đơn hàng này ?",
-            showCancelButton: true,
-            confirmButtonText: "Đúng vậy",
-            cancelButtonText: `Thoát`
-        }).then(async (result) => {
-            if (result.isConfirmed) {
-                try {
-                    const response = await apiUpdateOrderDetail({ status: 'Sent' }, orderDetailId);
-                    if (response.success) {
-                        Swal.fire("Cập nhật đơn hàng thành công", "", "success");
-                        window.location.reload()
-                    }
-
-                } catch (error) {
-                    console.error(error);
-                    Swal.fire("Cập nhật đơn hàng không thành công", "", "error");
-                }
-            }
-        });
-    };
     const [listOrders, setListOrders] = useState([]);
     useEffect(() => {
         const fetchData = async () => {
-            const response = await apiGetAllOrderItems({ status: "Paid" });
+            const response = await apiGetAllOrderItems({ status: "Problem" });
             if (response.success) {
+                setOrderDetails(response.OrderDetails)
                 const ordersWithTotalCost = response.OrderDetails.map(order => ({
                     ...order,
                     totalCost: order.product.cost * order.quantity,
@@ -111,7 +116,7 @@ const ManageOrder = () => {
                     firstname: order?.orderBy?.firstname,
                     mobile: order?.orderBy?.mobile,
                     address: order?.orderBy?.address,
-                    status: 'Đang chuẩn bị'
+                    status: order.claims.find(item => item.type === "Damage").status === 'Pending' ? "Chưa xử lý" : "Đã xử lý"
                 }));
                 setListOrders(ordersWithTotalCost);
             }
@@ -120,11 +125,13 @@ const ManageOrder = () => {
         fetchData();
     }, []);
 
+    console.log(listOrders)
+
     return (
         <div id="ManageOrder">
             <div className='h-screen w-full px-8'>
                 <h1 className=' h-[75px] flex justify-between items-center text-3xl font-bold border-b text-primary-1'>
-                    <span>Quản lý đơn hàng chưa vận chuyển</span>
+                    <span>Quản lý đơn hàng gặp sự cố</span>
                 </h1>
 
                 <Table
@@ -138,4 +145,4 @@ const ManageOrder = () => {
     );
 };
 
-export default ManageOrder;
+export default withBaseComponent(ManageProblemOrder);
