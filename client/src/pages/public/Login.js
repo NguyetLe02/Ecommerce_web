@@ -106,7 +106,6 @@ const Login = () => {
                 {isRegister &&
                     <div className=' w-full flex gap-2 justify-between items-center'>
                         <div className=' text-sm flex flex-none'>Ngày sinh :</div>
-                        <ChooseDate/>
                         <DatePicker style={{ width: '100%', padding: '10px' }} />
                     </div>
                 }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { apiGetProduct } from '../../apis'
+import { apiGetProduct, apiGetRemainQuantity } from '../../apis'
 import { Button, ZoomImage, RatingStar, ChooseDate, InputQuantity, ProductInformation, SliderHotProducts, ButtonAddToCart, StartDatePicker } from '../../components'
 import CurrencyFormat from 'react-currency-format';
 import icons from '../../ultils/icons'
@@ -22,6 +22,7 @@ const DetailProduct = ({ data, isQuickView }) => {
         quantity: 0
     })
     const [showImage, setShowImage] = useState(null)
+    const [availableQuantity, setAvailableQuantity] = useState(0);
     const fetchProductData = async () => {
         const response = await apiGetProduct(pid)
         if (response.success) {
@@ -36,6 +37,17 @@ const DetailProduct = ({ data, isQuickView }) => {
             setShowImage(response.productData.images[0])
         }
     }
+
+    const fetchAvailableQuantity = async () => {
+        const { size, startAt, endAt } = selectProduct;
+        if (size && startAt && endAt) {
+            const response = await apiGetRemainQuantity({ size, startDate: startAt, endDate: endAt }, pid);
+            if (response.success) {
+                setAvailableQuantity(response.remainQuantity);
+            }
+        }
+    };
+
     const handleSelectSize = (size) => {
         const updatedProduct = {
             ...selectProduct,
@@ -70,6 +82,10 @@ const DetailProduct = ({ data, isQuickView }) => {
     useEffect(() => {
         if (pid) fetchProductData()
     }, [pid])
+
+    useEffect(() => {
+        fetchAvailableQuantity();
+    }, [selectProduct.size, selectProduct.startAt, selectProduct.endAt]);
     return (
         <div className=' w-full lg:w-main px-[30px] pt-5'>
             <div className=' w-full h-full  sm:flex flex-col grid grid-cols-2 gap-3'>
@@ -150,7 +166,11 @@ const DetailProduct = ({ data, isQuickView }) => {
                     <div className=' flex justify-between'>
                         <div className='flex flex-col'>
                             <span>Số lượng</span>
-                            <InputQuantity defaultValue={selectProduct?.quantity} handleChangeQuantity={handleChangeQuantity} />
+                            <InputQuantity
+                                defaultValue={selectProduct?.quantity}
+                                handleChangeQuantity={handleChangeQuantity}
+                                max={availableQuantity}
+                            />
                         </div>
                         <div className=' flex gap-3'>
                             <Button
@@ -158,6 +178,10 @@ const DetailProduct = ({ data, isQuickView }) => {
                             />
                             <ButtonAddToCart productData={selectProduct} />
                         </div>
+                    </div>
+                    <div className='py-2 font-semibold'>
+                        <span>Số lượng hàng có thể thuê: </span>
+                        <span className=' text-xl p-2'>{availableQuantity}</span>
                     </div>
                 </div>
             </div>

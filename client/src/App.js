@@ -2,7 +2,7 @@ import Reac, { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import { Login, Home, Public, DetailProduct, Products } from "./pages/public";
 import {
-  AdmminLayout,
+  AdminLayout,
   Dashboard,
   ManageUser,
   ManageOrder,
@@ -58,11 +58,9 @@ function App() {
           <Route path={path.LOGIN} element={<Login />} />
           <Route path={path.PRODUCTS} element={<Products />} />
           <Route path={path.PRODUCTS_OPTION} element={<Products />} />
-          <Route path={path.CART} element={<Cart />} />
-          <Route path={path.PAYMENT} element={<Payment />} />
           <Route path={path.DETAIL_PRODUCT} element={<DetailProduct />} />
         </Route>
-        <Route path={path.ADMIN} element={<AdmminLayout />}>
+        <Route path={path.ADMIN} element={<AdminLayout />}>
           <Route path={path.DASHBOARD} element={<Dashboard />} />
           <Route path={path.MANAGE_USER} element={<ManageUser />} />
           <Route path={path.PROBLEM_ORDER} element={<ManageProblemOrder />} />
@@ -81,6 +79,8 @@ function App() {
           <Route path={path.BLOG} element={<ManageBlog />} />
         </Route>
         <Route path={path.MEMBER} element={<MemberLayout />}>
+          <Route path={path.PAYMENT} element={<Payment />} />
+          <Route path={path.CART} element={<Cart />} />
           <Route path={path.PROFILE} element={<Profile />} />
           <Route path={path.ORDERED} element={<Ordered />} />
           <Route path={path.CHAT} element={<Message />} />

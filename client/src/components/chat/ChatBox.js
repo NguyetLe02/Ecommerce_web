@@ -12,7 +12,7 @@ const ChatBox = ({ selectedConversation, dispatch }) => {
     const socket = useRef();
     const { currentUser } = useSelector(state => state.user)
     const [messages, setMessages] = useState([])
-    const [sendMessgae, setSendMessage] = useState(null)
+    const [sendMessage, setSendMessage] = useState(null)
     const [arrivalMessage, setArrivalMessage] = useState(null)
     const scrollRef = useRef()
 
@@ -50,13 +50,13 @@ const ChatBox = ({ selectedConversation, dispatch }) => {
     console.log(socket.current)
     useEffect(() => {
         fetchMessages()
-    }, [selectedConversation, sendMessgae])
+    }, [selectedConversation, sendMessage])
 
     const handleSendMessage = async (e) => {
         e.preventDefault();
         const message = {
             sender: currentUser?._id,
-            text: sendMessgae,
+            text: sendMessage,
             conversationId: selectedConversation?._id
         };
 
@@ -69,7 +69,7 @@ const ChatBox = ({ selectedConversation, dispatch }) => {
             socket.current.emit('sendMessage', {
                 senderId: currentUser?._id,
                 receiverId: receivedId?._id,
-                text: sendMessgae,
+                text: sendMessage,
             });
             scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
         } catch (err) {
@@ -99,7 +99,7 @@ const ChatBox = ({ selectedConversation, dispatch }) => {
                     className=' w-full rounded'
                     placeholder='Nhắn cho chúng tôi'
                     onChange={(e) => setSendMessage(e.target.value)}
-                    value={sendMessgae}
+                    value={sendMessage}
                 ></textarea>
                 <button
                     className='bg-sub rounded-3xl text-white p-2 w-[50px] h-[50px]'

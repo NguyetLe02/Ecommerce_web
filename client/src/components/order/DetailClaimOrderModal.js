@@ -96,7 +96,7 @@ const DetailClaimOrderModal = ({ orderClaimData, orderData, dispatch, isAdmin })
                         <Form className='flex flex-col gap-4 bg-gray-100 p-4 rounded'>
                             <div className=' font-semibold'>Phản hồi:</div>
                             <Radio.Group onChange={handleRadioChange}>
-                                <Radio value='None'>Không sao bạn nhé !</Radio>
+                                <Radio value='None'>Từ chối yêu cầu</Radio>
                                 {orderClaimData?.type !== 'ProductIssue' ?
                                     <Radio value='Compensation'>Bồi thường (%)</Radio> :
                                     <Radio value='Discount'>Giảm giá (%)</Radio>

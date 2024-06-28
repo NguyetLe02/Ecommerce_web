@@ -5,9 +5,10 @@ import { Link } from 'react-router-dom';
 import path from '../ultils/path';
 import { logout } from '../store/user/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import withBaseComponent from '../hocs/withBaseComponent';
 
 const { FaUserAlt } = icons
-const Content = (isLoggedIn) => {
+const Content = (isLoggedIn, navigate) => {
     const dispatch = useDispatch()
     return (
         <div>
@@ -29,7 +30,10 @@ const Content = (isLoggedIn) => {
                         <span>Đơn hàng của bạn</span>
                     </Link>
                     <span
-                        onClick={() => dispatch(logout())}
+                        onClick={() => {
+                            dispatch(logout())
+                            navigate(`/`)
+                        }}
                         className=' hover:cursor-pointer hover:text-main'
                     >
                         Đăng xuất
@@ -41,11 +45,11 @@ const Content = (isLoggedIn) => {
     );
 }
 
-const UserPopover = ({ isLoggedIn }) => {
+const UserPopover = ({ isLoggedIn, navigate }) => {
     const { currentUser } = useSelector(state => state.user)
     return (
         <div>
-            <Popover placement="bottomRight" content={Content(isLoggedIn)} trigger="hover">
+            <Popover placement="bottomRight" content={Content(isLoggedIn, navigate)} trigger="hover">
                 {isLoggedIn ? <img src={currentUser?.image} className=' w-[40px] h-[40px] rounded-full border-sub border-2' />
                     : <FaUserAlt />}
             </Popover>
@@ -53,4 +57,4 @@ const UserPopover = ({ isLoggedIn }) => {
     );
 }
 
-export default UserPopover;
+export default withBaseComponent(UserPopover);

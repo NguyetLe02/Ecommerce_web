@@ -16,6 +16,12 @@ export const apiGetProducts = (params) => axios({
     params
 })
 
+export const apiGetRemainQuantity = (data, pid) => axios({
+    url: '/product/remainQuantity/' + pid,
+    method: 'get',
+    params: data
+})
+
 export const apiGetStyle = () => axios({
     url: '/style',
     method: 'get',

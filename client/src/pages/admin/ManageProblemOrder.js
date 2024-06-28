@@ -2,13 +2,10 @@ import {
     Table,
 } from "antd";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { apiGetAllOrderItems, apiUpdateOrderDetail } from "../../apis";
+import { apiGetAllOrderItems } from "../../apis";
 import moment from "moment";
-import { Button, DetailClaimOrderModal } from "../../components";
-import Swal from "sweetalert2";
+import { DetailClaimOrderModal } from "../../components";
 import icons from '../../ultils/icons'
-import { withConfirm } from "antd/es/modal/confirm";
 import withBaseComponent from "../../hocs/withBaseComponent";
 import { showModal } from "../../store/app/appSlice";
 import path from "../../ultils/path";
@@ -116,7 +113,7 @@ const ManageProblemOrder = ({ dispatch, navigate }) => {
                     firstname: order?.orderBy?.firstname,
                     mobile: order?.orderBy?.mobile,
                     address: order?.orderBy?.address,
-                    status: order.claims.find(item => item.type === "Damage").status === 'Pending' ? "Chưa xử lý" : "Đã xử lý"
+                    status: order.claims.find(item => item.type === "Damage")?.status === 'Pending' ? "Chưa xử lý" : "Đã xử lý"
                 }));
                 setListOrders(ordersWithTotalCost);
             }

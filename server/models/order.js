@@ -11,9 +11,9 @@ var orderSchema = new mongoose.Schema({
     totalCost: Number,
     totalRentalPrice: Number,
     totalRentalPriceCoupon: Number,
-    coupon: {
+    voucher: {
         type: mongoose.Types.ObjectId,
-        ref: 'Coupon'
+        ref: 'Voucher'
     },
     paymentIntent: {
         type: String,

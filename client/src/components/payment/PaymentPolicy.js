@@ -42,7 +42,7 @@ const PaymentPolicy = ({ dispatch, navigate }) => {
                         style={!isAgree && 'px-4 py-2 rounded-md bg-gray-200 font-semibold'}
                         handleOnclick={() => {
                             dispatch(showModal({ isShowModal: false }))
-                            navigate(`/${path.PAYMENT}`)
+                            navigate(`/member/${path.PAYMENT}`)
                         }}
                     />
                 </div>

@@ -41,28 +41,31 @@ const Header = ({ dispatch, navigate }) => {
                             isHideLabel
                             placeholder={'Tìm kiếm '}
                         />
-                        <div onClick={() => dispatch(showCart())} className='flex justify-center items-center gap-1'>
-                            {currentUser?.cart?.length > 0 ?
-                                <Badge count={currentUser?.cart?.length}>
-                                    <FaBagShopping size={24} />
-                                </Badge> :
-                                <FaBagShopping size={24} />
-                            }
-                        </div>
-                        <div onClick={() => {
-                            dispatch(setHasMessage(false));
-                            navigate(`/${path.MEMBER}/${path.CHAT}`)
-                        }} className='flex justify-center items-center gap-1'>
-                            {
-                                hasMessage ?
-                                    <Badge count={1}>
-                                        <AiFillMessage size={24} />
-                                    </Badge> :
-                                    <Badge>
-                                        <AiFillMessage size={24} />
-                                    </Badge>
-                            }
-                        </div>
+                        {isLoggedIn &&
+                            <div className=' flex gap-4'>
+                                <div onClick={() => dispatch(showCart())} className='flex justify-center items-center gap-1'>
+                                    {currentUser?.cart?.length > 0 ?
+                                        <Badge count={currentUser?.cart?.length}>
+                                            <FaBagShopping size={24} />
+                                        </Badge> :
+                                        <FaBagShopping size={24} />
+                                    }
+                                </div>
+                                <div onClick={() => {
+                                    dispatch(setHasMessage(false));
+                                    navigate(`/${path.MEMBER}/${path.CHAT}`)
+                                }} className='flex justify-center items-center gap-1'>
+                                    {
+                                        hasMessage ?
+                                            <Badge count={1}>
+                                                <AiFillMessage size={24} />
+                                            </Badge> :
+                                            <Badge>
+                                                <AiFillMessage size={24} />
+                                            </Badge>
+                                    }
+                                </div>
+                            </div>}
                         <div className='flex justify-center items-center gap-1'>
                             <UserPopover
                                 size={24}

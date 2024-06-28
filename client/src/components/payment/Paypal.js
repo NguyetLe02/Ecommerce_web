@@ -24,7 +24,7 @@ const ButtonWrapper = ({ currency, showSpinner, amount, payload, setIsSuccess })
 
     }, [currency, showSpinner])
 
-    const hanndleSaveOrder = async () => {
+    const handleSaveOrder = async () => {
         const response = await apiCreateOrder(payload)
         if (response.success) {
             setIsSuccess(true)
@@ -51,7 +51,7 @@ const ButtonWrapper = ({ currency, showSpinner, amount, payload, setIsSuccess })
                 }).then(orderId => orderId)}
                 onApprove={(data, actions) => actions.order.capture().then(async (response) => {
                     if (response.status === 'COMPLETED') {
-                        hanndleSaveOrder()
+                        handleSaveOrder()
                     }
                 })}
             />

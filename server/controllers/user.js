@@ -205,7 +205,6 @@ const updateUser = asyncHandler(async (req, res) => {
     const { firstname, lastname, email, mobile, address } = req.body
     const data = { firstname, lastname, email, mobile, address }
     if (req.file) data.image = req.file.path
-    console.log(req.body)
     if (!_id || Object.keys(req.body).length === 0) throw new Error('Missing input')
     const response = await User.findByIdAndUpdate(_id, data, { new: true }).select('-password -role')
     return res.status(200).json({

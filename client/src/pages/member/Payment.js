@@ -65,10 +65,10 @@ const Payment = ({ dispatch, navigate }) => {
                 <h2 className='text-2xl font-bold'>Thanh toán</h2>
                 <PaymentTable data={currentCart} />
                 <div className='flex justify-between'>
-                    <div>Voucher của Shop</div>
+                    <div>Mã giảm giá của Shop</div>
                     <div onClick={() => dispatch(showModal({ isShowModal: true, modalChildren: <VoucherModal onVoucherSelect={handleVoucherSelect} /> }))}>
                         {!voucher ?
-                            <div>Chọn Voucher</div> :
+                            <div>Chọn mã giảm giá</div> :
                             <div className=' flex gap-2 text-main'>
                                 <div className=' flex'>
                                     <span>-</span>
