@@ -4,22 +4,18 @@ import { DownOutlined, UpOutlined } from '@ant-design/icons'
 import clsx from 'clsx'
 import { createSearchParams, useNavigate } from 'react-router-dom';
 
-const ProductFilterSelection = ({ label, items }) => {
+const ProductFilterSelection = ({ label, items, selected, setSelected }) => {
     const [isShow, setIsShow] = useState(true)
-    const navigate = useNavigate()
-    const [selected, setSelected] = useState({ color: [], price: [] })
+    // const navigate = useNavigate()
     const handleSeleted = (e) => {
-        //Check xem el đã được select chưa
         const value = e.target.value;
         if (label === 'Màu sắc') {
             setSelected(prev => {
-                const colorCopy = [...prev.color]; // Tạo một bản sao của mảng màu sắc
+                const colorCopy = [...prev.color];
                 const alreadyElIndex = colorCopy.findIndex(el => el === value);
                 if (alreadyElIndex !== -1) {
-                    // Nếu phần tử đã tồn tại, loại bỏ nó
                     colorCopy.splice(alreadyElIndex, 1);
                 } else {
-                    // Nếu phần tử chưa tồn tại, thêm vào mảng
                     colorCopy.push(value);
                 }
                 return { ...prev, color: colorCopy };
@@ -39,28 +35,49 @@ const ProductFilterSelection = ({ label, items }) => {
                 }
                 return { ...prev, price: priceCopy };
             })
+        } else if (label === 'Thương hiệu') {
+            setSelected(prev => {
+                const brandCopy = [...prev.brand];
+                const alreadyElIndex = brandCopy.findIndex(el => el === value);
+                if (alreadyElIndex !== -1) {
+                    brandCopy.splice(alreadyElIndex, 1);
+                } else {
+                    brandCopy.push(value);
+                }
+                return { ...prev, brand: brandCopy };
+            })
+        } else if (label === 'Loại trang phục') {
+            setSelected(prev => {
+                const typeCopy = [...prev.type];
+                const alreadyElIndex = typeCopy.findIndex(el => el === value);
+                if (alreadyElIndex !== -1) {
+                    typeCopy.splice(alreadyElIndex, 1);
+                } else {
+                    typeCopy.push(value);
+                }
+                return { ...prev, type: typeCopy };
+            })
+        } else if (label === 'Phong cách') {
+            setSelected(prev => {
+                const styleCopy = [...prev.styles];
+                const alreadyElIndex = styleCopy.findIndex(el => el === value);
+                if (alreadyElIndex !== -1) {
+                    styleCopy.splice(alreadyElIndex, 1);
+                } else {
+                    styleCopy.push(value);
+                }
+                return { ...prev, styles: styleCopy };
+            })
         }
     }
-    useEffect(() => {
-        if (selected.color.length > 0) {
-            navigate({
-                search: createSearchParams(
-                    { color: selected.color.join(',') }
-                ).toString()
-            })
-        } else if (selected.price.length > 0) {
-            navigate({
-                search: createSearchParams(
-                    { price: selected.price.join(',') }
-                ).toString()
-            })
-        } else {
-            navigate('/products')
-        }
-    }, [selected])
-
     // useEffect(() => {
-    //     if (selected.length > 0) {
+    //     if (selected.color.length > 0) {
+    //         navigate({
+    //             search: createSearchParams(
+    //                 { color: selected.color.join(',') }
+    //             ).toString()
+    //         })
+    //     } else if (selected.price.length > 0) {
     //         navigate({
     //             search: createSearchParams(
     //                 { price: selected.price.join(',') }
@@ -69,8 +86,7 @@ const ProductFilterSelection = ({ label, items }) => {
     //     } else {
     //         navigate('/products')
     //     }
-    // }, [selected.price])
-
+    // }, [selected])
 
     return (
         <div className=' w-full h-full flex flex-col'>
