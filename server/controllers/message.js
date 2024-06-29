@@ -13,7 +13,6 @@ const createMessage = asyncHandler(async (req, res) => {
 
 const getMessage = asyncHandler(async (req, res) => {
     const { cvId } = req.params
-    console.log(cvId)
     const response = await Message.find({ conversation: cvId }).populate('sender')
     return res.status(200).json({
         success: response ? true : false,

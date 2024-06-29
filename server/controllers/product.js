@@ -35,8 +35,6 @@ const getRemainingQuantity = asyncHandler(async (req, res) => {
         ]
     });
 
-    console.log(orderDetails);
-
     const totalOrdered = orderDetails.reduce((total, order) => total + order?.quantity, 0);
 
     const remainQuantity = totalQuantity - totalOrdered
@@ -94,7 +92,6 @@ const getProducts = asyncHandler(async (req, res) => {
             if (el === 'Xám') return { color: { $regex: 'gray', $options: 'i' } }
             if (el === 'Cam') return { color: { $regex: 'orange', $options: 'i' } }
         })
-        console.log(colorQuery)
         colorQueryObject = { $or: colorQuery }
     }
     const q = { ...colorQueryObject, ...formatedQueries }

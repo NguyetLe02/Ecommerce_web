@@ -22,7 +22,6 @@ const createOrder = asyncHandler(async (req, res) => {
     //Tổng tiền thuê khi có mã giảm giá
     let totalRentalPriceVoucher, totalCost
     if (voucher) {
-        console.log(voucher)
         totalRentalPriceVoucher = totalAmountPaid
     } else {
         totalCost = totalAmountPaid
