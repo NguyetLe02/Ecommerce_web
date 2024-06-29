@@ -1,6 +1,6 @@
-import Reac, { useEffect } from "react";
+import React, { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
-import { Login, Home, Public, DetailProduct, Products } from "./pages/public";
+import { Login, Home, Public, DetailProduct, Products, Blogs, BlogDetail } from "./pages/public";
 import {
   AdminLayout,
   Dashboard,
@@ -59,6 +59,8 @@ function App() {
           <Route path={path.PRODUCTS} element={<Products />} />
           <Route path={path.PRODUCTS_OPTION} element={<Products />} />
           <Route path={path.DETAIL_PRODUCT} element={<DetailProduct />} />
+          <Route path={path.BLOGS} element={<Blogs />} />
+          <Route path={`${path.BLOGS}/:id`} element={<BlogDetail />} />
         </Route>
         <Route path={path.ADMIN} element={<AdminLayout />}>
           <Route path={path.DASHBOARD} element={<Dashboard />} />
