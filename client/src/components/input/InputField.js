@@ -1,7 +1,7 @@
 import React, { memo } from 'react'
 import clsx from 'clsx'
 
-const InputField = ({ value, setValue, nameKey, type, icon, inValidFields, setInvalidFields, style }) => {
+const InputField = ({ value, setValue, nameKey, type, isRequired, icon, inValidFields, setInvalidFields, style }) => {
     return (
         <div className={clsx('relative w-full')}>
             {value.trim() != '' &&
@@ -13,6 +13,7 @@ const InputField = ({ value, setValue, nameKey, type, icon, inValidFields, setIn
                 placeholder={nameKey.slice(0, 1).toUpperCase() + nameKey.slice(1)}
                 value={value}
                 onChange={e => setValue(prev => ({ ...prev, [nameKey]: e.target.value }))}
+                required={true}
             />
         </div>
     )

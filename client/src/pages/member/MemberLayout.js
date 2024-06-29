@@ -4,13 +4,13 @@ import { Header, ProfileSidebar } from '../../components'
 
 const MemberLayout = () => {
     return (
-        <div className=' w-full flex flex-col items-center'>
+        <div className='w-full flex flex-col items-center h-screen'>
             <Header />
-            <div className='w-full min-h-screen m-auto flex justify-items-center '>
-                <div className=' flex flex-none'>
+            <div className='w-full flex flex-1'>
+                <div className='flex-none h-full'>
                     <ProfileSidebar />
                 </div>
-                <div className=' flex flex-1'>
+                <div className='flex-1 h-full'>
                     <Outlet />
                 </div>
             </div>

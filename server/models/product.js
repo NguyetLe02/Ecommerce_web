@@ -43,7 +43,7 @@ var productSchema = new mongoose.Schema({
     },
     color: {
         type: String,
-        enum: ['black', 'white', 'red', 'green', 'yellow', 'orange', 'pink']
+        enum: ['đen', 'trắng', 'đỏ', 'xanh lá', 'vàng', 'cam', 'hồng', 'nâu']
     },
     ratings: [
         {
@@ -58,7 +58,7 @@ var productSchema = new mongoose.Schema({
         default: 0
     },
     style: {
-        type: [String],
+        type: String,
         enum: ['Thanh lịch', 'Sexy', 'Vintage', 'Nàng thơ']
     },
     type: [{
@@ -73,7 +73,10 @@ var productSchema = new mongoose.Schema({
         remainQuantity: {
             type: Number,
         }
-    }]
+    }],
+    totalQuantity: {
+        type: Number,
+    }
 }, {
     timestamps: true
 });

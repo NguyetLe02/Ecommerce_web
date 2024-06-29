@@ -2,6 +2,7 @@ const mongoose = require('mongoose'); // Erase if already required
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 
+
 // Declare the Schema of the Mongo model
 var userSchema = new mongoose.Schema({
     firstname: {
@@ -19,8 +20,8 @@ var userSchema = new mongoose.Schema({
     },
     mobile: {
         type: String,
-        // required: true,
-        unique: true,
+        required: true,
+        // unique: true,
     },
     role: {
         type: String,
@@ -42,12 +43,15 @@ var userSchema = new mongoose.Schema({
         type: String,
         default: ''
     },
-    favoritelist: [{ type: mongoose.Types.ObjectId, ref: 'Product' }],
+    wishList: [{ type: mongoose.Types.ObjectId, ref: 'Product' }],
     isBlocked: {
         type: Boolean,
         default: false,
     },
     refreshToken: {
+        type: String,
+    },
+    registerToken: {
         type: String,
     },
     passwordChangedAt: {

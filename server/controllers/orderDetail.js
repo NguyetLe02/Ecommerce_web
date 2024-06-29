@@ -23,16 +23,30 @@ const getOrderDetails = asyncHandler(async (req, res) => {
 })
 
 const getAllOrderDetailsByAdmin = asyncHandler(async (req, res) => {
-    const response = await OrderDetail.find().populate(
-        {
-            path: 'product',
-            select: 'title rentalPrice cost images color slug'
-        }
-    )
-    return res.status(200).json({
-        success: response ? true : false,
-        OrderDetails: response ? response : 'Cannot get Order'
-    })
+    const status = req.query.status;
+    if (status) {
+        const response = await OrderDetail.find({ status: status }).populate(
+            {
+                path: 'product',
+                select: 'title rentalPrice cost images color slug'
+            }
+        ).populate('orderBy')
+        return res.status(200).json({
+            success: response ? true : false,
+            OrderDetails: response ? response : 'Cannot get Order'
+        })
+    } else {
+        const response = await OrderDetail.find().populate(
+            {
+                path: 'product',
+                select: 'title rentalPrice cost images color slug'
+            }
+        ).populate('orderBy')
+        return res.status(200).json({
+            success: response ? true : false,
+            OrderDetails: response ? response : 'Cannot get Order'
+        })
+    }
 })
 // const deleteOrder = asyncHandler(async (req, res) => {
 //     const { bid } = req.params
@@ -91,8 +105,8 @@ const createClaim = asyncHandler(async (req, res) => {
 
 const updateClaimOrder = asyncHandler(async (req, res) => {
     const { odid } = req.params
-    const { claimResponse, clid } = req.body
-    if (!claimResponse) throw new Error('Missing input.')
+    const { amount, decision, clid } = req.body
+    if (!amount || !decision) throw new Error('Missing input.')
 
     const orderDetail = await OrderDetail.findById(odid);
     if (!orderDetail) {
@@ -102,10 +116,17 @@ const updateClaimOrder = asyncHandler(async (req, res) => {
         });
     }
 
-    const response = await OrderDetail.findByIdAndUpdate(odid, { status: 'Resolved', response: claimResponse })
-
-
-    console.log(orderDetail)
+    const response = await OrderDetail.findOneAndUpdate(
+        { _id: odid, 'claims._id': clid },
+        {
+            $set: {
+                'claims.$.status': 'Resolved',
+                'claims.$.response.decision': decision,
+                'claims.$.response.amount': amount
+            }
+        },
+        { new: true }
+    );
 
     return res.status(200).json({
         success: response ? true : false,

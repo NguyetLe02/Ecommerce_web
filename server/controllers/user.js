@@ -6,22 +6,38 @@ const jwt = require('jsonwebtoken')
 const sendMail = require('../ultils/sendMail')
 const crypto = require('crypto')
 const dayjs = require('dayjs');
-const utc = require('dayjs/plugin/utc');
-const timezone = require('dayjs/plugin/timezone');
-dayjs.extend(utc);
-dayjs.extend(timezone);
+const makeToken = require('uniqid')
+
+// const utc = require('dayjs/plugin/utc');
+// const timezone = require('dayjs/plugin/timezone');
+// dayjs.extend(utc);
+// dayjs.extend(timezone);
 
 
 const register = asyncHandler(async (req, res) => {
-    const { email, password, firstname, lastname, mobile, dateOfBirth } = req.body
-    if (!email || !password || !firstname || !lastname || !mobile || !dateOfBirth)
+    const { email, password, firstname, lastname, mobile } = req.body
+    if (!email || !password || !firstname || !lastname || !mobile)
         return res.status(400).json({
             success: false,
             message: 'Missing input'
         })
+
+    //Tạo token đăng ký tài khoản
+    const token = makeToken()
+    res.cookie('dataregister', { ...req.body, token }, { httpOnly: true, maxAge: 15 * 60 * 1000 })
+    const html = `Xin vui lòng click vào link dưới đây để hoàn tất quá trình đăng ký. Link này sẽ hết hạn sau 15 phút kể từ bây giờ.
+    <a href= ${process.env.URL_SERVER}/api/user/finalregister/${token}>Click here</a>`
+
+    await sendMail({ email, html, subject: "Hoàn tất đăng ký" })
+    return res.json({
+        success: true,
+        mes: "Please check your email to active account"
+    })
+
+
     const user = await User.findOne({ email: email })
     if (user)
-        throw new Error('User has already been registered')
+        throw new Error('Email này đã được sử dụng.')
     else {
         const newUser = await User.create(req.body)
         return res.status(200).json({
@@ -114,9 +130,10 @@ const forgotPassword = asyncHandler(async (req, res) => {
 
     const data = {
         email: email,
-        html: html
+        html: html,
+        subject: 'Forgot Password'
     }
-    const rs = await sendMail(email, html)
+    const rs = await sendMail(data)
     return res.status(200).json({
         success: true,
         rs
@@ -205,7 +222,6 @@ const updateUser = asyncHandler(async (req, res) => {
     const { firstname, lastname, email, mobile, address } = req.body
     const data = { firstname, lastname, email, mobile, address }
     if (req.file) data.image = req.file.path
-    console.log(req.body)
     if (!_id || Object.keys(req.body).length === 0) throw new Error('Missing input')
     const response = await User.findByIdAndUpdate(_id, data, { new: true }).select('-password -role')
     return res.status(200).json({

@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const control = require('../controllers/user')
 const { verifyAccessToken, isAdmin } = require('../middlewares/verifyToken')
-const uploader = require('../config/cloudinary.config')
+const uploader = require('../middlewares/uploader')
 
 router.get('/', [verifyAccessToken, isAdmin], control.getUsers)
 router.post('/register', control.register)

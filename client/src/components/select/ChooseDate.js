@@ -4,15 +4,15 @@ import dayjs from 'dayjs'
 
 const ChooseDate = ({ defaultValue, handleSelectDate }) => {
     const dateFormat = 'YYYY/MM/DD';
-    const handleOnChage = (value) => {
+    const handleOnChange = (value) => {
         handleSelectDate(dayjs(value.format(dateFormat), dateFormat))
     }
     return (
         <div>
             <DatePicker
                 format={dateFormat}
-                defaultValue={dayjs(defaultValue.format(dateFormat), dateFormat)}
-                onChange={handleOnChage}
+                defaultValue={dayjs(defaultValue?.format(dateFormat), dateFormat)}
+                onChange={handleOnChange}
             />
         </div>
     )

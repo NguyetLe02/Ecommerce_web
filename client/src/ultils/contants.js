@@ -83,7 +83,16 @@ export const productFilter = {
 
 }
 
-const { MdSpaceDashboard, FaUserAlt, FaBagShopping, GiLargeDress, FaClipboardList } = icons
+const { MdSpaceDashboard,
+    FaUserAlt,
+    FaBagShopping,
+    GiLargeDress,
+    FaClipboardList,
+    FaPowerOff,
+    BiSolidCoupon,
+    FaMoneyBillTrendUp,
+    HiNewspaper
+} = icons
 export const adminSidebar = [
     {
         id: 1,
@@ -95,7 +104,7 @@ export const adminSidebar = [
     {
         id: 2,
         type: 'single',
-        text: 'Quản lý người dùng',
+        text: 'Quản lý khách hàng',
         path: `/${path.ADMIN}/${path.MANAGE_USER}`,
         icons: <FaUserAlt />
     },
@@ -103,36 +112,79 @@ export const adminSidebar = [
         id: 3,
         type: 'parent',
         text: 'Quản lý sản phẩm',
-        path: `/${path.ADMIN}/${path.DASHBOAR}`,
         icons: <GiLargeDress />,
         submenu: [
+            // {
+            //     text: 'Loại sản phẩm',
+            //     path: `/${path.ADMIN}/${path.PRODUCT_CATEGORY}`
+            // },
             {
-                text: 'Tạo sản phẩm',
-                path: `/${path.ADMIN}/${path.DASHBOAR}`
+                text: 'Sản phẩm',
+                path: `/${path.ADMIN}/${path.MANAGE_PRODUCT}`
             },
             {
-                text: 'Chỉnh sửa thông tin',
-                path: `/${path.ADMIN}/${path.DASHBOAR}`
+                text: 'Nhãn hàng',
+                path: `/${path.ADMIN}/${path.BRAND}`
             }
         ]
     },
     {
         id: 4,
         type: 'parent',
-        text: 'Quản lý đơn hàng',
-        path: `/${path.ADMIN}/${path.DASHBOAR}`,
+        text: 'Quản lý bán hàng',
         icons: <FaBagShopping />,
         submenu: [
             {
-                text: 'Tất cả đơn hàng',
-                path: `/${path.ADMIN}/${path.MANAGE_ORDER}`
+                text: 'Đơn đặt hàng',
+                path: `/${path.ADMIN}/${path.ORDER}`
             },
             {
-                text: 'Khiếu nại/Sự cố',
-                path: `/${path.ADMIN}/${path.MANAGE_CLAIM}`
-            }
+                text: 'Đang vận chuyển',
+                path: `/${path.ADMIN}/${path.SENT_ORDER}`
+            },
+            {
+                text: 'Đang thuê',
+                path: `/${path.ADMIN}/${path.RENTING_ORDER}`
+            },
+            {
+                text: 'Đã hoàn thành',
+                path: `/${path.ADMIN}/${path.COMPLETED_ORDER}`
+            },
+            {
+                text: 'Đã hủy',
+                path: `/${path.ADMIN}/${path.CANCELLED_ORDER}`
+            },
+            {
+                text: 'Đơn hàng gặp sự cố',
+                path: `/${path.ADMIN}/${path.PROBLEM_ORDER}`
+            },
+            {
+                text: 'Đơn hàng có khiếu nại',
+                path: `/${path.ADMIN}/${path.CLAIM_ORDER}`
+            },
         ]
-    }
+    },
+    {
+        id: 5,
+        type: 'single',
+        text: 'Doanh thu',
+        path: `/${path.ADMIN}/${path.REVENUE}`,
+        icons: <FaMoneyBillTrendUp />,
+    },
+    {
+        id: 6,
+        type: 'single',
+        text: 'Mã giảm giá',
+        path: `/${path.ADMIN}/${path.VOUCHER}`,
+        icons: <BiSolidCoupon />,
+    },
+    {
+        id: 7,
+        type: 'single',
+        text: 'Blog',
+        path: `/${path.ADMIN}/${path.BLOG}`,
+        icons: <HiNewspaper />,
+    },
 ]
 
 export const profileSidebar = [
@@ -329,4 +381,3 @@ export const orderStatusTabs = [
         note: ''
     },
 ]
-

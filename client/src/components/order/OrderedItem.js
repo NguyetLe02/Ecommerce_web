@@ -8,7 +8,6 @@ import { differentDate } from '../../ultils/helpers'
 import dayjs from 'dayjs'
 
 const OrderedItem = ({ orderItemData }) => {
-    // console.log(typeof (orderItemData.startAt), orderItemData.endAt)
     const rentalTime = differentDate(dayjs(orderItemData.startAt).format(dateFormat), dayjs(orderItemData.endAt).format(dateFormat))
     return (
         <div className=' w-full mx-auto font-bold my-8 border-b py-3 flex flex-col gap-3'>

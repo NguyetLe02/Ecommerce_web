@@ -10,7 +10,24 @@ const createBrand = asyncHandler(async (req, res) => {
 })
 
 const getBrand = asyncHandler(async (req, res) => {
-    const response = await Brand.find().select('title _id icon')
+    const response = await Brand.aggregate([
+        {
+            $lookup: {
+                from: 'products',
+                localField: '_id',
+                foreignField: 'brand',
+                as: 'products'
+            }
+        },
+        {
+            $project: {
+                title: 1,
+                _id: 1,
+                icon: 1,
+                productCount: { $size: '$products.totalQuantity' }
+            }
+        }
+    ]);
     return res.status(200).json({
         success: response ? true : false,
         Brands: response ? response : 'Cannot get brand'
