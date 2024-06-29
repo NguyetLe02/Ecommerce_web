@@ -60,7 +60,7 @@ const Login = () => {
                             { min: 6, message: 'Password phải có ít nhất 6 ký tự' }
                         ]}
                     >
-                        <Input.Password placeholder="Mật khẩu" />
+                        <Input.Password placeholder="Password" />
                     </Form.Item>
                     <Form.Item>
                         <Button type="primary" htmlType="submit" name={'Đăng nhập'} fullWidth />
