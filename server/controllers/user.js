@@ -2,11 +2,11 @@ const User = require('../models/user')
 const Product = require('../models/product')
 const asyncHandler = require('express-async-handler')
 const { generateAccessToken, generateRefreshToken } = require('../middlewares/jwt')
-const jwt = require('jsonwebtoken')
-const sendMail = require('../ultils/sendMail')
-const crypto = require('crypto')
+// const jwt = require('jsonwebtoken')
+// const sendMail = require('../ultils/sendMail')
+// const crypto = require('crypto')
 const dayjs = require('dayjs');
-const makeToken = require('uniqid')
+// const makeToken = require('uniqid')
 
 // const utc = require('dayjs/plugin/utc');
 // const timezone = require('dayjs/plugin/timezone');

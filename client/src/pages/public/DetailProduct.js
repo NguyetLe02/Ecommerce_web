@@ -118,7 +118,12 @@ const DetailProduct = ({ data, isQuickView }) => {
                         </div>
                     </div>
                     <div className=' py-2 border-black border-y text-3xl font-bold text-main'><CurrencyFormat value={selectProduct?.product?.rentalPrice} displayType={'text'} thousandSeparator={true} suffix={' đ'} renderText={value => <div>{value}</div>} /></div>
-                    <div className=' flex gap-3' >Giá hãng:  <div className=' font-semibold text-main'><CurrencyFormat value={selectProduct?.product?.cost} displayType={'text'} thousandSeparator={true} suffix={' đ'} renderText={value => <div>{value}</div>} /> </div></div>
+                    <div className=' flex gap-3' >Tiền cọc:  <div className=' font-semibold text-main'><CurrencyFormat value={selectProduct?.product?.cost} displayType={'text'} thousandSeparator={true} suffix={' đ'} renderText={value => <div>{value}</div>} /> </div></div>
+                    <div className=' flex flex-col px-2 py-2 bg-main rounded-md'>
+                        <div className=' font-semibold'>Lưu ý: </div>
+                        <div className=' flex gap-3' >Giá trên hệ thống là giá thuê ngày đầu tiên</div>
+                        <div className=' flex gap-3' >Từ ngày thứ 2: Giá thuê = <span className=' font-semibold text-main'>30%</span> ngày đầu</div>
+                    </div>
                     <div className=' flex flex-col gap-3'>
                         <span>Kích thước</span>
                         <div className=' flex gap-2'>

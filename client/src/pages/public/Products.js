@@ -21,19 +21,20 @@ const Products = () => {
         type: [],
         styles: [],
     });
+
     const fetchProducts = async (queries) => {
         const response = await apiGetProducts(queries);
-        if (response.counts !== 0) {
+        if (response.success) {
             setProducts(response.products);
             setFilteredProducts(response.products);
             setSortedProducts(response.products);
+        } else {
+            setProducts([]);
+            setFilteredProducts([]);
+            setSortedProducts([]);
         }
     };
 
-    const capitalizeFirstLetter = (str) => {
-        return str.charAt(0).toUpperCase() + str.slice(1);
-    };
-    
     const applyFilters = () => {
         let filtered = products;
         if (filtered) {
@@ -80,18 +81,19 @@ const Products = () => {
     };
 
     useEffect(() => {
-        let param = [];
-        for (let i of params.entries()) param.push(i);
         const queries = {};
-        for (let i of params) queries[i[0]] = i[1];
-        if (type && optionid) queries[type] = optionid;
+        for (let entry of params.entries()) {
+            queries[entry[0]] = entry[1];
+        }
+        if (type && optionid) {
+            queries[type] = optionid;
+        }
         queries["sort"] = "-createdAt";
         fetchProducts(queries);
-    }, [params]);
+    }, [params, type, optionid]);
 
     useEffect(() => {
         applyFilters();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selected, products]);
 
     const sortProductsLowToHigh = () => {
@@ -109,45 +111,45 @@ const Products = () => {
     };
 
     return (
-        <div className=" w-full lg:w-main px-[30px]">
+        <div className="w-full lg:w-main px-[30px]">
             <div className="w-full flex sm:flex-col gap-3 py-4">
-                <div className=" flex-none">
+                <div className="flex-none">
                     <ProductFilter
                         setSelected={setSelected}
                         selected={selected}
                     />
                 </div>
-                {
-                    filteredProducts ? (
-                        <div className=" flex-1 flex-col">
-                            <div className=" flex sm:flex-col justify-between">
-                                <div className=" text-2xl font-semibold ">
-                                    Tất cả sản phẩm
-                                </div>
-                                <ProductSort
-                                    sortLowToHigh={sortProductsLowToHigh}
-                                    sortHighToLow={sortProductsHighToLow}
-                                />
+                {filteredProducts && filteredProducts.length > 0 ? (
+                    <div className="flex-1 flex-col">
+                        <div className="flex sm:flex-col justify-between">
+                            <div className="text-2xl font-semibold">
+                                Tất cả sản phẩm
                             </div>
-                            <div className=" grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-3">
-                                {sortedProducts?.map((product) => (
-                                    <ProductCard
-                                        key={product._id}
-                                        productData={product}
-                                    />
-                                ))}
-                            </div>
-                            <div className=" italic ">
-                                <Pagination totalCount={products?.length} />
-                            </div>
+                            <ProductSort
+                                sortLowToHigh={sortProductsLowToHigh}
+                                sortHighToLow={sortProductsHighToLow}
+                            />
                         </div>
-                    ) : (
-                        <span className=" text-xl font-semibold">{`Không có sản phẩm nào có  bạn cần tìm`}</span>
-                    )
-                    // : <span className=' text-xl font-semibold'>{`Không có sản phẩm nào có ${type} bạn cần tìm`}</span>
-                }
+                        <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-3">
+                            {sortedProducts?.map((product) => (
+                                <ProductCard
+                                    key={product._id}
+                                    productData={product}
+                                />
+                            ))}
+                        </div>
+                        <div className="italic">
+                            <Pagination totalCount={products?.length} />
+                        </div>
+                    </div>
+                ) : (
+                    <span className="text-2xl font-semibold">
+                        Không có sản phẩm nào phù hợp
+                    </span>
+                )}
             </div>
         </div>
     );
 };
+
 export default Products;

@@ -62,72 +62,89 @@ const getProduct = asyncHandler(async (req, res) => {
     })
 })
 
-//Filtering, sorting, pagination
 const getProducts = asyncHandler(async (req, res) => {
     const queries = { ...req.query }
-    //Tách các trường đặc biệt ra khỏi query
+
+    // Tách các trường đặc biệt ra khỏi query
     const excludeFields = ['limit', 'sort', 'page', 'fields']
     excludeFields.forEach(el => delete queries[el])
 
-    //Format lại các operators cho đúng cú pháp mongoose
+    // Format lại các operators cho đúng cú pháp mongoose
     let queryString = JSON.stringify(queries)
     queryString = queryString.replace(/\b(gte|gt|lt|lte)\b/g, matchedEl => `$${matchedEl}`)
     const formatedQueries = JSON.parse(queryString)
-    let colorQueryObject
-    //Filtering
+
+    // Filtering
     if (queries?.title) formatedQueries.title = { $regex: queries.title, $options: 'i' }
     if (queries?.category) formatedQueries.category = queries.category
-    if (queries?.color) {
-        delete formatedQueries.color
-        const colorArr = queries.color?.split(',')
-        const colorQuery = colorArr.map(el => {
-            if (el === 'Trắng') return { color: { $regex: 'white', $options: 'i' } }
-            if (el === 'Đen') return { color: { $regex: 'black', $options: 'i' } }
-            if (el === 'Kem') return { color: { $regex: 'beige', $options: 'i' } }
-            if (el === 'Đỏ') return { color: { $regex: 'red', $options: 'i' } }
-            if (el === 'Hồng') return { color: { $regex: 'pink', $options: 'i' } }
-            if (el === 'Xanh lá') return { color: { $regex: 'green', $options: 'i' } }
-            if (el === 'Tím') return { color: { $regex: 'purple', $options: 'i' } }
-            if (el === 'Nâu') return { color: { $regex: 'brown', $options: 'i' } }
-            if (el === 'Xám') return { color: { $regex: 'gray', $options: 'i' } }
-            if (el === 'Cam') return { color: { $regex: 'orange', $options: 'i' } }
-        })
-        colorQueryObject = { $or: colorQuery }
-    }
-    const q = { ...colorQueryObject, ...formatedQueries }
-    let queryCommand = Product.find(q).populate("category").populate("brand")
-    //Sorting
+    if (queries?.color) formatedQueries.color = queries.color
+
+    // Fetch all products and populate category and brand
+    const products = await Product.find().populate("category").populate("brand");
+
+    // Filter products
+    const filteredProducts = products.filter(product => {
+        for (const key in formatedQueries) {
+            if (key === 'category' || key === 'brand') {
+                if (product[key]?._id.toString() !== formatedQueries[key]) {
+                    return false;
+                }
+            } else {
+                if (product[key] !== formatedQueries[key]) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    });
+
+    let queryCommand = filteredProducts;
+
+    // Sorting
     if (req.query.sort) {
-        const sortBy = req.query.sort.split(',').join(' ')
-        queryCommand = queryCommand.sort(sortBy)
+        const sortBy = req.query.sort.split(',').join(' ');
+        queryCommand = queryCommand.sort((a, b) => {
+            const fields = sortBy.split(' ');
+            for (const field of fields) {
+                const [key, order] = field.startsWith('-') ? [field.substring(1), -1] : [field, 1];
+                if (a[key] < b[key]) return -1 * order;
+                if (a[key] > b[key]) return 1 * order;
+            }
+            return 0;
+        });
     }
-    //Fields limiting
+
+    // Fields limiting
     if (req.query.fields) {
-        const fields = req.query.fields.split(',').join(' ')
-        queryCommand = queryCommand.select(fields)
+        const fields = req.query.fields.split(',').join(' ');
+        queryCommand = queryCommand.map(product => {
+            const limitedProduct = {};
+            fields.split(' ').forEach(field => {
+                limitedProduct[field] = product[field];
+            });
+            return limitedProduct;
+        });
     }
-    //Pagination
-    //limit=n: lấy về n phần tử đầu trong 1 lần gọi API
-    //skip = n, bỏ qua n phần tử đầu tiên 
-    const page = req.query.page || 1
-    const limit = req.query.limit || process.env.LIMIT_PRODUCTS
-    const skip = (page - 1) * limit
-    queryCommand.skip(skip).limit(limit)
-    // Số lượng sản phẩm thỏa mãn điều kiện !== số lượng sản phẩm trả về 1 lần gọi API
+
+    // Pagination
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || parseInt(process.env.LIMIT_PRODUCTS);
+    const skip = (page - 1) * limit;
+    const paginatedProducts = queryCommand.slice(skip, skip + limit);
+
     try {
-        // Thực hiện query và đếm số lượng sản phẩm thỏa mãn điều kiện
-        const response = await queryCommand.exec()
-        // console.log(response)
-        const counts = await Product.countDocuments(queryCommand.skip(skip).limit(limit))
+        // Số lượng sản phẩm thỏa mãn điều kiện
+        const total = filteredProducts.length;
         res.status(200).json({
-            success: response ? true : false,
-            products: response ? response : 'Cannot get products',
-            counts: counts
-        })
+            success: true,
+            products: paginatedProducts,
+            total
+        });
     } catch (err) {
         res.status(500).json({ success: false, error: err.message });
     }
-})
+});
+
 
 const deleteProduct = asyncHandler(async (req, res) => {
     const { pid } = req.params

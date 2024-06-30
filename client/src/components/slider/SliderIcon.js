@@ -19,7 +19,7 @@ const SliderIcon = ({ data, column, isTitle, type }) => {
                         <List.Item>
                             <Link
                                 key={createSlug(item.title)}
-                                to={`/${path.PRODUCTS}/${type}/${item?._id}`}
+                                to={`/${path.PRODUCTS}?${type}=${item?._id}`}
                             >
                                 <Card
                                     hoverable
