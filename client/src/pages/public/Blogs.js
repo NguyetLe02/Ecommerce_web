@@ -7,6 +7,7 @@ import {
 } from "@ant-design/icons";
 import { format } from "date-fns";
 import { apiGetBlog } from "../../apis";
+import { BlogFilter } from "../../components";
 
 const { Title, Text } = Typography;
 
@@ -18,11 +19,8 @@ const NewsCard = ({ title, date, author, content, imageSrc, link }) => {
             style={{ width: "40%" }}
         >
             <Card
-                style={{
-                    marginBottom: "20px",
-                    border: "none",
-                }}
-                cover={<img alt="example" src={imageSrc} />}
+                style={{ maxWidth: '300px' }}
+                cover={<img alt="example" src={imageSrc} className="w-full h-auto object-cover" />}
             >
                 <Row justify="space-between" align="middle" gutter={[16, 16]}>
                     <Col>
@@ -55,25 +53,34 @@ const Blogs = () => {
         fetchBlogData();
     }, []);
     return (
-        <div className="container mx-auto px-4 py-8">
-            <Title level={2} className="text-center mb-20">
-                Tin tức
-            </Title>
-            <div className="flex flex-wrap justify-evenly">
-                {blogData?.map((blog) => {
-                    return (
-                        <NewsCard
-                            title={blog.title}
-                            date={format(blog.createdAt, "dd/MM/yyyy")}
-                            author={blog.author}
-                            content={blog.description}
-                            imageSrc={blog.image}
-                            link={`/blogs/${blog.id}`}
-                        />
-                    );
-                })}
+        <div className="w-full lg:w-main px-[30px]">
+            <div className="w-full flex sm:flex-col gap-3 py-4">
+                <div className="flex-none">
+                    <BlogFilter />
+                </div>
+                <div className=" flex flex-col container px-4 gap-6">
+                    <div className=" text-2xl font-semibold ">
+                        Blog của tôi
+                    </div>
+                    <div className="flex flex-wrap justify-start">
+                        {blogData?.map((blog) => {
+                            return (
+                                <NewsCard
+                                    title={blog.title}
+                                    date={format(blog.createdAt, "dd/MM/yyyy")}
+                                    author={blog.author}
+                                    content={blog.description}
+                                    imageSrc={blog.image}
+                                    link={`/blogs/${blog.id}`}
+                                />
+                            );
+                        })}
+                    </div>
+                </div>
             </div>
         </div>
+
+
     );
 };
 

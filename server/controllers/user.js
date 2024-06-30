@@ -21,20 +21,9 @@ const register = asyncHandler(async (req, res) => {
             success: false,
             message: 'Missing input'
         })
-
-    //Tạo token đăng ký tài khoản
-    const token = makeToken()
-    res.cookie('dataregister', { ...req.body, token }, { httpOnly: true, maxAge: 15 * 60 * 1000 })
-    const html = `Xin vui lòng click vào link dưới đây để hoàn tất quá trình đăng ký. Link này sẽ hết hạn sau 15 phút kể từ bây giờ.
-    <a href= ${process.env.URL_SERVER}/api/user/finalregister/${token}>Click here</a>`
-
-    await sendMail({ email, html, subject: "Hoàn tất đăng ký" })
-    return res.json({
-        success: true,
-        mes: "Please check your email to active account"
-    })
-
-
+    const hasPhonenumber = await User.findOne({ mobile: mobile })
+    if (hasPhonenumber)
+        throw new Error('Số điện thoại này đã được sử dụng.')
     const user = await User.findOne({ email: email })
     if (user)
         throw new Error('Email này đã được sử dụng.')

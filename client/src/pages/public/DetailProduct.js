@@ -3,11 +3,12 @@ import { apiGetProduct, apiGetRemainQuantity } from '../../apis'
 import { Button, ZoomImage, RatingStar, ChooseDate, InputQuantity, ProductInformation, SliderHotProducts, ButtonAddToCart, StartDatePicker } from '../../components'
 import CurrencyFormat from 'react-currency-format';
 import icons from '../../ultils/icons'
-import moment from 'moment';
+import { FacebookShareButton, FacebookIcon } from 'react-share';
 import { useParams } from 'react-router-dom'
 import dayjs from 'dayjs'
 import { DatePicker } from 'antd';
 import { addDate, getDateFormat } from '../../ultils/helpers';
+import path from '../../ultils/path';
 
 const DetailProduct = ({ data, isQuickView }) => {
     const { FaHeart } = icons
@@ -173,6 +174,13 @@ const DetailProduct = ({ data, isQuickView }) => {
                             />
                         </div>
                         <div className=' flex gap-3'>
+                            <FacebookShareButton
+                                url={`https://ecommerce-web-ery2ml9i4-nguyetle02s-projects.vercel.app/${path.PRODUCTS}/${pid}`}
+                                quote={'Thuê đồ xinh cùng Moon Clothes'}
+                                hashtag={'#Moonclothes'}
+                            >
+                                <FacebookIcon size={40} round />
+                            </FacebookShareButton>
                             <Button
                                 iconsAfter={<FaHeart />}
                             />

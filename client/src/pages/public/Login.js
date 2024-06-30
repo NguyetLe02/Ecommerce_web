@@ -66,8 +66,7 @@ const Login = () => {
                         <Button type="primary" htmlType="submit" name={'Đăng nhập'} fullWidth />
                     </Form.Item>
                 </Form>
-                <div className='flex justify-between w-full pt-3'>
-                    <div className='hover:text-main cursor-pointer'>Quên mật khẩu?</div>
+                <div className='flex justify-center w-full pt-3'>
                     <div
                         className='hover:text-main cursor-pointer'
                         onClick={() => navigate(`/${path.SIGNUP}`)}
