@@ -9,7 +9,6 @@ const path = {
     BLOGS: 'blogs',
     ORDERS: 'orders',
     DETAIL_PRODUCT: 'products/:detail/:pid/:title',
-    CART: 'cart',
 
     //admin
     ADMIN: 'admin',
@@ -31,12 +30,14 @@ const path = {
     REVENUE: 'veneue',
     VOUCHER: 'voucher',
     BLOG: 'blog',
+    BLOG_DETAIL: 'blogs/:bid',
 
     //member
     MEMBER: 'member',
     PAYMENT: 'payment',
     PROFILE: 'profile',
     CHAT: 'chat',
+    CART: 'cart',
 }
 
 export default path;

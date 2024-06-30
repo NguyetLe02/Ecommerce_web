@@ -61,7 +61,7 @@ function App() {
           <Route path={path.PRODUCTS_OPTION} element={<Products />} />
           <Route path={path.DETAIL_PRODUCT} element={<DetailProduct />} />
           <Route path={path.BLOGS} element={<Blogs />} />
-          <Route path={`${path.BLOGS}/:id`} element={<BlogDetail />} />
+          <Route path={path.BLOG_DETAIL} element={<BlogDetail />} />
         </Route>
         <Route path={path.ADMIN} element={<AdminLayout />}>
           <Route path={path.DASHBOARD} element={<Dashboard />} />

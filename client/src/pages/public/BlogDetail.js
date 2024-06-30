@@ -7,18 +7,18 @@ import { format } from "date-fns";
 import { useSelector } from "react-redux";
 import { BlogFilter } from "../../components";
 
-const { Title, Text, Paragraph } = Typography;
+const { Text, Paragraph } = Typography;
 
 const BlogDetail = () => {
     const { currentUser } = useSelector(state => state.user);
-    const { id } = useParams();
+    const { bid } = useParams();
     const [blogDetailData, setBlogDetailData] = useState();
     const [liked, setLiked] = useState(false);
     const [disliked, setDisliked] = useState(false);
 
     useEffect(() => {
         const fetchBlogDataById = async () => {
-            const data = await apiGetBlogById(id);
+            const data = await apiGetBlogById(bid);
             setBlogDetailData(data.Blogs);
             if (data.Blogs.likes.find(user => user._id === currentUser?._id)) {
                 setLiked(true);
@@ -28,11 +28,11 @@ const BlogDetail = () => {
             }
         };
         fetchBlogDataById();
-    }, [id]);
+    }, [bid]);
 
     const handleLike = async () => {
         try {
-            await apiLikeBlog(id);
+            await apiLikeBlog(bid);
             setLiked(!liked);
             if (disliked) setDisliked(false);
             message.success('Bạn đã thích bài viết này');
@@ -43,7 +43,7 @@ const BlogDetail = () => {
 
     const handleDislike = async () => {
         try {
-            await apiDislikeBlog(id);
+            await apiDislikeBlog(bid);
             setDisliked(!disliked);
             if (liked) setLiked(false);
             message.success('Bạn đã dislike bài viết');

@@ -76,75 +76,75 @@ const getCurrent = asyncHandler(async (req, res) => {
     })
 })
 
-// Tạo lại access token sau khi hết hạn
-const refreshAccessToken = asyncHandler(async (req, res) => {
-    //Lấy token từ cookie
-    const cookie = req.cookies
-    if (!cookie && !cookie.refreshToken) throw new Error('No refresh token in cookie')
-    //Check token co hop le hay khong
-    const rs = await jwt.verify(cookie.refreshToken, process.env.JWT_SECRET)
-    const response = await User.findOne({ _id: rs._id, refreshToken: cookie.refreshToken })
-    return res.status(200).json({
-        success: response ? true : false,
-        newAccessToken: response ? generateAccessToken(response._id, response.role) : 'Refresh token not matched'
-    })
-})
+// // Tạo lại access token sau khi hết hạn
+// const refreshAccessToken = asyncHandler(async (req, res) => {
+//     //Lấy token từ cookie
+//     const cookie = req.cookies
+//     if (!cookie && !cookie.refreshToken) throw new Error('No refresh token in cookie')
+//     //Check token co hop le hay khong
+//     const rs = await jwt.verify(cookie.refreshToken, process.env.JWT_SECRET)
+//     const response = await User.findOne({ _id: rs._id, refreshToken: cookie.refreshToken })
+//     return res.status(200).json({
+//         success: response ? true : false,
+//         newAccessToken: response ? generateAccessToken(response._id, response.role) : 'Refresh token not matched'
+//     })
+// })
 
-const logout = asyncHandler(async (req, res) => {
-    const cookie = req.cookies
-    if (!cookie || !cookie.refreshToken) throw new Error('No refresh token in cookies')
-    //xoa refresh token o db
-    await User.findOneAndUpdate({ refreshToken: cookie.refreshToken }, { refreshToken: '' }, { new: true })
-    //xoa refresh token o cookie
-    res.clearCookie('refreshToken', {
-        httpOnly: true,
-        secure: true
-    })
-    return res.status(200).json({
-        success: true,
-        mes: 'Logout is successful'
-    })
-})
+// const logout = asyncHandler(async (req, res) => {
+//     const cookie = req.cookies
+//     if (!cookie || !cookie.refreshToken) throw new Error('No refresh token in cookies')
+//     //xoa refresh token o db
+//     await User.findOneAndUpdate({ refreshToken: cookie.refreshToken }, { refreshToken: '' }, { new: true })
+//     //xoa refresh token o cookie
+//     res.clearCookie('refreshToken', {
+//         httpOnly: true,
+//         secure: true
+//     })
+//     return res.status(200).json({
+//         success: true,
+//         mes: 'Logout is successful'
+//     })
+// })
 
-const forgotPassword = asyncHandler(async (req, res) => {
-    const { email } = req.query
-    if (!email) throw new Error('Missing email')
-    const user = await User.findOne({ email: email })
-    if (!user) throw new Error('User not found')
-    const resetToken = user.createPasswordChangedToken()
-    await user.save()
+// const forgotPassword = asyncHandler(async (req, res) => {
+//     const { email } = req.query
+//     if (!email) throw new Error('Missing email')
+//     const user = await User.findOne({ email: email })
+//     if (!user) throw new Error('User not found')
+//     const resetToken = user.createPasswordChangedToken()
+//     await user.save()
 
-    const html = `Xin vui long click vao link duoi day de thay doi mat khau. Link nay se het han sau 15 phut ke tu bay gio
-    <a href= ${process.env.URL_SERVER}/api/user/resetpassword/${resetToken}>Click here</a>`
+//     const html = `Xin vui long click vao link duoi day de thay doi mat khau. Link nay se het han sau 15 phut ke tu bay gio
+//     <a href= ${process.env.URL_SERVER}/api/user/resetpassword/${resetToken}>Click here</a>`
 
-    const data = {
-        email: email,
-        html: html,
-        subject: 'Forgot Password'
-    }
-    const rs = await sendMail(data)
-    return res.status(200).json({
-        success: true,
-        rs
-    })
-})
+//     const data = {
+//         email: email,
+//         html: html,
+//         subject: 'Forgot Password'
+//     }
+//     const rs = await sendMail(data)
+//     return res.status(200).json({
+//         success: true,
+//         rs
+//     })
+// })
 
-const resetPassword = asyncHandler(async (req, res) => {
-    const { password, token } = req.body
-    if (!password || !token) throw new Error('Missing input')
-    const passwordResetToken = crypto.createHash('sha256').update(token).digest('hex')
-    const user = await User.findOne({ passwordResetToken, passwordResetExpires: { $gt: Date.now() } })
-    if (!user) throw new Error('Invalid reset token')
-    user.password = password
-    user.passwordResetToken = undefined
-    user.passwordChangedAt = Date.now()
-    user.passwordResetExpires = undefined
-    await user.save()
-    return res.status(200).json({
-        success: user ? true : false,
-        mes: user ? 'Updated password' : 'Something went wrong'
-    })
-})
+// const resetPassword = asyncHandler(async (req, res) => {
+//     const { password, token } = req.body
+//     if (!password || !token) throw new Error('Missing input')
+//     const passwordResetToken = crypto.createHash('sha256').update(token).digest('hex')
+//     const user = await User.findOne({ passwordResetToken, passwordResetExpires: { $gt: Date.now() } })
+//     if (!user) throw new Error('Invalid reset token')
+//     user.password = password
+//     user.passwordResetToken = undefined
+//     user.passwordChangedAt = Date.now()
+//     user.passwordResetExpires = undefined
+//     await user.save()
+//     return res.status(200).json({
+//         success: user ? true : false,
+//         mes: user ? 'Updated password' : 'Something went wrong'
+//     })
+// })
 
 const getUsers = asyncHandler(async (req, res) => {
     const queries = { ...req.query }
@@ -257,7 +257,7 @@ const updateCart = asyncHandler(async (req, res) => {
     const endDate = new Date(endAt).getTime();
     const daysDifference = Math.round((endDate - startDate) / millisecondsPerDay) + 1;
 
-    const totalRentalPrice = daysDifference * quantity * product.rentalPrice
+    const totalRentalPrice = (1 + (daysDifference - 1) * 0.3) * product.rentalPrice * quantity
 
     const updateUser = await User.findById(_id)
     const alreadyProduct = updateUser.cart.find(el => el.product.toString() === pid && el.size === size)
@@ -275,7 +275,7 @@ const updateCart = asyncHandler(async (req, res) => {
     // console.log(userUpdated)
     return res.status(200).json({
         success: response ? true : false,
-        mes: response ? response : 'Some thing went wrong'
+        mes: response ? userUpdated : 'Some thing went wrong'
     })
 })
 
@@ -301,10 +301,10 @@ module.exports = {
     register,
     login,
     getCurrent,
-    refreshAccessToken,
-    logout,
-    forgotPassword,
-    resetPassword,
+    // refreshAccessToken,
+    // logout,
+    // forgotPassword,
+    // resetPassword,
     getUsers,
     deleteUser,
     updateUser,

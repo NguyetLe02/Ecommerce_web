@@ -23,7 +23,7 @@ const Content = (isLoggedIn, navigate) => {
                     <Link to={`/${path.MEMBER}/${path.PROFILE}`}>
                         <span>Chỉnh sửa thông tin cá nhân</span>
                     </Link>
-                    <Link to={`/${path.ORDERS}`}>
+                    <Link to={`/${path.MEMBER}/${path.ORDERED}`}>
                         <span>Đơn hàng của bạn</span>
                     </Link>
                     <span

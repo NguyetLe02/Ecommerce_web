@@ -291,9 +291,9 @@ export const paymentPolicy = [
         name: 'Các bước thuê đồ',
         step: [
             'Chọn đồ và ngày muốn thuê',
-            'Thanh toán tiền cọc bằng tiền giá hãng',
+            'Thanh toán tiền cọc',
         ],
-        situation: 'Sau khi đồ hoàn trả thành công',
+        situation: 'Chú ý: Giá thuê trên hệ thống áp dụng với ngày thuê đầu tiên, từ những ngày sau giá thuê bằng 30% giá thuê ngày đầu. Sau khi đồ hoàn trả thành công',
         moneyback: 'Số tiền nhận lại = tiền cọc - giá thuê'
     },
     {
@@ -303,7 +303,7 @@ export const paymentPolicy = [
             'Vào đơn hàng chọn gia hạn',
             'Chọn thời gian gia hạn',
         ],
-        situation: 'Nếu gia hạn thành công, bạn sẽ có thể tiếp tục thuê đồ.Trong trường hợp không thể gai hạn do có lịch thuê khác, khách hàng vui lòng hoàn đồ cho shop theo đúng dự kiến',
+        situation: 'Nếu gia hạn thành công, bạn sẽ có thể tiếp tục thuê đồ.Trong trường hợp không thể gia hạn do có lịch thuê khác, khách hàng vui lòng hoàn đồ cho shop theo đúng dự kiến',
         moneyback: 'Số tiền nhận lại = tiền cọc - giá thuê (đã gia hạn)'
     },
     {

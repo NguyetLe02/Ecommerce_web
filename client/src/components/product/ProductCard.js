@@ -10,6 +10,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { getCurrent } from '../../store/user/asyncActions';
 import { useSelector, useDispatch } from 'react-redux';
 import Swal from 'sweetalert2'
+import { message } from 'antd';
 
 const { FaEye, FaCartPlus, IoMenu } = icons
 const ProductCard = ({ productData }) => {
@@ -20,7 +21,7 @@ const ProductCard = ({ productData }) => {
     const handleClickOptions = async (e, flag) => {
         e.stopPropagation()
         if (flag === 'VIEW') navigate(`/${path.PRODUCTS}/detail/${productData?._id}/${productData?.slug}`)
-        if (flag === 'QUICK_VIEW') toast.info('Quick View', { hideProgressBar: false, })
+        if (flag === 'WISH_LIST') toast.info('wish list', { hideProgressBar: false, })
         if (flag === 'CART') {
             if (!currentUser) return Swal.fire({
                 title: null,
@@ -34,10 +35,10 @@ const ProductCard = ({ productData }) => {
             })
             const response = await apiUpdateCart({ pid: productData._id, quantity: 1, size: productData.type[0].size })
             if (response.success) {
-                toast.success(response.mes)
+                message.success('Thêm sản phẩm vào giỏ hàng thành công!')
                 dispatch(getCurrent())
             }
-            else toast.error(response.mes)
+            else message.error('Thêm sản phẩm vào giỏ hàng thất bại!')
         }
     }
 

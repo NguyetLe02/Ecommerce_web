@@ -59,7 +59,7 @@ const Payment = ({ dispatch, navigate }) => {
 
     return (
         <div className='w-full lg:w-main px-[30px] py-8 grid grid-cols-10'>
-            <div className='absolute cursor-pointer' onClick={() => navigate(`/${path.CART}`)}><IoIosArrowBack size={30} title='Quay lại giỏ hàng' /></div>
+            <div className='absolute cursor-pointer' onClick={() => navigate(`/${path.MEMBER}/${path.CART}`)}><IoIosArrowBack size={30} title='Quay lại giỏ hàng' /></div>
             <img src={payment} alt='Thanh toán' className='object-cover col-span-4' />
             <div className='flex flex-col col-span-6 gap-4'>
                 <h2 className='text-2xl font-bold'>Thanh toán</h2>

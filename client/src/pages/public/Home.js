@@ -1,10 +1,12 @@
 import React from 'react'
 import { Banner, SliderStyle, SliderProductCategory, SliderBrand, SliderHotProducts, SliderNewProducts } from '../../components'
+import { ToastContainer } from 'react-toastify'
 
 const Home = () => {
 
     return (
         <div className=' w-screen flex flex-col items-center'>
+            <ToastContainer />
             <Banner />
             <div className='w-full lg:w-main px-[30px] flex flex-col gap-5 '>
                 <div className=' flex flex-col gap-3'>

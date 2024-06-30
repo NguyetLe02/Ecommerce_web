@@ -4,6 +4,7 @@ import CurrencyFormat from 'react-currency-format';
 import { Button, OrderItem, PaymentButton } from '../../components';
 import withBaseComponent from '../../hocs/withBaseComponent';
 import { apiUpdateCart } from '../../apis';
+import { message } from 'antd';
 
 const Cart = ({ navigate }) => {
     const { currentCart } = useSelector(state => state.user)
@@ -13,6 +14,7 @@ const Cart = ({ navigate }) => {
             return response
         })
         const response = await Promise.all(promises);
+        if (response) message.success('Cập nhật giỏ hàng thành công')
     }
 
     return (

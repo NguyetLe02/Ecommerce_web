@@ -7,11 +7,12 @@ import { toast } from 'react-toastify';
 import { apiRemoveCart } from '../../apis';
 import { getCurrent } from '../../store/user/asyncActions';
 import withBaseComponent from '../../hocs/withBaseComponent';
+import { message } from 'antd';
 
 const { MdDeleteForever } = icons;
 const CartItem = ({ productData, orderData, dispatch }) => {
-    const totalRentalPrice = orderData?.quantity * productData.rentalPrice
-
+    // const totalRentalPrice = orderData?.quantity * productData.rentalPrice
+    console.log(orderData)
     const handleRemoveCart = () => {
         Swal.fire({
             title: null,
@@ -25,11 +26,13 @@ const CartItem = ({ productData, orderData, dispatch }) => {
                 try {
                     const response = await apiRemoveCart({ pid: productData._id, size: orderData.size });
                     if (response.success) {
-                        toast.success('Đã xóa sản phẩm khỏi giỏ hàng');
+                        message.success('Xóa sản phẩm thành công')
                         dispatch(getCurrent())
+                    } else {
+                        message.error('Có lỗi xảy ra khi xóa sản phẩm')
                     }
                 } catch (error) {
-                    throw new Error(error);
+                    message.error('Có lỗi xảy ra. Vui lòng thử lại sau.')
                 }
             }
         })
@@ -45,7 +48,7 @@ const CartItem = ({ productData, orderData, dispatch }) => {
                     <div>{`x ${orderData?.quantity}`}</div>
                     <span className=' flex'>
                         <div className=' font-semibold text-sub'>
-                            <CurrencyFormat value={totalRentalPrice} displayType={'text'} thousandSeparator={true} suffix={' đ'} renderText={value => <div>{value}</div>} />
+                            <CurrencyFormat value={orderData?.totalRentalPrice} displayType={'text'} thousandSeparator={true} suffix={' đ'} renderText={value => <div>{value}</div>} />
                         </div>
                     </span>
                 </div>

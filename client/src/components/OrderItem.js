@@ -29,14 +29,14 @@ const OrderItem = ({ el, dispatch, defaultquantity = 1 }) => {
     const startDate = new Date(startAt).getTime();
     const endDate = new Date(endAt).getTime();
     const daysDifference = Math.round((endDate - startDate) / millisecondsPerDay) + 1;
-    const totalRentalPrice = daysDifference * quantity * el.product.rentalPrice
+    const totalRentalPrice = (1 + (daysDifference - 1) * 0.3) * el.product.rentalPrice * quantity
 
     useEffect(() => {
         dispatch(updateCart({ pid: el.product?._id, quantity, startAt, endAt, size: el.size, totalRentalPrice: totalRentalPrice }))
     }, [quantity, startAt, endAt])
     return (
         <div key={el._id} className=' w-full mx-auto font-bold my-8 border-b py-3 grid grid-cols-10'>
-            <img alt='Ảnh' src={el?.product.images[0]} className='col-span-2 text-center rounded-lg mx-auto w-2/3 ' />
+            <img alt='Ảnh' src={el?.product.images[0]} className='lg:col-span-2 col-span-1 w-[150px] h-[150px] text-center object-cover rounded-lg mx-auto lg:w-2/3' />
             <span className='col-span-3 w-full flex flex-col px-2'>
                 <span className=' font-semibold text-main'>{el?.product?.title}</span>
                 <span className='lg:text-base text-xs'>{`${el?.product?.color} | ${el?.size}`}</span>
@@ -80,7 +80,7 @@ const OrderItem = ({ el, dispatch, defaultquantity = 1 }) => {
                     </div>
                 </div>
                 <div className=' flex gap-2 justify-between'>
-                    <span>Giá gốc:</span>
+                    <span>Tiền cọc:</span>
                     <div className=' font-semibold '>
                         <CurrencyFormat
                             value={el.product.cost * quantity}
